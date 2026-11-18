@@ -8,7 +8,8 @@ import {
   FileText, 
   Anchor, 
   TrendingUp, 
-  CheckSquare 
+  CheckSquare,
+  ArrowRight
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -22,90 +23,112 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+    <html lang="en" className="dark">
+      <body className="bg-[#080c14] text-slate-100 antialiased min-h-screen flex flex-col selection:bg-emerald-500/30 selection:text-emerald-300">
         {/* Navigation Bar */}
-        <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
+        <header className="sticky top-0 z-50 bg-[#080c14]/90 backdrop-blur-md border-b border-slate-800/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
+              {/* Logo & Brand */}
               <div className="flex items-center space-x-3">
-                <Link href="/" className="flex items-center space-x-2.5">
-                  <div className="w-9 h-9 bg-emerald-600 rounded-lg flex items-center justify-center text-white shadow-sm shadow-emerald-200">
+                <Link href="/" className="flex items-center space-x-2.5 group">
+                  <div className="w-9 h-9 bg-emerald-500 rounded-xl flex items-center justify-center text-slate-950 font-bold shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                     <Anchor className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-lg font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
-                      ExportOps <span className="text-emerald-600 font-extrabold">AI</span>
+                    <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1">
+                      ExportOps <span className="text-emerald-400 font-extrabold">AI</span>
                     </span>
                     <span className="hidden sm:inline-block text-[10px] uppercase font-semibold text-slate-400 tracking-wider">
                       RMG Pre-Shipment Control Tower
                     </span>
                   </div>
                 </Link>
-                <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
+                <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
                   Supply Chain Nexus
                 </span>
               </div>
 
-              <nav className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
+              {/* Navigation Links */}
+              <nav className="flex items-center space-x-1 sm:space-x-1.5 md:space-x-2">
                 <Link
                   href="/"
-                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  className="flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                 >
-                  <Layers className="w-3.5 h-3.5 text-slate-500" />
+                  <Layers className="w-3.5 h-3.5 text-slate-400" />
                   <span>Shipments</span>
                 </Link>
                 <Link
                   href="/compliance"
-                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  className="flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                 >
-                  <CheckSquare className="w-3.5 h-3.5 text-slate-500" />
+                  <CheckSquare className="w-3.5 h-3.5 text-slate-400" />
                   <span>Buyer Compliance</span>
                 </Link>
                 <Link
                   href="/dashboard"
-                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  className="flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                 >
-                  <BarChart3 className="w-3.5 h-3.5 text-slate-500" />
+                  <BarChart3 className="w-3.5 h-3.5 text-slate-400" />
                   <span>Cost Dashboard</span>
                 </Link>
                 <Link
                   href="/roi"
-                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                  className="flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-700/60 hover:bg-emerald-900/60 transition-colors"
                 >
-                  <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+                  <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
                   <span>ROI & Pricing</span>
                 </Link>
                 <Link
                   href="/docs"
-                  className="hidden md:flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  className="hidden md:flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
                 >
-                  <FileText className="w-3.5 h-3.5 text-slate-500" />
+                  <FileText className="w-3.5 h-3.5 text-slate-400" />
                   <span>Pitch & Docs</span>
                 </Link>
               </nav>
 
-              <div className="hidden lg:flex items-center space-x-2 text-xs text-slate-500 border-l border-slate-200 pl-4">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>Deterministic Rules + AI Explanations</span>
+              {/* Quick Launch CTA */}
+              <div className="hidden lg:flex items-center space-x-3 border-l border-slate-800 pl-4">
+                <Link
+                  href="/shipments/EXP-001"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg shadow-sm shadow-emerald-500/20 transition-all"
+                >
+                  <span>Launch Demo (EXP-001)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1">
-          {children}
+        <main className="flex-1 bg-grid-subtle relative">
+          <div className="absolute inset-0 radial-glow-emerald pointer-events-none" />
+          <div className="relative z-10">
+            {children}
+          </div>
         </main>
 
         {/* Global Footer */}
-        <footer className="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>© 2026 ExportOps AI. Built for Bangladesh RMG Exporters & Clearing Agents.</p>
-            <p className="text-slate-400">
-              Zero-Hallucination Compliance Architecture • 8-Point Pre-Filing Validation • BondIQ Reconciled
+        <footer className="bg-[#05080e] border-t border-slate-800/80 py-8 text-center text-xs text-slate-400">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center space-x-2">
+              <span className="font-bold text-white">ExportOps AI</span>
+              <span className="text-slate-600">•</span>
+              <span>RMG Pre-Shipment Control Tower</span>
+            </div>
+            <p className="text-slate-500 text-[11px]">
+              Built for Bangladesh RMG Exporters, Buying Houses & Clearing Agents • Chittagong Port Cut-Off Shield
             </p>
+            <div className="flex items-center space-x-4 text-[11px] text-slate-500">
+              <Link href="/docs" className="hover:text-slate-300">Pitch Script</Link>
+              <span>•</span>
+              <Link href="/roi" className="hover:text-slate-300">Pricing & Pilot</Link>
+              <span>•</span>
+              <Link href="/compliance" className="hover:text-slate-300">Buyer Rulebook</Link>
+            </div>
           </div>
         </footer>
       </body>
