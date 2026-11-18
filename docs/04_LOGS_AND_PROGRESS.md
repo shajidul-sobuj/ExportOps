@@ -24,6 +24,7 @@ This document tracks all project milestones, architectural decisions, completed 
 | **Phase 5** | AI Document Extraction Route (`/api/extract`) with Fallback | ✅ Completed | Nov 18, 2026 - 23:21 |
 | **Phase 6** | Frontend Pages (`/`, `/shipments/[id]`, `/dashboard`, `/docs`) | ✅ Completed | Nov 18, 2026 - 23:23 |
 | **Phase 7** | Automated Tests & Production Build Verification | ✅ Completed | Nov 18, 2026 - 23:24 |
+| **Phase 8** | Sample Trade Documents, File Drag & Drop, Customs Gate-Pass | ✅ Completed | Nov 19, 2026 - 00:55 |
 
 ---
 
@@ -42,15 +43,16 @@ This document tracks all project milestones, architectural decisions, completed 
 - **Context:** Live LLM APIs can encounter rate limits or network hiccups during live presentations.
 - **Decision:** `/api/extract` implements an automatic graceful fallback to pre-verified cached extractions with confidence scores.
 
+### Decision 4: Tangible Physical Output (Customs Gate-In Pass)
+- **Context:** Export compliance products often feel abstract without a concrete operational artifact.
+- **Decision:** Created an official Chittagong Port Gate-In Pass with verification hash, QR code, and audit stamp that can be viewed and printed directly.
+
 ---
 
 ## Verification Results
 
 - **Unit Tests:** `6 of 6 passed` in `tests/rules.test.ts` (Vitest).
-  - Asserted `EXP-001` (Blocked: Qty discrepancy)
-  - Asserted `EXP-002` (Blocked: Date window + Missing COO)
-  - Asserted `EXP-003` (Blocked: Bond raw material quota exceeded)
-  - Asserted `EXP-004` (At risk: Container missing warning)
-  - Asserted `EXP-005` (Customs-ready: Score 100)
-  - Asserted Interactive Remediation loop (Editing Packing List to 12,000 pcs clears shipment to Customs-Ready).
 - **Next.js Production Build:** `next build` compiled with 0 errors across 7 routes (`/`, `/shipments/[id]`, `/dashboard`, `/docs`, `/api/extract`, `/_not-found`).
+- **Git Commits:**
+  - `79bd570`: Initial prototype release
+  - `80d6ba3`: Sample trade documents, drag & drop file upload, customs clearance gate-pass modal
