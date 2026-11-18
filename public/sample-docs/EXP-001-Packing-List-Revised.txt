@@ -1,0 +1,30 @@
+================================================================================
+REVISED PACKING LIST (FINAL VERIFIED - 100% RECONCILED)
+================================================================================
+PACKING LIST NO: PL-0412-REV1
+DATE: 18-NOV-2026
+REF INVOICE NO: INV-0412
+
+SHIPPER: Northfield Apparel Ltd., Dhaka EPZ, Bangladesh
+CONSIGNEE: Nordic Retailers A/S, Copenhagen, Denmark
+CONTAINER NO: MSKU-781920-4
+SEAL NO: ML-BD9821
+VESSEL: MAERSK HAVEN / V-419W
+COMMODITY HS CODE: 6109.10.00
+
+PACKAGING BREAKDOWN (RECONCILED FLOOR AUDIT):
+--------------------------------------------------------------------------------
+Carton Range | Description                         | Pcs/Ctn | Total Cartons | Total Pcs
+--------------------------------------------------------------------------------
+001 - 200    | Men's Cotton T-Shirt (Navy)         | 24      | 200           | 4,800
+201 - 350    | Men's Cotton T-Shirt (Black)        | 24      | 150           | 3,600
+351 - 500    | Men's Cotton T-Shirt (White)        | 24      | 150           | 3,600
+--------------------------------------------------------------------------------
+TOTAL CARTONS: 500 CARTONS
+GRAND TOTAL PIECES: 12,000 PCS
+TOTAL NET WEIGHT: 2,880.00 KGS
+TOTAL GROSS WEIGHT: 3,250.00 KGS
+TOTAL MEASUREMENT: 30.00 CBM
+
+[RECONCILED BY EXPORTOPS AI: Quantity 12,000 PCS matches Commercial Invoice INV-0412 exactly]
+================================================================================

@@ -1,0 +1,40 @@
+================================================================================
+COMMERCIAL INVOICE
+================================================================================
+INVOICE NO: INV-0412
+DATE: 18-NOV-2026
+EXP NUMBER: EXP-2026-DH-0914
+
+EXPORTER / SHIPPER:
+Northfield Apparel Ltd.
+Plot 14-18, Dhaka EPZ, Savar, Dhaka, Bangladesh
+Bond License No: BL-2024-DH-4412
+
+CONSIGNEE:
+Nordic Retailers A/S
+Toldbodgade 12, DK-1253 Copenhagen, Denmark
+
+NOTIFY PARTY:
+Nordic Logistics Spedition ApS, Copenhagen, Denmark
+
+LETTER OF CREDIT NO: LC-2026-DH-90112 (Standard Chartered Bank)
+LATEST DATE OF SHIPMENT: 2026-11-25
+PORT OF LOADING: Chittagong Sea Port, Bangladesh
+PORT OF DISCHARGE: Copenhagen Port, Denmark
+VESSEL / VOYAGE: MAERSK HAVEN / V-419W
+ESTIMATED DEPARTURE: 20-NOV-2026
+
+DESCRIPTION OF GOODS:
+--------------------------------------------------------------------------------
+Marks & Nos    | Description of Goods              | Quantity  | Unit Price | Total Amount
+--------------------------------------------------------------------------------
+NR/CPH/01-500  | Men's 100% Knitted Cotton T-Shirts| 12,000 PCS| USD 6.00   | USD 72,000.00
+               | H.S. CODE: 6109.10.00             |           |            |
+--------------------------------------------------------------------------------
+TOTAL QUANTITY: 12,000 PCS
+TOTAL INVOICE VALUE: USD 72,000.00 (FOB CHITTAGONG)
+
+RAW MATERIAL UTILIZATION DECLARATION:
+Linked to BGMEA UD No: UD-2026-BGMEA-4410
+Fabric Consumed: 3,600 kg (Within Approved Quota)
+================================================================================

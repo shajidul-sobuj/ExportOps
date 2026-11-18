@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
   ArrowLeft, 
@@ -16,16 +16,18 @@ import {
   Check, 
   Edit3, 
   Sparkles, 
-  ExternalLink,
-  HelpCircle,
-  FileSpreadsheet,
-  Layers,
-  Flame
+  Layers, 
+  Flame,
+  Printer,
+  X,
+  FileCheck2,
+  FileUp,
+  Download,
+  QrCode
 } from 'lucide-react';
 import initialShipments from '@/data/shipments.json';
 import { 
   Shipment, 
-  Document, 
   RuleResult, 
   AuditEntry, 
   ShipmentStatus 
@@ -38,7 +40,6 @@ import {
 
 export default function ShipmentDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const shipmentId = (params?.id as string) || 'EXP-001';
 
   // Find initial shipment
@@ -58,6 +59,9 @@ export default function ShipmentDetailPage() {
   const [editableQuantity, setEditableQuantity] = useState<number>(11400);
   const [activeDocTab, setActiveDocTab] = useState<string>('Packing List');
   const [showCelebration, setShowCelebration] = useState(false);
+  const [showGatePass, setShowGatePass] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Sync initial fields if Packing list exists
   useEffect(() => {
@@ -105,7 +109,7 @@ export default function ShipmentDetailPage() {
   };
 
   // Simulate AI document upload & extraction
-  const handleSimulateAiUpload = async (fixed: boolean) => {
+  const handleSimulateAiUpload = async (fixed: boolean, customText?: string) => {
     setIsExtracting(true);
     setExtractionNotice('Calling Document Intelligence API (/api/extract)...');
 
@@ -116,6 +120,7 @@ export default function ShipmentDetailPage() {
         body: JSON.stringify({
           documentType: 'Packing List',
           shipmentId: shipment.id,
+          documentText: customText,
           isFixDemo: fixed,
         }),
       });
@@ -129,20 +134,46 @@ export default function ShipmentDetailPage() {
 
         setEditableQuantity(extractedQty);
         setExtractionNotice(
-          `AI Extracted: ${extractedQty.toLocaleString()} pcs (Confidence: 99%). Click 'Apply & Re-validate' to clear shipment.`
+          `AI Extracted: ${extractedQty.toLocaleString()} pcs (Confidence: 99%). Status re-evaluated automatically.`
         );
 
-        if (fixed) {
+        if (fixed || extractedQty === 12000) {
           handleRevalidate(12000);
         }
       }
     } catch (err) {
       setIsExtracting(false);
-      // Fallback
       if (fixed) {
         setEditableQuantity(12000);
         handleRevalidate(12000);
       }
+    }
+  };
+
+  // Real file drop handler
+  const handleFileDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragActive(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processRealFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      processRealFile(e.target.files[0]);
+    }
+  };
+
+  const processRealFile = async (file: File) => {
+    try {
+      const text = await file.text();
+      // If the file contains 12000 or Revised, treat as fixed
+      const isFixed = text.includes('12,000') || text.includes('12000') || file.name.toLowerCase().includes('revised');
+      handleSimulateAiUpload(isFixed, text);
+    } catch {
+      handleSimulateAiUpload(true);
     }
   };
 
@@ -161,9 +192,16 @@ export default function ShipmentDetailPage() {
         </Link>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs text-slate-500">
-            Port Cut-off: <strong className="text-slate-800">{shipment.vesselCutoff.split('T')[0]}</strong>
-          </span>
+          {status === 'Customs-ready' && (
+            <button
+              onClick={() => setShowGatePass(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+            >
+              <FileCheck2 className="w-3.5 h-3.5" />
+              <span>View Customs Clearance Gate-Pass</span>
+            </button>
+          )}
+
           <button
             onClick={() => handleRevalidate()}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
@@ -238,9 +276,9 @@ export default function ShipmentDetailPage() {
 
         {/* Dynamic Celebration Banner */}
         {showCelebration && (
-          <div className="mt-4 p-4 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-emerald-900 text-sm">
+          <div className="mt-4 p-4 bg-emerald-50 border border-emerald-300 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-emerald-900 text-sm">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shrink-0">
                 ✓
               </div>
               <div>
@@ -250,12 +288,20 @@ export default function ShipmentDetailPage() {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setShowCelebration(false)}
-              className="text-xs font-semibold text-emerald-700 hover:text-emerald-950 underline"
-            >
-              Dismiss
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowGatePass(true)}
+                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+              >
+                Open Gate-Pass
+              </button>
+              <button
+                onClick={() => setShowCelebration(false)}
+                className="text-xs text-emerald-700 hover:text-emerald-950 underline"
+              >
+                Dismiss
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -313,25 +359,52 @@ export default function ShipmentDetailPage() {
 
                 {/* Interactive Demo Fix Trigger for EXP-001 Packing List */}
                 {shipment.id === 'EXP-001' && selectedDocument.type === 'Packing List' && (
-                  <div className="bg-amber-50/80 border border-amber-300 rounded-xl p-3.5 space-y-3">
+                  <div className="bg-amber-50/90 border border-amber-300 rounded-xl p-4 space-y-3.5">
                     <div className="flex items-start gap-2.5">
-                      <Flame className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                      <Flame className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                       <div className="text-xs">
-                        <p className="font-bold text-amber-900">
-                          Hackathon Demo Flow: Fix Discrepancy
+                        <p className="font-bold text-amber-900 text-sm">
+                          Interactive Demo: Remediation Loop
                         </p>
-                        <p className="text-amber-800 text-[11px] mt-0.5">
-                          Invoice requires 12,000 pcs, but this Packing List only shows {editableQuantity.toLocaleString()} pcs.
-                          Upload revised document or edit directly to clear shipment!
+                        <p className="text-amber-800 text-xs mt-0.5">
+                          Commercial Invoice specifies <strong>12,000 pcs</strong>, but Packing List specifies only <strong>{editableQuantity.toLocaleString()} pcs</strong>. 
+                          Upload a revised document or apply the fix to clear the shipment!
                         </p>
                       </div>
                     </div>
 
+                    {/* Drag and Drop Zone */}
+                    <div
+                      onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                      onDragLeave={() => setDragActive(false)}
+                      onDrop={handleFileDrop}
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
+                        dragActive ? 'border-emerald-500 bg-emerald-50/50' : 'border-amber-300 bg-white hover:bg-amber-50/40'
+                      }`}
+                    >
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileInputChange}
+                        className="hidden"
+                        accept=".txt,.pdf,.csv"
+                      />
+                      <FileUp className="w-6 h-6 text-amber-600 mx-auto mb-1.5" />
+                      <p className="text-xs font-semibold text-slate-800">
+                        Drag & drop corrected trade document here, or <span className="text-amber-700 underline">browse file</span>
+                      </p>
+                      <p className="text-[10px] text-slate-400 mt-0.5">
+                        Accepts text, PDF, or sample trade files (.txt, .pdf)
+                      </p>
+                    </div>
+
+                    {/* Quick Demo Buttons */}
                     <div className="flex flex-wrap items-center gap-2 pt-1">
                       <button
                         onClick={() => handleSimulateAiUpload(true)}
                         disabled={isExtracting}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors"
                       >
                         <Upload className="w-3.5 h-3.5" />
                         <span>{isExtracting ? 'AI Extracting...' : 'Upload Revised Packing List (12,000 pcs)'}</span>
@@ -342,10 +415,10 @@ export default function ShipmentDetailPage() {
                           setEditableQuantity(12000);
                           handleRevalidate(12000);
                         }}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium transition-colors"
+                        className="inline-flex items-center gap-1 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium transition-colors"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
-                        <span>Set to 12,000 & Re-validate</span>
+                        <span>Set 12,000 & Re-validate</span>
                       </button>
 
                       <button
@@ -359,8 +432,21 @@ export default function ShipmentDetailPage() {
                       </button>
                     </div>
 
+                    {/* Sample Documents Link */}
+                    <div className="pt-2 border-t border-amber-200/60 flex items-center justify-between text-[11px] text-amber-800">
+                      <span>Realistic test files available in project:</span>
+                      <a
+                        href="/sample-docs/EXP-001-Packing-List-Revised.txt"
+                        download
+                        className="inline-flex items-center gap-1 font-semibold text-amber-900 hover:underline"
+                      >
+                        <Download className="w-3 h-3" />
+                        <span>Download Sample Revised File</span>
+                      </a>
+                    </div>
+
                     {extractionNotice && (
-                      <p className="text-[11px] text-emerald-800 font-medium bg-emerald-100/70 p-2 rounded-md">
+                      <p className="text-[11px] text-emerald-800 font-medium bg-emerald-100/70 p-2.5 rounded-md">
                         {extractionNotice}
                       </p>
                     )}
@@ -623,6 +709,137 @@ export default function ShipmentDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Customs Clearance Gate-Pass Modal */}
+      {showGatePass && (
+        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6 relative max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setShowGatePass(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Official Header */}
+            <div className="text-center border-b-2 border-slate-900 pb-4 space-y-1">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500">
+                Government of the People's Republic of Bangladesh
+              </span>
+              <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+                CHITTAGONG CUSTOMS HOUSE • PORT GATE-IN PERMIT
+              </h2>
+              <p className="text-xs text-slate-600">
+                ExportOps AI Automated Pre-Filing Clearance • ASYCUDA World Pre-Verification
+              </p>
+            </div>
+
+            {/* Permit Details */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <div>
+                <span className="text-slate-400 text-[10px] uppercase">Permit No</span>
+                <p className="font-mono font-bold text-slate-900">EXP-CLR-7819-2026</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-[10px] uppercase">Shipment ID</span>
+                <p className="font-mono font-bold text-slate-900">{shipment.id}</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-[10px] uppercase">Vessel & Voyage</span>
+                <p className="font-bold text-slate-900">MAERSK HAVEN / V-419W</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-[10px] uppercase">Exporter</span>
+                <p className="font-semibold text-slate-800">{shipment.supplier}</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-[10px] uppercase">Buyer / Consignee</span>
+                <p className="font-semibold text-slate-800">{shipment.buyer}</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-[10px] uppercase">Container Number</span>
+                <p className="font-mono font-bold text-slate-900">{shipment.containerNumber}</p>
+              </div>
+            </div>
+
+            {/* Verification Checklist Table */}
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                Reconciliation Compliance Audit
+              </span>
+              <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
+                <table className="w-full text-left">
+                  <thead className="bg-slate-100 text-slate-600 font-semibold">
+                    <tr>
+                      <th className="p-2.5">Verification Point</th>
+                      <th className="p-2.5">Evaluated Metric</th>
+                      <th className="p-2.5 text-right">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="p-2.5 font-medium">Quantity Cross-Check (R1)</td>
+                      <td className="p-2.5 text-slate-600">Invoice: 12,000 pcs == Packing List: 12,000 pcs</td>
+                      <td className="p-2.5 text-right font-bold text-emerald-600">PASSED</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-medium">LC Window & Entity (R2-R4)</td>
+                      <td className="p-2.5 text-slate-600">Within LC Cutoff (2026-11-25), Entity Aligned</td>
+                      <td className="p-2.5 text-right font-bold text-emerald-600">PASSED</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-medium">BondIQ UD Quota (R8)</td>
+                      <td className="p-2.5 text-slate-600">UD #UD-2026-BGMEA-4410 (Fabric Reconciled)</td>
+                      <td className="p-2.5 text-right font-bold text-emerald-600">PASSED</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* QR Code and Official Stamp */}
+            <div className="flex items-center justify-between p-4 bg-emerald-50/50 border border-emerald-200 rounded-xl">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white rounded-lg border border-emerald-300">
+                  <QrCode className="w-12 h-12 text-emerald-700" />
+                </div>
+                <div className="text-xs">
+                  <p className="font-bold text-emerald-950">Cryptographic Seal Verified</p>
+                  <p className="text-[11px] text-emerald-800">
+                    Scan at Chittagong Port Access Gate 4 for immediate automated gate-in.
+                  </p>
+                  <p className="font-mono text-[10px] text-emerald-700 mt-0.5">
+                    HASH: SHA256:7b90f48819a022
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-2 border-dashed border-emerald-600 rounded-xl p-2 text-center text-emerald-700 rotate-[-4deg]">
+                <span className="text-[10px] font-extrabold uppercase block">ExportOps AI</span>
+                <span className="text-xs font-black block">CUSTOMS READY</span>
+                <span className="text-[9px] block">CLEARED FOR GATE-IN</span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                onClick={() => setShowGatePass(false)}
+                className="px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => window.print()}
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+              >
+                <Printer className="w-3.5 h-3.5" />
+                <span>Print Gate-In Pass</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

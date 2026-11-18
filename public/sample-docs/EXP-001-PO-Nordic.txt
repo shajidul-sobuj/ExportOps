@@ -1,0 +1,35 @@
+================================================================================
+PURCHASE ORDER
+================================================================================
+ORDER NUMBER: PO-88219-NR
+ISSUE DATE: 15-OCT-2026
+CURRENCY: USD
+
+BUYER / ORDERING ENTITY:
+Nordic Retailers A/S
+Toldbodgade 12, DK-1253 Copenhagen, Denmark
+VAT ID: DK99102831
+
+SUPPLIER / MANUFACTURER:
+Northfield Apparel Ltd.
+Plot 14-18, Export Processing Zone (DEPZ)
+Savar, Dhaka, Bangladesh
+
+TERMS OF DELIVERY: FOB Chittagong Port, Bangladesh
+PAYMENT TERMS: Irrevocable Letter of Credit (LC) at 60 days sight
+LATEST SHIPMENT DATE: 25-NOV-2026
+
+ITEM DETAILS:
+--------------------------------------------------------------------------------
+Item # | Style / Description                  | HS Code     | Qty (PCS) | Unit Price | Total (USD)
+--------------------------------------------------------------------------------
+01     | Men's 100% Cotton Crewneck T-Shirt    | 6109.10.00  | 12,000    | $6.00      | $72,000.00
+       | Colors: Navy (4,000), Black (4,000), White (4,000)
+--------------------------------------------------------------------------------
+TOTAL QUANTITY: 12,000 PCS
+TOTAL ORDER VALUE: USD 72,000.00
+
+SPECIAL INSTRUCTIONS:
+- Certificate of Origin issued by Export Promotion Bureau (EPB) required.
+- Commercial invoice must show LC Number and exact container number.
+================================================================================
