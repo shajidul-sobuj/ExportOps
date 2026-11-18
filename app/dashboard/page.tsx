@@ -13,7 +13,9 @@ import {
   Layers, 
   AlertTriangle,
   Building2,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ChevronRight,
+  Activity
 } from 'lucide-react';
 import initialShipments from '@/data/shipments.json';
 import { Shipment } from '@/types';
@@ -76,93 +78,93 @@ export default function ManagementDashboard() {
     { cause: 'Quantity Discrepancy (Invoice vs Packing List)', percentage: 38, count: '38%', color: 'bg-red-500' },
     { cause: 'BondIQ: Unlinked Fabric & UD Entitlement Deficit', percentage: 28, count: '28%', color: 'bg-indigo-500' },
     { cause: 'Shipment Window Beyond LC Latest Date', percentage: 20, count: '20%', color: 'bg-amber-500' },
-    { cause: 'Missing Documents (COO / Container Number)', percentage: 14, count: '14%', color: 'bg-blue-500' },
+    { cause: 'Missing Documents (COO / Container Number)', percentage: 14, count: '14%', color: 'bg-cyan-500' },
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-emerald-400 text-xs font-semibold mb-2 font-mono">
             <BarChart3 className="w-3.5 h-3.5" />
-            <span>Executive Delay & Cost Intelligence</span>
+            <span>EXECUTIVE DELAY & COST INTELLIGENCE</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Management Delay & Cost Attribution Dashboard
           </h1>
-          <p className="text-slate-500 text-xs sm:text-sm mt-1">
-            Aggregated visibility across 5 active shipments: tracking root causes of RMG delays and measurable ROI.
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            Aggregated visibility across 5 active shipments: root-cause cost drivers, avoidable demurrage, and ROI metrics.
           </p>
         </div>
 
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm self-start transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 self-start transition-all transform hover:-translate-y-0.5"
         >
-          <span>View Active Shipments</span>
+          <span>Live Control Tower</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
         </Link>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-red-200 bg-red-50/10 shadow-sm">
+        <div className="bg-[#0c121e] p-5 rounded-2xl border border-red-500/30 shadow-xl hover-card-lift">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Estimated Avoidable Cost</p>
-            <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider font-mono">Avoidable Cost Exposure</p>
+            <div className="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-red-600 mt-2 font-mono">
+          <p className="text-3xl font-extrabold text-red-400 mt-2 font-mono">
             ${totalAvoidableCost.toLocaleString()}
           </p>
-          <p className="text-[11px] text-red-500 mt-1 font-medium">
-            Saved by pre-filing validation across 5 shipments
+          <p className="text-[11px] text-red-400/80 mt-1 font-medium">
+            Saved by pre-filing validation across 5 batches
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div className="bg-[#0c121e] p-5 rounded-2xl border border-slate-800 shadow-xl hover-card-lift">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Average Delay Risk</p>
-            <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider font-mono">Average Delay Risk</p>
+            <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
               <Clock className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2 font-mono">
+          <p className="text-3xl font-extrabold text-white mt-2 font-mono">
             4.2 Days
           </p>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Typical port gate-in & customs hold time
+          <p className="text-[11px] text-slate-400 mt-1">
+            Typical port gate-in & customs hold duration
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div className="bg-[#0c121e] p-5 rounded-2xl border border-slate-800 shadow-xl hover-card-lift">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Value In-Flight</p>
-            <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider font-mono">Total Value In-Flight</p>
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
               <Layers className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2 font-mono">
+          <p className="text-3xl font-extrabold text-white mt-2 font-mono">
             $576,000
           </p>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Export LC commitments protected
+          <p className="text-[11px] text-slate-400 mt-1">
+            Active export LC commitments protected
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-emerald-200 bg-emerald-50/20 shadow-sm">
+        <div className="bg-[#0c121e] p-5 rounded-2xl border border-emerald-500/30 shadow-xl hover-card-lift">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-emerald-700 uppercase tracking-wider">Target Monthly ROI</p>
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+            <p className="text-xs font-medium text-emerald-400 uppercase tracking-wider font-mono">Target Monthly ROI</p>
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-emerald-700 mt-2 font-mono">
+          <p className="text-3xl font-extrabold text-emerald-400 mt-2 font-mono">
             18.5x
           </p>
-          <p className="text-[11px] text-emerald-600 mt-1 font-medium">
+          <p className="text-[11px] text-emerald-400/80 mt-1 font-medium">
             Based on BDT 75,000/mo Growth subscription
           </p>
         </div>
@@ -171,10 +173,10 @@ export default function ManagementDashboard() {
       {/* Two Column Grid: Top Delay Causes & Avoidable Cost Attribution */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Top Delay Causes (5 cols) */}
-        <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+        <div className="lg:col-span-5 bg-[#0c121e] rounded-2xl border border-slate-800 p-6 shadow-xl space-y-5">
           <div>
-            <h2 className="font-bold text-slate-900 text-base">Top Garment Export Delay Causes</h2>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h2 className="font-bold text-white text-base">Top Garment Export Delay Causes</h2>
+            <p className="text-xs text-slate-400 mt-0.5">
               Identified through automated analysis of documentation mismatches.
             </p>
           </div>
@@ -183,10 +185,10 @@ export default function ManagementDashboard() {
             {delayCauses.map((item, idx) => (
               <div key={idx} className="space-y-1.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-medium text-slate-700">{item.cause}</span>
-                  <span className="font-bold font-mono text-slate-900">{item.count}</span>
+                  <span className="font-medium text-slate-300">{item.cause}</span>
+                  <span className="font-bold font-mono text-white">{item.count}</span>
                 </div>
-                <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-800">
                   <div
                     className={`h-full rounded-full ${item.color} transition-all duration-700`}
                     style={{ width: `${item.percentage}%` }}
@@ -196,9 +198,12 @@ export default function ManagementDashboard() {
             ))}
           </div>
 
-          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
-            <p className="font-semibold text-slate-800">Why deterministic rules win:</p>
-            <p className="text-slate-600 text-[11px]">
+          <div className="p-3.5 bg-slate-900/80 rounded-xl border border-slate-800 text-xs space-y-1">
+            <p className="font-semibold text-emerald-400 flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Why deterministic rules win:</span>
+            </p>
+            <p className="text-slate-400 text-[11px] leading-relaxed">
               Paperwork errors are 100% preventable. A single discrepancy between invoice and packing list 
               triggers customs physical inspection, adding 3-5 days of vessel demurrage.
             </p>
@@ -206,23 +211,23 @@ export default function ManagementDashboard() {
         </div>
 
         {/* Avoidable Cost Breakdown per Shipment Table (7 cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+        <div className="lg:col-span-7 bg-[#0c121e] rounded-2xl border border-slate-800 p-6 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-bold text-slate-900 text-base">Cost Attribution by Shipment</h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <h2 className="font-bold text-white text-base">Cost Attribution by Shipment</h2>
+              <p className="text-xs text-slate-400 mt-0.5">
                 Quantified financial penalties and demurrage exposure per batch.
               </p>
             </div>
-            <span className="text-xs font-mono font-bold text-red-600 bg-red-50 border border-red-200 px-2.5 py-1 rounded-md">
-              ${totalAvoidableCost.toLocaleString()} Total Exposure
+            <span className="text-xs font-mono font-bold text-red-400 bg-red-950/60 border border-red-800/60 px-2.5 py-1 rounded-md">
+              ${totalAvoidableCost.toLocaleString()} Exposure
             </span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-[11px] font-semibold text-slate-500 uppercase">
+                <tr className="border-b border-slate-800 text-[11px] font-semibold text-slate-400 uppercase font-mono">
                   <th className="py-2.5 pr-2">Shipment</th>
                   <th className="py-2.5 px-2">Buyer</th>
                   <th className="py-2.5 px-2">Primary Root Cause</th>
@@ -230,32 +235,33 @@ export default function ManagementDashboard() {
                   <th className="py-2.5 pl-2 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-800/60">
                 {costBreakdown.map((row) => (
-                  <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3 pr-2 font-mono font-bold text-slate-900">
+                  <tr key={row.id} className="hover:bg-slate-800/30 transition-colors">
+                    <td className="py-3 pr-2 font-mono font-bold text-emerald-400">
                       {row.id}
                     </td>
-                    <td className="py-3 px-2 font-medium text-slate-800">
+                    <td className="py-3 px-2 font-medium text-slate-200">
                       {row.buyer}
                     </td>
-                    <td className="py-3 px-2 text-slate-600">
-                      <p className="font-medium text-[11px] text-slate-900">{row.issue}</p>
-                      <p className="text-[10px] text-slate-400">{row.costType}</p>
+                    <td className="py-3 px-2 text-slate-300">
+                      <p className="font-medium text-[11px] text-white">{row.issue}</p>
+                      <p className="text-[10px] text-slate-500 font-mono">{row.costType}</p>
                     </td>
                     <td className="py-3 px-2 text-right font-mono font-bold">
                       {row.avoidableCost > 0 ? (
-                        <span className="text-red-600">${row.avoidableCost.toLocaleString()}</span>
+                        <span className="text-red-400">${row.avoidableCost.toLocaleString()}</span>
                       ) : (
-                        <span className="text-emerald-600">$0 (Cleared)</span>
+                        <span className="text-emerald-400">$0 (Cleared)</span>
                       )}
                     </td>
                     <td className="py-3 pl-2 text-right">
                       <Link
                         href={`/shipments/${row.id}`}
-                        className="text-emerald-600 hover:underline font-semibold text-[11px]"
+                        className="text-emerald-400 hover:text-emerald-300 hover:underline font-semibold text-[11px] inline-flex items-center gap-0.5"
                       >
-                        Inspect →
+                        <span>Inspect</span>
+                        <ChevronRight className="w-3 h-3" />
                       </Link>
                     </td>
                   </tr>
@@ -266,12 +272,15 @@ export default function ManagementDashboard() {
         </div>
       </div>
 
-      {/* Business Model & Congress Pitch Card */}
-      <div className="bg-gradient-to-r from-emerald-900 to-slate-900 rounded-2xl p-6 sm:p-8 text-white space-y-4">
+      {/* Business Model & Pitch Banner */}
+      <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-slate-900 rounded-2xl p-6 sm:p-8 border border-emerald-500/40 text-white space-y-4 shadow-xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h3 className="text-xl font-bold">The Business Case: Path to $5,000 / Month</h3>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl">
+            <h3 className="text-xl font-bold flex items-center gap-2">
+              <Activity className="w-5 h-5 text-emerald-400" />
+              <span>The Commercial Reality: Path to $5,000 / Month</span>
+            </h3>
+            <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
               Preventing a single delayed shipment pays for an entire year of ExportOps AI. 
               Priced at BDT 30,000 - 75,000 per factory, reaching $5k/mo requires only 8 factories 
               on the Growth tier in Bangladesh's 4,000+ factory ecosystem.
@@ -279,7 +288,7 @@ export default function ManagementDashboard() {
           </div>
           <Link
             href="/docs"
-            className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-lg shadow-sm shrink-0 transition-colors"
+            className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl shadow-lg shadow-emerald-500/20 shrink-0 transition-all transform hover:-translate-y-0.5"
           >
             Read Pitch & Concept Note
           </Link>

@@ -12,8 +12,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import AppShell from '@/components/AppShell';
 
 export const metadata: Metadata = {
   title: 'ExportOps AI - RMG Pre-Shipment Control Tower',
@@ -27,20 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-[#060910] text-slate-100 antialiased min-h-screen flex flex-col selection:bg-emerald-500/30 selection:text-emerald-300">
-        {/* Navigation Bar */}
-        <Navbar />
-
-        {/* Main Content */}
-        <main className="flex-1 bg-grid-subtle relative">
-          <div className="absolute inset-0 radial-glow-emerald pointer-events-none" />
-          <div className="relative z-10">
-            {children}
-          </div>
-        </main>
-
-        {/* Premium Global Footer */}
-        <Footer />
+      <body className="bg-[#060910] text-slate-100 antialiased min-h-screen selection:bg-emerald-500/30 selection:text-emerald-300">
+        <AppShell>
+          {children}
+        </AppShell>
       </body>
     </html>
   );

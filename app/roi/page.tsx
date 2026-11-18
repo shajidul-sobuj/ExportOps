@@ -93,31 +93,31 @@ export default function FactoryRoiPage() {
   const netRoiMultiple = Math.max(1, Math.round(annualSavings / annualCostUsd));
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 animate-fade-in">
       {/* Hero Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-emerald-400 text-xs font-semibold font-mono">
           <TrendingUp className="w-3.5 h-3.5" />
-          <span>Proven Factory ROI & Pricing</span>
+          <span>PROVEN FACTORY ROI & COMMERCIAL TIERS</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
           One Avoided Delay Pays For An Entire Year
         </h1>
-        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+        <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
           Garment export delays at Chittagong Port cost thousands in demurrage, air-freight penalties, and bank disputes. 
           See how much your factory saves every single month with ExportOps AI.
         </p>
       </div>
 
       {/* Interactive ROI Calculator */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 sm:p-10 space-y-8">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-          <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
-            <Calculator className="w-5 h-5" />
+      <div className="bg-[#0c121e] rounded-3xl border border-slate-800 shadow-2xl p-6 sm:p-10 space-y-8">
+        <div className="flex items-center gap-3 border-b border-slate-800/80 pb-4">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-slate-950 flex items-center justify-center font-bold shadow-md shadow-emerald-500/20">
+            <Calculator className="w-5 h-5 text-slate-950" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-slate-900">Interactive Factory Savings Calculator</h2>
-            <p className="text-xs text-slate-500">Adjust the sliders to match your factory's monthly shipment volume.</p>
+            <h2 className="text-xl font-bold text-white">Interactive Factory Savings Calculator</h2>
+            <p className="text-xs text-slate-400">Adjust the sliders to match your factory's monthly shipment volume.</p>
           </div>
         </div>
 
@@ -127,8 +127,8 @@ export default function FactoryRoiPage() {
             {/* Slider 1: Monthly Shipments */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-slate-700">Monthly Export Containers:</span>
-                <span className="font-mono font-bold text-base text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
+                <span className="font-semibold text-slate-300">Monthly Export Containers:</span>
+                <span className="font-mono font-bold text-base text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-lg border border-emerald-800/60">
                   {monthlyContainers} Containers / Mo
                 </span>
               </div>
@@ -139,10 +139,10 @@ export default function FactoryRoiPage() {
                 step="5"
                 value={monthlyContainers}
                 onChange={(e) => setMonthlyContainers(Number(e.target.value))}
-                className="w-full accent-emerald-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-full accent-emerald-500 h-2 bg-slate-900 rounded-lg cursor-pointer border border-slate-800"
               />
-              <div className="flex justify-between text-[11px] text-slate-400">
-                <span>5 Containers (Small)</span>
+              <div className="flex justify-between text-[11px] text-slate-500 font-mono">
+                <span>5 Containers (Single Unit)</span>
                 <span>40 Containers (Mid-Size)</span>
                 <span>80+ Containers (Group)</span>
               </div>
@@ -151,8 +151,8 @@ export default function FactoryRoiPage() {
             {/* Slider 2: Average Demurrage / Penalty Cost */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-slate-700">Avg Cost per Delayed Container:</span>
-                <span className="font-mono font-bold text-base text-slate-900 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
+                <span className="font-semibold text-slate-300">Avg Cost per Delayed Container:</span>
+                <span className="font-mono font-bold text-base text-white bg-slate-900 px-3 py-1 rounded-lg border border-slate-800">
                   ${avgDemurrageCost.toLocaleString()} USD
                 </span>
               </div>
@@ -163,18 +163,18 @@ export default function FactoryRoiPage() {
                 step="500"
                 value={avgDemurrageCost}
                 onChange={(e) => setAvgDemurrageCost(Number(e.target.value))}
-                className="w-full accent-emerald-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-full accent-emerald-500 h-2 bg-slate-900 rounded-lg cursor-pointer border border-slate-800"
               />
-              <p className="text-[11px] text-slate-400">
-                Includes shipping line demurrage, port storage, re-inspection, and detention.
+              <p className="text-[11px] text-slate-500">
+                Includes shipping line demurrage, port storage, re-inspection, and trailer detention.
               </p>
             </div>
 
             {/* Slider 3: Error Rate */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-slate-700">Historical Paperwork Friction Rate:</span>
-                <span className="font-mono font-bold text-base text-slate-900 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
+                <span className="font-semibold text-slate-300">Historical Paperwork Friction Rate:</span>
+                <span className="font-mono font-bold text-base text-white bg-slate-900 px-3 py-1 rounded-lg border border-slate-800">
                   {errorRatePercent}% of shipments
                 </span>
               </div>
@@ -185,18 +185,18 @@ export default function FactoryRoiPage() {
                 step="1"
                 value={errorRatePercent}
                 onChange={(e) => setErrorRatePercent(Number(e.target.value))}
-                className="w-full accent-emerald-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-full accent-emerald-500 h-2 bg-slate-900 rounded-lg cursor-pointer border border-slate-800"
               />
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-slate-500">
                 Industry average: 12-18% of RMG shipments face paperwork discrepancies or bond queries.
               </p>
             </div>
           </div>
 
           {/* Savings Result Card (5 cols) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 p-6 sm:p-8 rounded-2xl text-white shadow-xl space-y-6">
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#0b101a] via-slate-900 to-emerald-950/80 p-6 sm:p-8 rounded-2xl text-white shadow-2xl border border-emerald-500/40 space-y-6">
             <div>
-              <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">
+              <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider font-mono">
                 Projected Annual Impact
               </span>
               <p className="text-4xl font-extrabold font-mono text-emerald-400 mt-1">
@@ -207,7 +207,7 @@ export default function FactoryRoiPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-700/60 text-xs">
+            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-800 text-xs font-mono">
               <div>
                 <p className="text-slate-400 text-[11px]">Monthly Savings</p>
                 <p className="text-lg font-bold font-mono text-white mt-0.5">
@@ -222,10 +222,10 @@ export default function FactoryRoiPage() {
               </div>
             </div>
 
-            <div className="bg-emerald-500/20 border border-emerald-400/40 p-3.5 rounded-xl flex items-center justify-between text-xs">
+            <div className="bg-emerald-950/50 border border-emerald-500/40 p-3.5 rounded-xl flex items-center justify-between text-xs">
               <div>
                 <span className="text-emerald-300 font-semibold block">Net Return on Investment</span>
-                <span className="text-slate-300 text-[10px]">Based on {activePlanObj.name}</span>
+                <span className="text-slate-400 text-[10px]">Based on {activePlanObj.name}</span>
               </div>
               <span className="text-2xl font-extrabold font-mono text-emerald-300">
                 {netRoiMultiple}x ROI
@@ -234,7 +234,7 @@ export default function FactoryRoiPage() {
 
             <button
               onClick={() => setShowPilotModal(true)}
-              className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl transition-colors shadow-md flex items-center justify-center gap-1.5"
+              className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5"
             >
               <span>Apply for 90-Day Factory Pilot</span>
               <ArrowRight className="w-4 h-4" />
@@ -246,8 +246,8 @@ export default function FactoryRoiPage() {
       {/* Subscription Pricing Grid */}
       <div className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-1">
-          <h2 className="text-2xl font-bold text-slate-900">Transparent Subscription Plans</h2>
-          <p className="text-xs text-slate-500">
+          <h2 className="text-2xl font-bold text-white">Transparent Subscription Plans</h2>
+          <p className="text-xs text-slate-400">
             Priced in Bangladeshi Taka (BDT) for local factories with international USD billing option.
           </p>
         </div>
@@ -260,46 +260,46 @@ export default function FactoryRoiPage() {
               <div
                 key={plan.id}
                 onClick={() => setSelectedPlan(plan.id)}
-                className={`rounded-2xl p-6 sm:p-8 border cursor-pointer transition-all flex flex-col justify-between space-y-6 ${
+                className={`rounded-2xl p-6 sm:p-8 border cursor-pointer transition-all flex flex-col justify-between space-y-6 hover-card-lift ${
                   plan.recommended
-                    ? 'border-2 border-emerald-500 bg-white shadow-xl relative'
-                    : 'border-slate-200 bg-white hover:border-slate-300 shadow-sm'
+                    ? 'border-2 border-emerald-500 bg-[#0c121e] shadow-2xl relative shadow-emerald-500/10'
+                    : 'border-slate-800 bg-[#0c121e] hover:border-slate-700 shadow-xl'
                 }`}
               >
                 {plan.recommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-0.5 rounded-full shadow-md font-mono">
                     Most Popular for Exporters
                   </span>
                 )}
 
                 <div className="space-y-4">
                   <div>
-                    <h3 className="font-bold text-slate-900 text-lg">{plan.name}</h3>
-                    <p className="text-xs text-slate-500 mt-1">{plan.tagline}</p>
+                    <h3 className="font-bold text-white text-lg">{plan.name}</h3>
+                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">{plan.tagline}</p>
                   </div>
 
                   <div className="pt-2">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold font-mono text-slate-900">
+                      <span className="text-3xl font-extrabold font-mono text-white">
                         ৳{plan.priceBdt.toLocaleString()}
                       </span>
                       <span className="text-xs text-slate-500">/ {plan.billingPeriod}</span>
                     </div>
-                    <span className="text-xs font-mono text-slate-400">
+                    <span className="text-xs font-mono text-emerald-400/80">
                       (~${plan.priceUsd} USD / month)
                     </span>
                   </div>
 
                   <div className="pt-1">
-                    <span className="inline-block px-2.5 py-1 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-700">
+                    <span className="inline-block px-2.5 py-1 rounded-md text-[11px] font-semibold bg-slate-900 border border-slate-800 text-slate-300 font-mono">
                       {plan.shipmentLimit}
                     </span>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-100 space-y-2.5 text-xs text-slate-600">
+                  <div className="pt-3 border-t border-slate-800 space-y-2.5 text-xs text-slate-300">
                     {plan.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                         <span>{feature}</span>
                       </div>
                     ))}
@@ -312,10 +312,10 @@ export default function FactoryRoiPage() {
                     setSelectedPlan(plan.id);
                     setShowPilotModal(true);
                   }}
-                  className={`w-full py-2.5 rounded-xl text-xs font-bold transition-colors ${
+                  className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all ${
                     plan.recommended
-                      ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm'
-                      : 'bg-slate-900 hover:bg-slate-800 text-white'
+                      ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20'
+                      : 'bg-slate-850 hover:bg-slate-800 text-white border border-slate-700'
                   }`}
                 >
                   Select {plan.name}
@@ -328,57 +328,57 @@ export default function FactoryRoiPage() {
 
       {/* 90-Day Pilot Modal */}
       {showPilotModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6 relative">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-[#0b101a] rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-800 space-y-6 relative animate-scale-up">
             <button
               onClick={() => { setShowPilotModal(false); setPilotSuccess(false); }}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1"
             >
               <X className="w-5 h-5" />
             </button>
 
             {!pilotSuccess ? (
               <div className="space-y-4">
-                <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                  <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                <div className="flex items-center gap-3 border-b border-slate-800 pb-3">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
                     <Building className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900">
+                    <h3 className="text-lg font-bold text-white">
                       Activate 90-Day Factory Pilot
                     </h3>
-                    <p className="text-xs text-slate-500">Plan: {activePlanObj.name}</p>
+                    <p className="text-xs text-slate-400 font-mono">Plan: {activePlanObj.name}</p>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-3.5 rounded-xl text-xs space-y-1.5 border border-slate-200">
-                  <p className="font-semibold text-slate-800">What the 90-Day Pilot includes:</p>
-                  <p className="text-slate-600 text-[11px]">• Pre-clearance on your next 50-200 export shipments.</p>
-                  <p className="text-slate-600 text-[11px]">• Complete BondIQ raw material audit setup for your merchandisers.</p>
-                  <p className="text-slate-600 text-[11px]">• WhatsApp alert group integration with your packaging floor.</p>
-                  <p className="text-slate-600 text-[11px]">• Full refund guarantee if no document errors are caught.</p>
+                <div className="bg-slate-900/80 p-3.5 rounded-xl text-xs space-y-1.5 border border-slate-800">
+                  <p className="font-semibold text-emerald-400">What the 90-Day Pilot includes:</p>
+                  <p className="text-slate-300 text-[11px]">• Pre-clearance on your next 50-200 export shipments.</p>
+                  <p className="text-slate-300 text-[11px]">• Complete BondIQ raw material audit setup for your merchandisers.</p>
+                  <p className="text-slate-300 text-[11px]">• WhatsApp alert group integration with your packaging floor.</p>
+                  <p className="text-slate-300 text-[11px]">• Full refund guarantee if no document errors are caught.</p>
                 </div>
 
                 <div className="space-y-3 text-xs">
                   <div>
-                    <label className="font-semibold text-slate-700 block mb-1">Factory Name</label>
+                    <label className="font-semibold text-slate-300 block mb-1">Factory Name</label>
                     <input
                       type="text"
                       defaultValue="Northfield Apparel Ltd."
-                      className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono"
                     />
                   </div>
                   <div>
-                    <label className="font-semibold text-slate-700 block mb-1">Contact Email</label>
+                    <label className="font-semibold text-slate-300 block mb-1">Contact Email</label>
                     <input
                       type="email"
                       defaultValue="commercial@northfield-apparel.com"
-                      className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono"
                     />
                   </div>
                   <div>
-                    <label className="font-semibold text-slate-700 block mb-1">Export Sector</label>
-                    <select className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+                    <label className="font-semibold text-slate-300 block mb-1">Export Sector</label>
+                    <select className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none cursor-pointer">
                       <option>Knitwear (T-Shirts, Polos, Sweaters)</option>
                       <option>Woven (Shirts, Trousers, Denim)</option>
                       <option>Home Textile & Towels</option>
@@ -390,7 +390,7 @@ export default function FactoryRoiPage() {
                 <div className="pt-2">
                   <button
                     onClick={() => setPilotSuccess(true)}
-                    className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors"
+                    className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all"
                   >
                     Confirm Pilot Activation (৳{activePlanObj.priceBdt.toLocaleString()} / mo)
                   </button>
@@ -398,18 +398,18 @@ export default function FactoryRoiPage() {
               </div>
             ) : (
               <div className="text-center py-4 space-y-4">
-                <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                <div className="w-14 h-14 bg-emerald-950/80 text-emerald-400 border border-emerald-800 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Pilot Application Registered!</h3>
-                  <p className="text-xs text-slate-600 mt-1 max-w-sm mx-auto">
+                  <h3 className="text-lg font-bold text-white">Pilot Application Registered!</h3>
+                  <p className="text-xs text-slate-300 mt-1 max-w-sm mx-auto leading-relaxed">
                     A dedicated Trade Compliance Specialist from ExportOps AI will contact your commercial team within 2 hours to configure your factory's BGMEA e-UD sync.
                   </p>
                 </div>
                 <button
                   onClick={() => { setShowPilotModal(false); setPilotSuccess(false); }}
-                  className="px-6 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition-colors"
+                  className="px-6 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition-colors"
                 >
                   Return to Dashboard
                 </button>

@@ -379,7 +379,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. The $47B Paperwork Problem Breakdown (The 4 Cost Drivers with Hover Lift) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="problem" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-red-400 font-mono">
             The Cost of Trade Paperwork Friction
@@ -742,7 +742,7 @@ export default function HomePage() {
       </section>
 
       {/* 7. The 4-Step Pre-Filing Engine Pipeline with Electric Pulse Stream */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section id="pipeline" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">
             Deterministic Compliance Architecture
@@ -806,7 +806,7 @@ export default function HomePage() {
       </section>
 
       {/* 8. Interactive Feature Showcase (Tabbed with Smooth Animated Transitions) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section id="showcase" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">Product Deep-Dive</span>
           <h2 className="text-3xl font-extrabold text-white tracking-tight">Enterprise Suite Modules</h2>
@@ -1184,7 +1184,7 @@ export default function HomePage() {
       </section>
 
       {/* 9. Interactive ROI & Demurrage Savings Calculator */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-12 rounded-3xl border border-emerald-500/40 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
           {/* Subtle Ambient Pulse */}
           <div className="absolute -top-32 -left-32 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-ambient-pulse" />
@@ -1261,7 +1261,7 @@ export default function HomePage() {
       </section>
 
       {/* 10. Technical Architecture & FAQ Accordion */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section id="faq" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">
             Verification & Integrity
