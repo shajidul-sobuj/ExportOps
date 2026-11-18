@@ -33,7 +33,9 @@ import {
   Ship,
   FileSpreadsheet,
   Globe2,
-  ShieldAlert
+  ShieldAlert,
+  ArrowUpRight,
+  Boxes
 } from 'lucide-react';
 import initialShipments from '@/data/shipments.json';
 import { Shipment, ShipmentStatus } from '@/types';
@@ -143,9 +145,9 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20">
-      {/* 1. Live Marquee Ticker: Seamless Infinite Loop */}
-      <div className="bg-[#040711] border-b border-slate-800/80 py-2.5 overflow-hidden text-xs text-emerald-400 font-mono tracking-wider flex select-none">
+    <div className="space-y-16 sm:space-y-24 pb-20 overflow-hidden">
+      {/* 1. Live Marquee Ticker: Seamless Infinite Dual-Track Loop */}
+      <div className="bg-[#040711] border-b border-slate-800/80 py-2.5 overflow-hidden text-xs text-emerald-400 font-mono tracking-wider flex select-none relative z-10 shadow-sm">
         <div className="flex shrink-0 animate-marquee items-center gap-8 pr-8">
           <span className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -180,12 +182,15 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 2. Hero Section: The Pre-Shipment Control Tower */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* 2. Hero Section: Animated Pre-Shipment Control Tower */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 relative">
+        {/* Subtle Ambient Background Aura */}
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-ambient-pulse" />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Hero Content (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-semibold tracking-wide shadow-sm shadow-emerald-950">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-semibold tracking-wide shadow-sm shadow-emerald-950 hover:border-emerald-400/80 transition-all cursor-default">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
               <span className="font-mono text-[11px] uppercase tracking-wider text-emerald-300">
                 Chittagong Port Cut-Off Readiness Active
@@ -194,47 +199,50 @@ export default function HomePage() {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08]">
               Before the Vessel Leaves, Know Your Shipment is{' '}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent animate-gradient-x">
                 Customs-Ready.
               </span>
             </h1>
 
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-              ExportOps AI reconciles commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. 
+              ExportOps AI cross-checks commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. 
               Prevent container demurrage ($8,500/hold), eliminate air-freight panic, and guarantee clean bank presentation under UCP 600.
             </p>
 
-            {/* Hero CTAs */}
+            {/* Hero CTAs with Hover Shimmer */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
                 href="/shipments/EXP-001"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5"
+                className="relative overflow-hidden group/btn inline-flex items-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
               >
-                <span>Launch Interactive Demo (EXP-001)</span>
-                <ArrowRight className="w-4 h-4" />
+                {/* Shimmer line sweep */}
+                <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out" />
+                <span className="relative z-10">Launch Interactive Demo (EXP-001)</span>
+                <ArrowRight className="w-4 h-4 relative z-10 transition-transform group-hover/btn:translate-x-1" />
               </Link>
+
               <Link
                 href="/roi"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl border border-slate-700/80 transition-colors"
+                className="group inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl border border-slate-700/80 hover:border-emerald-500/40 transition-all hover:-translate-y-0.5"
               >
-                <Calculator className="w-4 h-4 text-emerald-400" />
+                <Calculator className="w-4 h-4 text-emerald-400 transition-transform group-hover:scale-110" />
                 <span>Calculate Factory Savings</span>
               </Link>
             </div>
 
-            {/* Trust Badges */}
+            {/* Trust Badges with Micro-Transitions */}
             <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-400 border-t border-slate-800/80">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="font-medium text-slate-300">Deterministic Rules (Zero Hallucination)</span>
+              <div className="flex items-center gap-2 group cursor-default">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 transition-transform group-hover:scale-110" />
+                <span className="font-medium text-slate-300 group-hover:text-white transition-colors">Deterministic Rules (Zero Hallucination)</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-indigo-400 shrink-0" />
-                <span className="font-medium text-slate-300">BGMEA e-UD Reconciled</span>
+              <div className="flex items-center gap-2 group cursor-default">
+                <Layers className="w-4 h-4 text-indigo-400 shrink-0 transition-transform group-hover:scale-110" />
+                <span className="font-medium text-slate-300 group-hover:text-white transition-colors">BGMEA e-UD Reconciled</span>
               </div>
-              <div className="flex items-center gap-2">
-                <FileCheck className="w-4 h-4 text-amber-400 shrink-0" />
-                <span className="font-medium text-slate-300">UCP 600 Bank Discrepancy Shield</span>
+              <div className="flex items-center gap-2 group cursor-default">
+                <FileCheck className="w-4 h-4 text-amber-400 shrink-0 transition-transform group-hover:scale-110" />
+                <span className="font-medium text-slate-300 group-hover:text-white transition-colors">UCP 600 Bank Discrepancy Shield</span>
               </div>
             </div>
           </div>
@@ -244,7 +252,7 @@ export default function HomePage() {
             <div className="relative w-full aspect-square max-w-md mx-auto rounded-3xl bg-[#070b13] border border-slate-800 p-6 shadow-2xl flex flex-col justify-between overflow-hidden animate-glow">
               {/* Radar Rings Background */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
-                <div className="w-[85%] h-[85%] rounded-full border border-emerald-500/20" />
+                <div className="w-[85%] h-[85%] rounded-full border border-emerald-500/20 animate-pulse-ring" />
                 <div className="w-[60%] h-[60%] rounded-full border border-emerald-500/30" />
                 <div className="w-[35%] h-[35%] rounded-full border border-emerald-500/40" />
                 <div className="w-[10%] h-[10%] rounded-full bg-emerald-500/30" />
@@ -253,17 +261,17 @@ export default function HomePage() {
                 
                 {/* Rotating Sweep Line */}
                 <div className="absolute inset-0 animate-radar">
-                  <div className="w-1/2 h-1/2 bg-gradient-to-br from-emerald-500/30 via-emerald-500/5 to-transparent origin-bottom-right rounded-tl-full" />
+                  <div className="w-1/2 h-1/2 bg-gradient-to-br from-emerald-500/35 via-emerald-500/5 to-transparent origin-bottom-right rounded-tl-full" />
                 </div>
               </div>
 
               {/* Radar Header */}
               <div className="relative z-10 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <Anchor className="w-4 h-4 text-emerald-400" />
+                  <Anchor className="w-4 h-4 text-emerald-400 animate-float" />
                   <span className="font-mono font-bold text-slate-200">CHITTAGONG SEA PORT BERTH 4</span>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-700/60 flex items-center gap-1.5">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-700/60 flex items-center gap-1.5 shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   RADAR ACTIVE
                 </span>
@@ -274,7 +282,7 @@ export default function HomePage() {
                 {/* Target 1: EXP-001 (Blocked Alert) */}
                 <Link
                   href="/shipments/EXP-001"
-                  className="block p-3.5 bg-red-950/80 border border-red-500/60 rounded-xl backdrop-blur-sm shadow-lg hover:border-red-400 hover:scale-[1.02] transition-all group cursor-pointer"
+                  className="block p-3.5 bg-red-950/80 border border-red-500/60 rounded-xl backdrop-blur-sm shadow-lg hover:border-red-400 hover:scale-[1.02] hover:-translate-y-0.5 transition-all group cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -289,10 +297,10 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] shrink-0">
+                      <span className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] shrink-0 shadow-sm">
                         BLOCKED
                       </span>
-                      <ChevronRight className="w-3.5 h-3.5 text-red-400 group-hover:translate-x-0.5 transition-transform" />
+                      <ChevronRight className="w-3.5 h-3.5 text-red-400 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>
@@ -300,11 +308,11 @@ export default function HomePage() {
                 {/* Target 2: EXP-005 (Customs-Ready) */}
                 <Link
                   href="/shipments/EXP-005"
-                  className="block p-3.5 bg-emerald-950/80 border border-emerald-500/60 rounded-xl backdrop-blur-sm shadow-lg hover:border-emerald-400 hover:scale-[1.02] transition-all group cursor-pointer"
+                  className="block p-3.5 bg-emerald-950/80 border border-emerald-500/60 rounded-xl backdrop-blur-sm shadow-lg hover:border-emerald-400 hover:scale-[1.02] hover:-translate-y-0.5 transition-all group cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 shadow-sm" />
                       <div>
                         <p className="font-bold text-emerald-200 group-hover:text-white transition-colors">
                           EXP-005 • MSKU-908234-7
@@ -315,10 +323,10 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shrink-0">
+                      <span className="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shrink-0 shadow-sm">
                         READY
                       </span>
-                      <ChevronRight className="w-3.5 h-3.5 text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
+                      <ChevronRight className="w-3.5 h-3.5 text-emerald-400 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>
@@ -328,7 +336,7 @@ export default function HomePage() {
               <div className="relative z-10 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-mono">
                 <span>Vessel: MAERSK HAVEN</span>
                 <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
+                  <Clock className="w-3 h-3 animate-pulse" />
                   Cut-Off: 48h Remaining
                 </span>
               </div>
@@ -337,33 +345,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Industry Scale Metrics Bar (Linear / Vercel style) */}
+      {/* 3. Industry Scale Metrics Bar (Linear / Vercel style with Light Beam) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-[#0b101a] border border-slate-800 shadow-xl">
-          <div className="space-y-1 border-r border-slate-800/80 pr-4">
-            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Sector Value</span>
-            <p className="text-2xl sm:text-3xl font-black font-mono text-white">$47.38B</p>
-            <p className="text-xs text-slate-400">Bangladesh Annual RMG Exports</p>
+        <div className="relative rounded-3xl bg-[#0b101a] border border-slate-800 shadow-xl overflow-hidden p-6 sm:p-8">
+          {/* Subtle Top Border Light Beam */}
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-slate-800/80 overflow-hidden pointer-events-none">
+            <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-border-beam" />
           </div>
-          <div className="space-y-1 lg:border-r border-slate-800/80 pr-4 pl-0 sm:pl-2">
-            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Gateway Volume</span>
-            <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-400">84%</p>
-            <p className="text-xs text-slate-400">Maritime Cargo Handled at Chittagong</p>
-          </div>
-          <div className="space-y-1 border-r border-slate-800/80 pr-4 pt-4 lg:pt-0">
-            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Discrepancy Rate</span>
-            <p className="text-2xl sm:text-3xl font-black font-mono text-amber-400">15.4%</p>
-            <p className="text-xs text-slate-400">Containers Facing Port/Bank Holds</p>
-          </div>
-          <div className="space-y-1 pl-0 sm:pl-2 pt-4 lg:pt-0">
-            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Verification Speed</span>
-            <p className="text-2xl sm:text-3xl font-black font-mono text-cyan-400">&lt; 60s</p>
-            <p className="text-xs text-slate-400">Automated 8-Point Cross-Check</p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="space-y-1 border-r border-slate-800/80 pr-4 group cursor-default">
+              <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Sector Value</span>
+              <p className="text-2xl sm:text-3xl font-black font-mono text-white group-hover:text-emerald-400 transition-colors">$47.38B</p>
+              <p className="text-xs text-slate-400">Bangladesh Annual RMG Exports</p>
+            </div>
+            <div className="space-y-1 lg:border-r border-slate-800/80 pr-4 pl-0 sm:pl-2 group cursor-default">
+              <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Gateway Volume</span>
+              <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 group-hover:scale-105 transition-transform inline-block">84%</p>
+              <p className="text-xs text-slate-400">Maritime Cargo Handled at Chittagong</p>
+            </div>
+            <div className="space-y-1 border-r border-slate-800/80 pr-4 pt-4 lg:pt-0 group cursor-default">
+              <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Discrepancy Rate</span>
+              <p className="text-2xl sm:text-3xl font-black font-mono text-amber-400 group-hover:scale-105 transition-transform inline-block">15.4%</p>
+              <p className="text-xs text-slate-400">Containers Facing Port/Bank Holds</p>
+            </div>
+            <div className="space-y-1 pl-0 sm:pl-2 pt-4 lg:pt-0 group cursor-default">
+              <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Verification Speed</span>
+              <p className="text-2xl sm:text-3xl font-black font-mono text-cyan-400 group-hover:scale-105 transition-transform inline-block">&lt; 60s</p>
+              <p className="text-xs text-slate-400">Automated 8-Point Cross-Check</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. The $47B Paperwork Problem Breakdown (The 4 Cost Drivers) */}
+      {/* 4. The $47B Paperwork Problem Breakdown (The 4 Cost Drivers with Hover Lift) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-red-400 font-mono">
@@ -380,12 +395,12 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Card 1: Demurrage */}
-          <div className="glass-panel p-6 rounded-2xl hover:border-red-500/60 transition-all space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl hover:border-red-500/60 hover:shadow-[0_0_25px_rgba(239,68,68,0.15)] space-y-3 cursor-default">
             <div className="flex items-center justify-between">
               <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center font-bold">
-                <AlertOctagon className="w-5 h-5" />
+                <AlertOctagon className="w-5 h-5 animate-pulse" />
               </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-950 text-red-400 border border-red-800/60">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-950 text-red-400 border border-red-800/60 shadow-sm">
                 CRITICAL HOLD
               </span>
             </div>
@@ -397,12 +412,12 @@ export default function HomePage() {
           </div>
 
           {/* Card 2: Air-Freight */}
-          <div className="glass-panel p-6 rounded-2xl hover:border-amber-500/60 transition-all space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl hover:border-amber-500/60 hover:shadow-[0_0_25px_rgba(245,158,11,0.15)] space-y-3 cursor-default">
             <div className="flex items-center justify-between">
               <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
-                <Clock className="w-5 h-5" />
+                <Clock className="w-5 h-5 animate-float" />
               </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950 text-amber-400 border border-amber-800/60">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950 text-amber-400 border border-amber-800/60 shadow-sm">
                 MARGIN WIPEOUT
               </span>
             </div>
@@ -414,12 +429,12 @@ export default function HomePage() {
           </div>
 
           {/* Card 3: Bond Audit */}
-          <div className="glass-panel p-6 rounded-2xl hover:border-indigo-500/60 transition-all space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl hover:border-indigo-500/60 hover:shadow-[0_0_25px_rgba(99,102,241,0.15)] space-y-3 cursor-default">
             <div className="flex items-center justify-between">
               <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold">
                 <Layers className="w-5 h-5" />
               </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-950 text-indigo-400 border border-indigo-800/60">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-950 text-indigo-400 border border-indigo-800/60 shadow-sm">
                 BOND AUDIT RISK
               </span>
             </div>
@@ -431,12 +446,12 @@ export default function HomePage() {
           </div>
 
           {/* Card 4: Bank Discrepancy */}
-          <div className="glass-panel p-6 rounded-2xl hover:border-blue-500/60 transition-all space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl hover:border-blue-500/60 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] space-y-3 cursor-default">
             <div className="flex items-center justify-between">
               <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
                 <FileText className="w-5 h-5" />
               </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60 shadow-sm">
                 PAYMENT DELAYS
               </span>
             </div>
@@ -465,7 +480,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Column 1: Manual Chaos */}
-          <div className="p-8 rounded-3xl bg-red-950/20 border border-red-500/30 space-y-5">
+          <div className="p-8 rounded-3xl bg-red-950/20 border border-red-500/30 hover-card-lift hover:border-red-500/60 space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold">
                 <XCircle className="w-5 h-5" />
@@ -501,10 +516,10 @@ export default function HomePage() {
           </div>
 
           {/* Column 2: ExportOps AI */}
-          <div className="p-8 rounded-3xl bg-emerald-950/20 border border-emerald-500/30 space-y-5">
+          <div className="p-8 rounded-3xl bg-emerald-950/20 border border-emerald-500/30 hover-card-lift hover:border-emerald-500/60 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                <Zap className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shadow-md shadow-emerald-500/20">
+                <Zap className="w-5 h-5 animate-pulse" />
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white">The ExportOps AI Standard</h3>
@@ -540,7 +555,12 @@ export default function HomePage() {
 
       {/* 6. Embedded Live Control Tower Section */}
       <section id="control-tower" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl space-y-8">
+        <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl space-y-8 relative overflow-hidden">
+          {/* Subtle Top Border Light Beam */}
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-slate-800/80 overflow-hidden pointer-events-none">
+            <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-border-beam" />
+          </div>
+
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
@@ -556,15 +576,15 @@ export default function HomePage() {
             </div>
 
             {/* Quick Demo Recommendation Guide */}
-            <div className="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-xl flex items-center gap-3">
-              <Flame className="w-5 h-5 text-amber-400 shrink-0" />
+            <div className="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-xl flex items-center gap-3 hover-card-lift">
+              <Flame className="w-5 h-5 text-amber-400 shrink-0 animate-float" />
               <div className="text-xs">
                 <span className="font-bold text-amber-300">Recommended Demo:</span>
                 <p className="text-slate-300 text-[11px]">Start with EXP-001 for 1-click quantity remediation.</p>
               </div>
               <Link
                 href="/shipments/EXP-001"
-                className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition-colors ml-2 shrink-0"
+                className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition-colors ml-2 shrink-0 shadow-sm"
               >
                 Inspect EXP-001
               </Link>
@@ -573,19 +593,19 @@ export default function HomePage() {
 
           {/* Metric KPI Counter Row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-[#080d15] p-4 rounded-xl border border-slate-800">
+            <div className="bg-[#080d15] p-4 rounded-xl border border-slate-800 hover-card-lift">
               <span className="text-[11px] text-slate-400 uppercase font-mono">Total Shipments</span>
               <p className="text-2xl font-bold font-mono text-white mt-1">{shipments.length}</p>
             </div>
-            <div className="bg-red-950/40 p-4 rounded-xl border border-red-500/30">
+            <div className="bg-red-950/40 p-4 rounded-xl border border-red-500/30 hover-card-lift">
               <span className="text-[11px] text-red-400 uppercase font-mono">Blocked at Port</span>
               <p className="text-2xl font-bold font-mono text-red-400 mt-1">{blockedCount}</p>
             </div>
-            <div className="bg-amber-950/40 p-4 rounded-xl border border-amber-500/30">
+            <div className="bg-amber-950/40 p-4 rounded-xl border border-amber-500/30 hover-card-lift">
               <span className="text-[11px] text-amber-400 uppercase font-mono">At Risk (Warnings)</span>
               <p className="text-2xl font-bold font-mono text-amber-400 mt-1">{atRiskCount}</p>
             </div>
-            <div className="bg-emerald-950/40 p-4 rounded-xl border border-emerald-500/30">
+            <div className="bg-emerald-950/40 p-4 rounded-xl border border-emerald-500/30 hover-card-lift">
               <span className="text-[11px] text-emerald-400 uppercase font-mono">Customs-Ready</span>
               <p className="text-2xl font-bold font-mono text-emerald-400 mt-1">{readyCount}</p>
             </div>
@@ -600,7 +620,7 @@ export default function HomePage() {
                   onClick={() => setFilter(tab)}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shrink-0 ${
                     filter === tab
-                      ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm'
+                      ? 'bg-emerald-500 text-slate-950 font-bold shadow-md'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -616,7 +636,7 @@ export default function HomePage() {
                 placeholder="Search shipment, buyer, PO, LC..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-[#080d15] border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full pl-9 pr-4 py-2 bg-[#080d15] border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 focus:border-emerald-500/80 transition-all"
               />
             </div>
           </div>
@@ -644,11 +664,11 @@ export default function HomePage() {
                       const isReady = s.status === 'Customs-ready';
 
                       return (
-                        <tr key={s.id} className="hover:bg-slate-900/50 transition-colors">
+                        <tr key={s.id} className="hover:bg-slate-800/60 hover:shadow-inner transition-colors duration-200 group">
                           <td className="py-3.5 px-4 sm:px-6 font-mono font-bold text-white">
                             <Link href={`/shipments/${s.id}`} className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                               <span>{s.id}</span>
-                              <ExternalLink className="w-3 h-3 text-slate-500 opacity-60 hover:opacity-100" />
+                              <ExternalLink className="w-3 h-3 text-slate-500 opacity-60 group-hover:opacity-100 group-hover:text-emerald-400 transition-all" />
                             </Link>
                           </td>
                           <td className="py-3.5 px-4">
@@ -661,19 +681,19 @@ export default function HomePage() {
                           </td>
                           <td className="py-3.5 px-4">
                             {isBlocked && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-950 text-red-300 border border-red-700 font-mono">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-950 text-red-300 border border-red-700 font-mono shadow-sm">
                                 <AlertOctagon className="w-3 h-3 text-red-400" />
                                 Blocked
                               </span>
                             )}
                             {isAtRisk && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-700 font-mono">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-700 font-mono shadow-sm">
                                 <AlertTriangle className="w-3 h-3 text-amber-400" />
                                 At Risk
                               </span>
                             )}
                             {isReady && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700 font-mono">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700 font-mono shadow-sm">
                                 <CheckCircle2 className="w-3 h-3 text-emerald-400" />
                                 Customs-Ready
                               </span>
@@ -701,7 +721,7 @@ export default function HomePage() {
                               className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold hover:underline font-mono"
                             >
                               <span>Inspect</span>
-                              <ChevronRight className="w-3.5 h-3.5" />
+                              <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                             </Link>
                           </td>
                         </tr>
@@ -721,7 +741,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. The 4-Step Pre-Filing Engine Pipeline */}
+      {/* 7. The 4-Step Pre-Filing Engine Pipeline with Electric Pulse Stream */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">
@@ -735,50 +755,57 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/40 transition-colors">
-            <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm">
-              01
-            </span>
-            <h3 className="font-bold text-white text-base">Trade Docs Ingested</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Accepts Commercial Invoice, Packing List, PO, Export LC, Certificate of Origin, and Bond records via drag-and-drop or ERP sync.
-            </p>
+        <div className="relative">
+          {/* Animated Connecting Electric Stream between steps (Desktop) */}
+          <div className="hidden md:block absolute top-1/2 left-4 right-4 h-[2px] bg-slate-800/80 -translate-y-1/2 overflow-hidden pointer-events-none z-0">
+            <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-electric-stream" />
           </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/40 transition-colors">
-            <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm">
-              02
-            </span>
-            <h3 className="font-bold text-white text-base">Multimodal AI Extraction</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Extracts quantities, values, HS codes, container numbers, and entity names with strict confidence scores and exact source quotations.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+            <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/60 transition-all cursor-default">
+              <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm shadow-sm shadow-emerald-500/20">
+                01
+              </span>
+              <h3 className="font-bold text-white text-base">Trade Docs Ingested</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Accepts Commercial Invoice, Packing List, PO, Export LC, Certificate of Origin, and Bond records via drag-and-drop or ERP sync.
+              </p>
+            </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/40 transition-colors">
-            <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm">
-              03
-            </span>
-            <h3 className="font-bold text-white text-base">8-Point Deterministic Rules</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Pure code checks R1-R8. Zero AI hallucination: mathematical cross-checking of units, dates, tolerances, and UD fabric quota balances.
-            </p>
-          </div>
+            <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/60 transition-all cursor-default">
+              <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm shadow-sm shadow-emerald-500/20">
+                02
+              </span>
+              <h3 className="font-bold text-white text-base">Multimodal AI Extraction</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Extracts quantities, values, HS codes, container numbers, and entity names with strict confidence scores and exact source quotations.
+              </p>
+            </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/40 transition-colors">
-            <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm">
-              04
-            </span>
-            <h3 className="font-bold text-white text-base">Customs Pass Issued</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Shipment flips to Customs-Ready, generating an official Chittagong Port Gate-In Pass with cryptographic verification hash and QR code.
-            </p>
+            <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/60 transition-all cursor-default">
+              <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm shadow-sm shadow-emerald-500/20">
+                03
+              </span>
+              <h3 className="font-bold text-white text-base">8-Point Deterministic Rules</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Pure code checks R1-R8. Zero AI hallucination: mathematical cross-checking of units, dates, tolerances, and UD fabric quota balances.
+              </p>
+            </div>
+
+            <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/60 transition-all cursor-default">
+              <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm shadow-sm shadow-emerald-500/20">
+                04
+              </span>
+              <h3 className="font-bold text-white text-base">Customs Pass Issued</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Shipment flips to Customs-Ready, generating an official Chittagong Port Gate-In Pass with cryptographic verification hash and QR code.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 8. Interactive Feature Showcase (Tabbed with Live Demos) */}
+      {/* 8. Interactive Feature Showcase (Tabbed with Smooth Animated Transitions) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">Product Deep-Dive</span>
@@ -791,7 +818,7 @@ export default function HomePage() {
           <button
             onClick={() => setActiveFeatureTab('studio')}
             className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
-              activeFeatureTab === 'studio' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+              activeFeatureTab === 'studio' ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Inspection Studio
@@ -799,7 +826,7 @@ export default function HomePage() {
           <button
             onClick={() => setActiveFeatureTab('bond')}
             className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
-              activeFeatureTab === 'bond' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+              activeFeatureTab === 'bond' ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             BondIQ Fabric Ledger
@@ -807,7 +834,7 @@ export default function HomePage() {
           <button
             onClick={() => setActiveFeatureTab('alerts')}
             className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
-              activeFeatureTab === 'alerts' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+              activeFeatureTab === 'alerts' ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Floor WhatsApp Alerts
@@ -815,20 +842,20 @@ export default function HomePage() {
           <button
             onClick={() => setActiveFeatureTab('compliance')}
             className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
-              activeFeatureTab === 'compliance' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+              activeFeatureTab === 'compliance' ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Buyer Compliance (H&M, Zara)
           </button>
         </div>
 
-        {/* Feature Tab Card */}
-        <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl">
+        {/* Feature Tab Card with Smooth Fade-In on Switch */}
+        <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl relative overflow-hidden animate-fade-in key={activeFeatureTab}">
           {/* TAB 1: Inspection Studio */}
           {activeFeatureTab === 'studio' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center animate-fade-in">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono border border-emerald-500/20">
                   <span>MODULE 01: DUAL-WINDOW AUDITOR</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white">Side-by-Side Document Inspection Studio</h3>
@@ -852,7 +879,7 @@ export default function HomePage() {
                 <div className="pt-2 flex items-center gap-3">
                   <Link
                     href="/shipments/EXP-001"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg transition-colors font-mono"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg transition-colors font-mono shadow-md"
                   >
                     <span>Open Live Studio (EXP-001)</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -861,12 +888,12 @@ export default function HomePage() {
               </div>
 
               {/* Interactive Diff Simulator */}
-              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono shadow-inner space-y-4">
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono shadow-inner space-y-4 hover-card-lift">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <span className="text-slate-400 text-[11px] font-semibold">// Interactive Audit Simulator</span>
                   <button
                     onClick={() => setStudioResolved(!studioResolved)}
-                    className="px-2.5 py-1 rounded text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+                    className="px-2.5 py-1 rounded text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-white transition-all transform active:scale-95 shadow-sm"
                   >
                     {studioResolved ? 'Reset to Mismatch' : 'Simulate 1-Click Fix'}
                   </button>
@@ -877,7 +904,7 @@ export default function HomePage() {
                     <span className="text-slate-400">COMMERCIAL INVOICE:</span>
                     <span className="text-white font-bold">12,000 PCS ($72,000)</span>
                   </div>
-                  <div className={`p-2.5 rounded-lg flex justify-between transition-colors ${
+                  <div className={`p-2.5 rounded-lg flex justify-between transition-colors duration-300 ${
                     studioResolved ? 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-300' : 'bg-red-950/60 border border-red-500/40 text-red-300'
                   }`}>
                     <span>PACKING LIST:</span>
@@ -885,10 +912,10 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className={`p-3 rounded-xl border text-[11px] leading-relaxed transition-all ${
+                <div className={`p-3 rounded-xl border text-[11px] leading-relaxed transition-all duration-300 ${
                   studioResolved
-                    ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300'
-                    : 'bg-red-950/40 border-red-500/50 text-red-300'
+                    ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 shadow-md shadow-emerald-950'
+                    : 'bg-red-950/40 border-red-500/50 text-red-300 shadow-md shadow-red-950'
                 }`}>
                   {studioResolved ? (
                     <div className="flex items-center gap-2">
@@ -908,9 +935,9 @@ export default function HomePage() {
 
           {/* TAB 2: BondIQ Fabric Ledger */}
           {activeFeatureTab === 'bond' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center animate-fade-in">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 text-[11px] font-mono">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 text-[11px] font-mono border border-indigo-500/20">
                   <span>MODULE 02: CUSTOMS BOND COMPLIANCE</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white">BondIQ: Fabric Math & UD Quota Ledger</h3>
@@ -930,7 +957,7 @@ export default function HomePage() {
                 <div className="pt-2">
                   <Link
                     href="/shipments/EXP-003"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-lg transition-colors font-mono"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-lg transition-colors font-mono shadow-md"
                   >
                     <span>Inspect Violation in EXP-003</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -939,7 +966,7 @@ export default function HomePage() {
               </div>
 
               {/* Interactive Garment Math Preset Selector */}
-              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono text-slate-200 shadow-inner space-y-4">
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono text-slate-200 shadow-inner space-y-4 hover-card-lift">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <span className="text-slate-400 text-[11px] font-semibold">// Select Garment Preset</span>
                   <div className="flex items-center gap-1">
@@ -947,9 +974,9 @@ export default function HomePage() {
                       <button
                         key={type}
                         onClick={() => setBondGarmentType(type)}
-                        className={`px-2 py-1 rounded text-[10px] font-bold uppercase transition-colors ${
+                        className={`px-2 py-1 rounded text-[10px] font-bold uppercase transition-all ${
                           bondGarmentType === type
-                            ? 'bg-indigo-600 text-white'
+                            ? 'bg-indigo-600 text-white shadow-md'
                             : 'bg-slate-800 text-slate-400 hover:text-white'
                         }`}
                       >
@@ -959,7 +986,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs">
+                <div className="space-y-1.5 text-xs animate-fade-in key={bondGarmentType}">
                   <div className="text-indigo-300 font-bold">{garmentPresets[bondGarmentType].name}</div>
                   <div className="flex justify-between text-slate-400 text-[11px]">
                     <span>Fabric Weight (GSM):</span>
@@ -987,7 +1014,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className={`p-3 rounded-xl border text-[11px] font-bold ${
+                <div className={`p-3 rounded-xl border text-[11px] font-bold transition-all duration-300 ${
                   garmentPresets[bondGarmentType].isSafe
                     ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300'
                     : 'bg-red-950/40 border-red-500/50 text-red-300'
@@ -1000,9 +1027,9 @@ export default function HomePage() {
 
           {/* TAB 3: Floor WhatsApp Alerts */}
           {activeFeatureTab === 'alerts' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center animate-fade-in">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono border border-emerald-500/20">
                   <span>MODULE 03: INSTANT DISPATCH</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white">Bilingual Floor & C&F WhatsApp Dispatcher</h3>
@@ -1022,7 +1049,7 @@ export default function HomePage() {
                 <div className="pt-2 flex items-center gap-3">
                   <button
                     onClick={handleCopyAlert}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg transition-colors font-mono"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg transition-all font-mono shadow-md transform active:scale-95"
                   >
                     <Copy className="w-3.5 h-3.5" />
                     <span>{copiedAlert ? 'Copied to Clipboard!' : 'Copy Dispatch Message'}</span>
@@ -1031,25 +1058,25 @@ export default function HomePage() {
               </div>
 
               {/* Interactive WhatsApp Message Simulator */}
-              <div className="p-6 bg-[#070b13] rounded-2xl border border-emerald-500/30 text-xs font-mono shadow-inner space-y-4">
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-emerald-500/30 text-xs font-mono shadow-inner space-y-4 hover-card-lift">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                     WhatsApp Discrepancy Dispatch
                   </span>
                   <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
                     <button
                       onClick={() => setAlertLanguage('bn')}
-                      className={`px-2.5 py-1 rounded text-[10px] font-bold ${
-                        alertLanguage === 'bn' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all ${
+                        alertLanguage === 'bn' ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'text-slate-400'
                       }`}
                     >
                       বাংলা
                     </button>
                     <button
                       onClick={() => setAlertLanguage('en')}
-                      className={`px-2.5 py-1 rounded text-[10px] font-bold ${
-                        alertLanguage === 'en' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all ${
+                        alertLanguage === 'en' ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'text-slate-400'
                       }`}
                     >
                       English
@@ -1057,7 +1084,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-[#0a1410] border border-emerald-500/20 rounded-xl space-y-2 text-xs">
+                <div className="p-4 bg-[#0a1410] border border-emerald-500/20 rounded-xl space-y-2 text-xs animate-fade-in key={alertLanguage}">
                   <p className="text-emerald-400 font-bold">🚨 EXPORTOPS AI: URGENT COMPLIANCE ALERT</p>
                   <p className="text-slate-300">📦 Shipment: EXP-001 (Nordic Retailers)</p>
                   <p className="text-red-400 font-semibold">⚠️ Issue: Quantity Mismatch (-600 PCS vs Invoice)</p>
@@ -1083,9 +1110,9 @@ export default function HomePage() {
 
           {/* TAB 4: Buyer Compliance */}
           {activeFeatureTab === 'compliance' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center animate-fade-in">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-[11px] font-mono">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-[11px] font-mono border border-blue-500/20">
                   <span>MODULE 04: RETAIL CHARGEBACK SHIELD</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white">Global Buyer Compliance Rulebook</h3>
@@ -1109,7 +1136,7 @@ export default function HomePage() {
                 <div className="pt-2">
                   <Link
                     href="/compliance"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-colors font-mono"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-colors font-mono shadow-md"
                   >
                     <span>Explore Buyer Directory</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -1118,10 +1145,10 @@ export default function HomePage() {
               </div>
 
               {/* Retailer Rulebook Matrix Preview */}
-              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs space-y-3 font-mono">
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs space-y-3 font-mono hover-card-lift">
                 <p className="text-slate-400 text-[11px] pb-2 border-b border-slate-800">// Retailer Compliance Matrix</p>
                 
-                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center hover:border-emerald-500/40 transition-colors">
                   <div>
                     <span className="font-bold text-white">H&M Group (HM-01)</span>
                     <p className="text-[10px] text-slate-400">Ratio Pack & Suffocation Warning</p>
@@ -1131,7 +1158,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center hover:border-emerald-500/40 transition-colors">
                   <div>
                     <span className="font-bold text-white">Inditex / Zara (ZRA-01)</span>
                     <p className="text-[10px] text-slate-400">UHF Gen2 EPC RFID Inlay Audit</p>
@@ -1141,7 +1168,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center hover:border-emerald-500/40 transition-colors">
                   <div>
                     <span className="font-bold text-white">Target US (TGT-02)</span>
                     <p className="text-[10px] text-slate-400">Max Carton Gross Weight &lt; 20kg</p>
@@ -1158,8 +1185,11 @@ export default function HomePage() {
 
       {/* 9. Interactive ROI & Demurrage Savings Calculator */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-12 rounded-3xl border border-emerald-500/40 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl">
-          <div className="space-y-4 max-w-xl">
+        <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-12 rounded-3xl border border-emerald-500/40 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
+          {/* Subtle Ambient Pulse */}
+          <div className="absolute -top-32 -left-32 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-ambient-pulse" />
+
+          <div className="space-y-4 max-w-xl relative z-10">
             <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">The Business Case</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Calculate Your Factory's Monthly Savings
@@ -1191,25 +1221,25 @@ export default function HomePage() {
 
             {/* Micro Breakdown Stats */}
             <div className="grid grid-cols-3 gap-3 pt-2 text-[11px] font-mono">
-              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800">
+              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800 hover-card-lift">
                 <span className="text-slate-400 block text-[10px]">Demurrage Avoided</span>
                 <span className="text-emerald-400 font-bold">${(quickContainers * 1275).toLocaleString()}</span>
               </div>
-              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800">
+              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800 hover-card-lift">
                 <span className="text-slate-400 block text-[10px]">Air-Freight Risk</span>
                 <span className="text-emerald-400 font-bold">${(quickContainers * 850).toLocaleString()}</span>
               </div>
-              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800">
+              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800 hover-card-lift">
                 <span className="text-slate-400 block text-[10px]">Hours Saved</span>
                 <span className="text-emerald-400 font-bold">{(quickContainers * 4)} hrs/mo</span>
               </div>
             </div>
           </div>
 
-          <div className="text-center lg:text-right shrink-0 space-y-4 bg-[#070b13]/60 p-8 rounded-2xl border border-slate-800">
+          <div className="text-center lg:text-right shrink-0 space-y-4 bg-[#070b13]/80 p-8 rounded-2xl border border-slate-800 relative z-10 hover-card-lift">
             <div>
               <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">Projected Annual Factory Savings</p>
-              <p className="text-4xl sm:text-5xl font-black font-mono text-emerald-400 mt-1">
+              <p className="text-4xl sm:text-5xl font-black font-mono text-emerald-400 mt-1 drop-shadow-sm">
                 ${estimatedSavingsAnnual.toLocaleString()}
               </p>
             </div>
@@ -1219,10 +1249,11 @@ export default function HomePage() {
             <div>
               <Link
                 href="/roi"
-                className="inline-flex items-center gap-1.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-colors"
+                className="relative overflow-hidden group/btn inline-flex items-center gap-1.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0"
               >
-                <span>Explore Pricing Plans (From ৳30k/mo)</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out" />
+                <span className="relative z-10">Explore Pricing Plans (From ৳30k/mo)</span>
+                <ArrowRight className="w-3.5 h-3.5 relative z-10 transition-transform group-hover/btn:translate-x-1" />
               </Link>
             </div>
           </div>
@@ -1249,7 +1280,7 @@ export default function HomePage() {
             return (
               <div 
                 key={idx}
-                className="glass-panel rounded-2xl border border-slate-800 overflow-hidden transition-all"
+                className="glass-panel rounded-2xl border border-slate-800 overflow-hidden transition-all duration-300"
               >
                 <button
                   onClick={() => setOpenFaq(isOpen ? null : idx)}
@@ -1259,10 +1290,10 @@ export default function HomePage() {
                     <HelpCircle className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>{faq.q}</span>
                   </span>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform shrink-0 ${isOpen ? 'rotate-180 text-emerald-400' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-emerald-400' : ''}`} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-800/50">
+                  <div className="px-5 pb-5 pt-1 text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-800/50 animate-fade-in">
                     {faq.a}
                   </div>
                 )}
@@ -1280,7 +1311,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-          <div className="glass-panel p-6 rounded-2xl space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3">
             <div className="flex items-center gap-1 text-amber-400">
               {'★'.repeat(5)}
             </div>
@@ -1294,7 +1325,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3">
             <div className="flex items-center gap-1 text-amber-400">
               {'★'.repeat(5)}
             </div>
@@ -1308,7 +1339,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="glass-panel p-6 rounded-2xl space-y-3">
+          <div className="glass-panel hover-card-lift p-6 rounded-2xl space-y-3">
             <div className="flex items-center gap-1 text-amber-400">
               {'★'.repeat(5)}
             </div>
@@ -1326,7 +1357,12 @@ export default function HomePage() {
 
       {/* 12. Final High-Converting Call to Action */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="bg-gradient-to-br from-[#0b101a] via-[#070b13] to-[#0b101a] border border-slate-800 p-10 sm:p-14 rounded-3xl space-y-6 shadow-2xl">
+        <div className="bg-gradient-to-br from-[#0b101a] via-[#070b13] to-[#0b101a] border border-slate-800 p-10 sm:p-14 rounded-3xl space-y-6 shadow-2xl relative overflow-hidden">
+          {/* Signature Animated Border Beam across the top of the CTA Box */}
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-slate-800/80 overflow-hidden pointer-events-none">
+            <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-border-beam" />
+          </div>
+
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Ready to Clear Every Container on Time?
           </h2>
@@ -1337,13 +1373,14 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
               href="/shipments/EXP-001"
-              className="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5"
+              className="relative overflow-hidden group/btn px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
             >
-              Start Live Interactive Demo
+              <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out" />
+              <span className="relative z-10">Start Live Interactive Demo</span>
             </Link>
             <Link
               href="/roi"
-              className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl border border-slate-700/80 transition-colors"
+              className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl border border-slate-700/80 hover:border-emerald-500/40 transition-all hover:-translate-y-0.5"
             >
               Apply for 90-Day Factory Pilot
             </Link>
