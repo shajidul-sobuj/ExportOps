@@ -27,7 +27,13 @@ import {
   ExternalLink,
   Cpu,
   BarChart2,
-  HelpCircle
+  HelpCircle,
+  XCircle,
+  Zap,
+  Ship,
+  FileSpreadsheet,
+  Globe2,
+  ShieldAlert
 } from 'lucide-react';
 import initialShipments from '@/data/shipments.json';
 import { Shipment, ShipmentStatus } from '@/types';
@@ -80,65 +86,65 @@ export default function HomePage() {
 
   const garmentPresets = {
     tshirt: {
-      name: 'Basic Crewneck T-Shirt (Knit)',
+      name: 'Basic Crewneck T-Shirt (Knit Single Jersey)',
       gsm: 160,
       dznCons: '2.40 kg/dzn',
       orderQty: '12,000 PCS (1,000 Dzn)',
       netNeed: '2,400 kg',
-      wastage: '+120 kg (5%)',
+      wastage: '+120 kg (5% Cutting)',
       totalFabric: '2,520 kg',
       udQuota: '4,000 kg (UD-2026-BGMEA-4410)',
-      status: 'Within Quota (Compliant)',
+      status: 'Within Approved Quota (Compliant)',
       isSafe: true,
     },
     hoodie: {
-      name: 'Fleece Heavy Hoodie (Knit)',
+      name: 'Fleece Heavy Winter Hoodie (Knit Terry)',
       gsm: 320,
       dznCons: '6.80 kg/dzn',
       orderQty: '10,000 PCS (833 Dzn)',
       netNeed: '5,664 kg',
-      wastage: '+283 kg (5%)',
+      wastage: '+283 kg (5% Cutting)',
       totalFabric: '5,947 kg',
       udQuota: '5,500 kg (UD-2026-BGMEA-8821)',
-      status: 'Over Quota by 447 kg (Violation)',
+      status: 'Over Quota by 447 kg (Bond Violation - Blocked)',
       isSafe: false,
     },
     denim: {
-      name: '5-Pocket Stretch Denim Pant (Woven)',
+      name: '5-Pocket Stretch Denim Pant (Woven Twill)',
       gsm: 380,
       dznCons: '16.50 Yds/dzn',
       orderQty: '6,000 PCS (500 Dzn)',
       netNeed: '8,250 Yds',
-      wastage: '+412 Yds (5%)',
+      wastage: '+412 Yds (5% Cutting)',
       totalFabric: '8,662 Yds',
       udQuota: '10,000 Yds (UD-2026-BGMEA-9014)',
-      status: 'Within Quota (Compliant)',
+      status: 'Within Approved Quota (Compliant)',
       isSafe: true,
     }
   };
 
   const faqs = [
     {
-      q: 'Why do you use a Deterministic Rules Engine instead of pure LLM generation for customs clearance?',
-      a: 'In maritime export compliance and customs law, a hallucination is catastrophic — it leads to seized containers, tax evasion charges, or license revocation. ExportOps AI uses multimodal LLMs strictly to extract data from chaotic PDFs and explain findings. The actual legal decision (R1-R8) is computed by 100% deterministic pure TypeScript logic with zero hallucination risk.'
+      q: 'Why does ExportOps AI use a Deterministic Rules Engine instead of pure LLM generation for customs clearance?',
+      a: 'In maritime export compliance, customs law, and bank letters of credit, an AI hallucination is legally and financially catastrophic. A made-up HS code or fabricated quantity leads to container impoundment, tax penalties, or bonded license suspension. ExportOps AI uses multimodal LLMs exclusively for OCR extraction and explanation; the actual legal compliance verdict (R1 through R8) is calculated by 100% deterministic pure TypeScript logic with mathematical guarantees.'
     },
     {
       q: 'How does BondIQ handle raw material fabric consumption and BGMEA UD quotas?',
-      a: 'Bonded factories in Bangladesh import raw fabric duty-free under Utilization Declaration (UD) quotas issued by BGMEA/BKMEA. BondIQ takes the garment GSM, multiplies it by the standard consumption per dozen, factors in 5% cutting wastage, and validates against the remaining UD quota. If usage exceeds quota (Rule R8), the shipment is blocked before customs filing to prevent heavy penalties.'
+      a: 'Bonded RMG factories in Bangladesh import raw fabric duty-free under Utilization Declaration (UD) quotas sanctioned by BGMEA/BKMEA. BondIQ takes garment GSM, applies standard consumption per dozen, factors in 5% cutting wastage, and validates the cumulative consumption against the remaining UD quota. If consumption exceeds quota (Rule R8), the shipment is blocked before customs filing to prevent heavy customs duty demands and audits.'
     },
     {
       q: 'Does ExportOps AI integrate with ASYCUDA World or factory ERPs (SAP/Oracle)?',
-      a: 'Yes. ExportOps AI exports standardized, validated JSON and XML payloads fully formatted according to Bangladesh Customs ASYCUDA World pre-entry specifications. C&F agents and factory commercial teams can either ingest via REST API or download clean data packages for one-click portal submission.'
+      a: 'Yes. ExportOps AI generates standardized JSON and XML payloads formatted according to Bangladesh Customs ASYCUDA World pre-entry specifications. C&F agents and factory commercial teams can either ingest via REST API or download pre-validated data packages for one-click portal submission.'
     },
     {
       q: 'How does the bilingual WhatsApp alert system help floor merchandisers?',
-      a: 'Most factory packing supervisors and clearing agents at Chittagong Port communicate via WhatsApp rather than desktop email, especially during late-night cut-offs. ExportOps AI generates instant bilingual (Bangla and English) actionable alerts with exact carton numbers and remedial steps so corrections take 5 minutes instead of 6 hours.'
+      a: 'Most factory packing floor supervisors and C&F port agents communicate primarily via WhatsApp groups rather than desktop email, especially during late-night cut-offs. ExportOps AI instantly generates formatted, urgency-ranked WhatsApp messages in native Bangla and English with exact carton discrepancies and concrete action steps, reducing correction turnaround from hours to minutes.'
     }
   ];
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
-      {/* 1. Live Marquee Ticker: Buttery Smooth Infinite Loop */}
+      {/* 1. Live Marquee Ticker: Seamless Infinite Loop */}
       <div className="bg-[#040711] border-b border-slate-800/80 py-2.5 overflow-hidden text-xs text-emerald-400 font-mono tracking-wider flex select-none">
         <div className="flex shrink-0 animate-marquee items-center gap-8 pr-8">
           <span className="flex items-center gap-2">
@@ -194,7 +200,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-              ExportOps AI cross-checks commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. 
+              ExportOps AI reconciles commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. 
               Prevent container demurrage ($8,500/hold), eliminate air-freight panic, and guarantee clean bank presentation under UCP 600.
             </p>
 
@@ -331,7 +337,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. The $47B Paperwork Bottleneck Breakdown */}
+      {/* 3. Industry Scale Metrics Bar (Linear / Vercel style) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-[#0b101a] border border-slate-800 shadow-xl">
+          <div className="space-y-1 border-r border-slate-800/80 pr-4">
+            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Sector Value</span>
+            <p className="text-2xl sm:text-3xl font-black font-mono text-white">$47.38B</p>
+            <p className="text-xs text-slate-400">Bangladesh Annual RMG Exports</p>
+          </div>
+          <div className="space-y-1 lg:border-r border-slate-800/80 pr-4 pl-0 sm:pl-2">
+            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Gateway Volume</span>
+            <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-400">84%</p>
+            <p className="text-xs text-slate-400">Maritime Cargo Handled at Chittagong</p>
+          </div>
+          <div className="space-y-1 border-r border-slate-800/80 pr-4 pt-4 lg:pt-0">
+            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Discrepancy Rate</span>
+            <p className="text-2xl sm:text-3xl font-black font-mono text-amber-400">15.4%</p>
+            <p className="text-xs text-slate-400">Containers Facing Port/Bank Holds</p>
+          </div>
+          <div className="space-y-1 pl-0 sm:pl-2 pt-4 lg:pt-0">
+            <span className="text-[11px] text-slate-500 uppercase font-mono font-semibold">Verification Speed</span>
+            <p className="text-2xl sm:text-3xl font-black font-mono text-cyan-400">&lt; 60s</p>
+            <p className="text-xs text-slate-400">Automated 8-Point Cross-Check</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. The $47B Paperwork Problem Breakdown (The 4 Cost Drivers) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-red-400 font-mono">
@@ -417,7 +449,96 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Embedded Live Control Tower Section */}
+      {/* 5. The Chaos vs Control Comparison (Stripe / Linear style) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">
+            Transformation Workflow
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Manual Chaos vs Autonomous Pre-Shipment Control
+          </h2>
+          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+            See how ExportOps AI transforms chaotic trade document cross-checking into a deterministic, zero-error workflow.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Column 1: Manual Chaos */}
+          <div className="p-8 rounded-3xl bg-red-950/20 border border-red-500/30 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold">
+                <XCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">The Legacy Manual Approach</h3>
+                <p className="text-xs text-red-300 font-mono">Fragmented, high risk & error-prone</p>
+              </div>
+            </div>
+
+            <div className="space-y-3.5 text-xs text-slate-300">
+              <div className="flex items-start gap-2.5">
+                <span className="text-red-400 font-bold shrink-0 mt-0.5">✕</span>
+                <p>Commercial teams spend 4+ hours per shipment juggling 5 separate PDF windows and printouts.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-red-400 font-bold shrink-0 mt-0.5">✕</span>
+                <p>A 600-piece carton deficit slips past manual inspection during late-night packing floor rush.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-red-400 font-bold shrink-0 mt-0.5">✕</span>
+                <p>Container arrives at Chittagong Port gate; customs physical audit halts the trailer.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-red-400 font-bold shrink-0 mt-0.5">✕</span>
+                <p>Mother vessel departs without cargo, triggering $30,000 emergency air-freight demand by buyer.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-red-400 font-bold shrink-0 mt-0.5">✕</span>
+                <p>Advising bank files UCP 600 discrepancy notices; export payment delayed by 3 weeks.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: ExportOps AI */}
+          <div className="p-8 rounded-3xl bg-emerald-950/20 border border-emerald-500/30 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                <Zap className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">The ExportOps AI Standard</h3>
+                <p className="text-xs text-emerald-300 font-mono">Automated, deterministic & gate-ready</p>
+              </div>
+            </div>
+
+            <div className="space-y-3.5 text-xs text-slate-300">
+              <div className="flex items-start gap-2.5">
+                <span className="text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
+                <p>Commercial Invoice, Packing List, LC, and PO reconciled in under 60 seconds with 99% OCR confidence.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
+                <p>Deterministic 8-point engine instantly flags carton mismatch before container leaves factory premises.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
+                <p>Automated bilingual WhatsApp dispatch notifies floor supervisor in Savar/Gazipur within 5 seconds.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
+                <p>Official Chittagong Port Gate-In Pass issued with QR code and cryptographic verification hash.</p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
+                <p>Zero bank discrepancies under UCP 600; export remittances released in 48 hours without demurrage.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Embedded Live Control Tower Section */}
       <section id="control-tower" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl space-y-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
@@ -600,7 +721,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. The 4-Step Pre-Filing Engine Pipeline */}
+      {/* 7. The 4-Step Pre-Filing Engine Pipeline */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">
@@ -657,7 +778,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Interactive Feature Showcase (Tabbed with Live Demos) */}
+      {/* 8. Interactive Feature Showcase (Tabbed with Live Demos) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">Product Deep-Dive</span>
@@ -1035,7 +1156,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Interactive ROI & Demurrage Savings Calculator */}
+      {/* 9. Interactive ROI & Demurrage Savings Calculator */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-12 rounded-3xl border border-emerald-500/40 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl">
           <div className="space-y-4 max-w-xl">
@@ -1108,7 +1229,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. Technical Architecture & FAQ Accordion */}
+      {/* 10. Technical Architecture & FAQ Accordion */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">
@@ -1151,7 +1272,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 9. Social Proof & Industry Testimonials */}
+      {/* 11. Social Proof & Industry Testimonials */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Trusted by Bangladesh Export Leaders</h2>
@@ -1203,7 +1324,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 10. Final High-Converting Call to Action */}
+      {/* 12. Final High-Converting Call to Action */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="bg-gradient-to-br from-[#0b101a] via-[#070b13] to-[#0b101a] border border-slate-800 p-10 sm:p-14 rounded-3xl space-y-6 shadow-2xl">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
