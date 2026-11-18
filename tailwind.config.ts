@@ -22,6 +22,11 @@ export default {
           900: "#052e16",
         },
       },
+      fontFamily: {
+        sans: ['var(--font-sans)', 'Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'monospace'],
+        bengali: ['var(--font-bengali)', 'Noto Sans Bengali', 'sans-serif'],
+      },
     },
   },
   plugins: [],

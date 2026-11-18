@@ -15,17 +15,19 @@ import {
   Calculator,
   ShieldCheck,
   TrendingUp,
-  Boxes,
   FileText,
   Clock,
   ChevronRight,
+  ChevronDown,
   Flame,
   Check,
   Building2,
-  DollarSign,
-  ArrowUpRight,
-  ShieldAlert,
-  Send
+  Copy,
+  Radio,
+  ExternalLink,
+  Cpu,
+  BarChart2,
+  HelpCircle
 } from 'lucide-react';
 import initialShipments from '@/data/shipments.json';
 import { Shipment, ShipmentStatus } from '@/types';
@@ -38,7 +40,17 @@ export default function HomePage() {
 
   // Interactive ROI widget state
   const [quickContainers, setQuickContainers] = useState<number>(20);
-  const estimatedSavings = quickContainers * 2125;
+  const estimatedSavingsMonth = quickContainers * 2125;
+  const estimatedSavingsAnnual = estimatedSavingsMonth * 12;
+
+  // Interactive Feature Tab States
+  const [studioResolved, setStudioResolved] = useState<boolean>(false);
+  const [bondGarmentType, setBondGarmentType] = useState<'tshirt' | 'hoodie' | 'denim'>('tshirt');
+  const [alertLanguage, setAlertLanguage] = useState<'bn' | 'en'>('bn');
+  const [copiedAlert, setCopiedAlert] = useState<boolean>(false);
+
+  // FAQ Accordion State
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const filteredShipments = shipments.filter((s) => {
     const matchesFilter = filter === 'All' || s.status === filter;
@@ -57,26 +69,108 @@ export default function HomePage() {
     shipments.reduce((acc, s) => acc + s.bankReadyScore, 0) / shipments.length
   );
 
+  const handleCopyAlert = () => {
+    const textToCopy = alertLanguage === 'bn' 
+      ? `🚨 EXPORTOPS AI: জরুরি নোটিশ - শিপমেন্ট EXP-001 (Nordic Retailers)\n⚠️ প্যাকিং লিস্টে কার্টন ঘাটতি (-৬০০ পিস) ধরা পড়েছে।\n❗ অবিলম্বে ফ্লোর ইন-চার্জ প্যাকিং লিস্ট ৫০০ কার্টনে আপডেট করুন। জাহাজ কাট-অফ বাকি: ৪৮ ঘণ্টা।`
+      : `🚨 EXPORTOPS AI: URGENT COMPLIANCE NOTICE - EXP-001 (Nordic Retailers)\n⚠️ Packing list carton deficit detected (-600 PCS vs Invoice).\n❗ Floor In-charge: Update packing list to 500 cartons immediately. Vessel cut-off: 48 hours.`;
+    navigator.clipboard?.writeText(textToCopy);
+    setCopiedAlert(true);
+    setTimeout(() => setCopiedAlert(false), 2500);
+  };
+
+  const garmentPresets = {
+    tshirt: {
+      name: 'Basic Crewneck T-Shirt (Knit)',
+      gsm: 160,
+      dznCons: '2.40 kg/dzn',
+      orderQty: '12,000 PCS (1,000 Dzn)',
+      netNeed: '2,400 kg',
+      wastage: '+120 kg (5%)',
+      totalFabric: '2,520 kg',
+      udQuota: '4,000 kg (UD-2026-BGMEA-4410)',
+      status: 'Within Quota (Compliant)',
+      isSafe: true,
+    },
+    hoodie: {
+      name: 'Fleece Heavy Hoodie (Knit)',
+      gsm: 320,
+      dznCons: '6.80 kg/dzn',
+      orderQty: '10,000 PCS (833 Dzn)',
+      netNeed: '5,664 kg',
+      wastage: '+283 kg (5%)',
+      totalFabric: '5,947 kg',
+      udQuota: '5,500 kg (UD-2026-BGMEA-8821)',
+      status: 'Over Quota by 447 kg (Violation)',
+      isSafe: false,
+    },
+    denim: {
+      name: '5-Pocket Stretch Denim Pant (Woven)',
+      gsm: 380,
+      dznCons: '16.50 Yds/dzn',
+      orderQty: '6,000 PCS (500 Dzn)',
+      netNeed: '8,250 Yds',
+      wastage: '+412 Yds (5%)',
+      totalFabric: '8,662 Yds',
+      udQuota: '10,000 Yds (UD-2026-BGMEA-9014)',
+      status: 'Within Quota (Compliant)',
+      isSafe: true,
+    }
+  };
+
+  const faqs = [
+    {
+      q: 'Why do you use a Deterministic Rules Engine instead of pure LLM generation for customs clearance?',
+      a: 'In maritime export compliance and customs law, a hallucination is catastrophic — it leads to seized containers, tax evasion charges, or license revocation. ExportOps AI uses multimodal LLMs strictly to extract data from chaotic PDFs and explain findings. The actual legal decision (R1-R8) is computed by 100% deterministic pure TypeScript logic with zero hallucination risk.'
+    },
+    {
+      q: 'How does BondIQ handle raw material fabric consumption and BGMEA UD quotas?',
+      a: 'Bonded factories in Bangladesh import raw fabric duty-free under Utilization Declaration (UD) quotas issued by BGMEA/BKMEA. BondIQ takes the garment GSM, multiplies it by the standard consumption per dozen, factors in 5% cutting wastage, and validates against the remaining UD quota. If usage exceeds quota (Rule R8), the shipment is blocked before customs filing to prevent heavy penalties.'
+    },
+    {
+      q: 'Does ExportOps AI integrate with ASYCUDA World or factory ERPs (SAP/Oracle)?',
+      a: 'Yes. ExportOps AI exports standardized, validated JSON and XML payloads fully formatted according to Bangladesh Customs ASYCUDA World pre-entry specifications. C&F agents and factory commercial teams can either ingest via REST API or download clean data packages for one-click portal submission.'
+    },
+    {
+      q: 'How does the bilingual WhatsApp alert system help floor merchandisers?',
+      a: 'Most factory packing supervisors and clearing agents at Chittagong Port communicate via WhatsApp rather than desktop email, especially during late-night cut-offs. ExportOps AI generates instant bilingual (Bangla and English) actionable alerts with exact carton numbers and remedial steps so corrections take 5 minutes instead of 6 hours.'
+    }
+  ];
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
-      {/* 1. Live Marquee Ticker */}
-      <div className="bg-[#050912] border-b border-slate-800/80 py-2.5 overflow-hidden text-xs text-emerald-400 font-mono tracking-wide">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-10">
-          <span>🚢 BANGLADESH RMG: $47.38 BILLION EXPORTS</span>
+      {/* 1. Live Marquee Ticker: Buttery Smooth Infinite Loop */}
+      <div className="bg-[#040711] border-b border-slate-800/80 py-2.5 overflow-hidden text-xs text-emerald-400 font-mono tracking-wider flex select-none">
+        <div className="flex shrink-0 animate-marquee items-center gap-8 pr-8">
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            BANGLADESH RMG: $47.38 BILLION ANNUAL EXPORTS
+          </span>
           <span className="text-slate-600">•</span>
-          <span>⚓ CHITTAGONG SEA PORT: 84% OF MARITIME CARGO</span>
+          <span>⚓ CHITTAGONG SEA PORT: 84% OF MARITIME EXPORT CARGO</span>
           <span className="text-slate-600">•</span>
           <span>🛡️ ZERO ASYCUDA DISCREPANCIES: 8-POINT DETERMINISTIC ENGINE</span>
           <span className="text-slate-600">•</span>
-          <span>⚖️ BONDIQ: 100% UD FABRIC QUOTA RECONCILED</span>
+          <span>⚖️ BONDIQ: 100% UD FABRIC QUOTA RECONCILED BEFORE GATE-IN</span>
           <span className="text-slate-600">•</span>
           <span>⚡ BILINGUAL DISCREPANCY DISPATCH (BANGLA & ENGLISH)</span>
           <span className="text-slate-600">•</span>
-          <span>🚢 BANGLADESH RMG: $47.38 BILLION EXPORTS</span>
+          <span>🚢 PREVENT $8,500 DEMURRAGE HOLDS & $30,000 AIR-FREIGHT PANIC</span>
+        </div>
+        <div className="flex shrink-0 animate-marquee items-center gap-8 pr-8" aria-hidden="true">
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            BANGLADESH RMG: $47.38 BILLION ANNUAL EXPORTS
+          </span>
           <span className="text-slate-600">•</span>
-          <span>⚓ CHITTAGONG SEA PORT: 84% OF MARITIME CARGO</span>
+          <span>⚓ CHITTAGONG SEA PORT: 84% OF MARITIME EXPORT CARGO</span>
           <span className="text-slate-600">•</span>
           <span>🛡️ ZERO ASYCUDA DISCREPANCIES: 8-POINT DETERMINISTIC ENGINE</span>
+          <span className="text-slate-600">•</span>
+          <span>⚖️ BONDIQ: 100% UD FABRIC QUOTA RECONCILED BEFORE GATE-IN</span>
+          <span className="text-slate-600">•</span>
+          <span>⚡ BILINGUAL DISCREPANCY DISPATCH (BANGLA & ENGLISH)</span>
+          <span className="text-slate-600">•</span>
+          <span>🚢 PREVENT $8,500 DEMURRAGE HOLDS & $30,000 AIR-FREIGHT PANIC</span>
         </div>
       </div>
 
@@ -85,9 +179,11 @@ export default function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Content (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold tracking-wide">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-semibold tracking-wide shadow-sm shadow-emerald-950">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>Chittagong Port Cut-Off Readiness Active</span>
+              <span className="font-mono text-[11px] uppercase tracking-wider text-emerald-300">
+                Chittagong Port Cut-Off Readiness Active
+              </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08]">
@@ -98,15 +194,15 @@ export default function HomePage() {
             </h1>
 
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-              ExportOps AI reconciles commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. 
-              Prevent container demurrage ($8,500/hold), eliminate air-freight panic, and guarantee clean bank presentation.
+              ExportOps AI cross-checks commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. 
+              Prevent container demurrage ($8,500/hold), eliminate air-freight panic, and guarantee clean bank presentation under UCP 600.
             </p>
 
-            {/* CTAs */}
+            {/* Hero CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
                 href="/shipments/EXP-001"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5"
               >
                 <span>Launch Interactive Demo (EXP-001)</span>
                 <ArrowRight className="w-4 h-4" />
@@ -123,16 +219,16 @@ export default function HomePage() {
             {/* Trust Badges */}
             <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-400 border-t border-slate-800/80">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Deterministic Rules Engine (Zero Hallucination)</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="font-medium text-slate-300">Deterministic Rules (Zero Hallucination)</span>
               </div>
               <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-indigo-400" />
-                <span>BGMEA e-UD Reconciled</span>
+                <Layers className="w-4 h-4 text-indigo-400 shrink-0" />
+                <span className="font-medium text-slate-300">BGMEA e-UD Reconciled</span>
               </div>
               <div className="flex items-center gap-2">
-                <FileCheck className="w-4 h-4 text-amber-400" />
-                <span>UCP 600 Bank Discrepancy Shield</span>
+                <FileCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="font-medium text-slate-300">UCP 600 Bank Discrepancy Shield</span>
               </div>
             </div>
           </div>
@@ -161,50 +257,74 @@ export default function HomePage() {
                   <Anchor className="w-4 h-4 text-emerald-400" />
                   <span className="font-mono font-bold text-slate-200">CHITTAGONG SEA PORT BERTH 4</span>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-700/60">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-700/60 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   RADAR ACTIVE
                 </span>
               </div>
 
-              {/* Targets */}
+              {/* Targets: Clickable Live Radar Blips */}
               <div className="relative z-10 my-auto space-y-3 font-mono text-xs">
                 {/* Target 1: EXP-001 (Blocked Alert) */}
-                <div className="p-3.5 bg-red-950/70 border border-red-500/50 rounded-xl backdrop-blur-sm flex items-center justify-between shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
-                    <div>
-                      <p className="font-bold text-red-200">EXP-001 • MSKU-781920-4</p>
-                      <p className="text-[10px] text-red-300 font-sans mt-0.5">
-                        Invoice (12k pcs) != Packing list (11.4k pcs)
-                      </p>
+                <Link
+                  href="/shipments/EXP-001"
+                  className="block p-3.5 bg-red-950/80 border border-red-500/60 rounded-xl backdrop-blur-sm shadow-lg hover:border-red-400 hover:scale-[1.02] transition-all group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
+                      <div>
+                        <p className="font-bold text-red-200 group-hover:text-white transition-colors">
+                          EXP-001 • MSKU-781920-4
+                        </p>
+                        <p className="text-[10px] text-red-300 font-sans mt-0.5">
+                          Invoice (12,000 pcs) != Packing list (11,400 pcs)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] shrink-0">
+                        BLOCKED
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 text-red-400 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] shrink-0">
-                    BLOCKED
-                  </span>
-                </div>
+                </Link>
 
                 {/* Target 2: EXP-005 (Customs-Ready) */}
-                <div className="p-3.5 bg-emerald-950/70 border border-emerald-500/50 rounded-xl backdrop-blur-sm flex items-center justify-between shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0" />
-                    <div>
-                      <p className="font-bold text-emerald-200">EXP-005 • MSKU-908234-7</p>
-                      <p className="text-[10px] text-emerald-300 font-sans mt-0.5">
-                        All 8 rules passed • Gate-In Pass Issued
-                      </p>
+                <Link
+                  href="/shipments/EXP-005"
+                  className="block p-3.5 bg-emerald-950/80 border border-emerald-500/60 rounded-xl backdrop-blur-sm shadow-lg hover:border-emerald-400 hover:scale-[1.02] transition-all group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0" />
+                      <div>
+                        <p className="font-bold text-emerald-200 group-hover:text-white transition-colors">
+                          EXP-005 • MSKU-908234-7
+                        </p>
+                        <p className="text-[10px] text-emerald-300 font-sans mt-0.5">
+                          All 8 rules passed • Gate-In Pass Issued
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shrink-0">
+                        READY
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shrink-0">
-                    READY
-                  </span>
-                </div>
+                </Link>
               </div>
 
               {/* Radar Footer */}
               <div className="relative z-10 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-mono">
                 <span>Vessel: MAERSK HAVEN</span>
-                <span className="text-emerald-400 font-semibold">Cut-Off: 48h Remaining</span>
+                <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  Cut-Off: 48h Remaining
+                </span>
               </div>
             </div>
           </div>
@@ -221,15 +341,21 @@ export default function HomePage() {
             A Garment Shipment Fails on Paperwork, Not Production
           </h2>
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Over 15% of garment containers leaving Bangladesh face documentation queries at customs, banks, or shipping lines. 
+            Over 15% of garment export containers leaving Bangladesh face documentation queries at customs, banks, or shipping lines. 
             The financial consequences are catastrophic for factory profit margins.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1: Demurrage */}
           <div className="glass-panel p-6 rounded-2xl hover:border-red-500/60 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center font-bold">
-              <AlertOctagon className="w-5 h-5" />
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center font-bold">
+                <AlertOctagon className="w-5 h-5" />
+              </div>
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-950 text-red-400 border border-red-800/60">
+                CRITICAL HOLD
+              </span>
             </div>
             <h3 className="font-bold text-white text-base">Port Demurrage Fees</h3>
             <p className="text-2xl font-extrabold font-mono text-red-400">$8,500+</p>
@@ -238,9 +364,15 @@ export default function HomePage() {
             </p>
           </div>
 
+          {/* Card 2: Air-Freight */}
           <div className="glass-panel p-6 rounded-2xl hover:border-amber-500/60 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
-              <Clock className="w-5 h-5" />
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
+                <Clock className="w-5 h-5" />
+              </div>
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950 text-amber-400 border border-amber-800/60">
+                MARGIN WIPEOUT
+              </span>
             </div>
             <h3 className="font-bold text-white text-base">Emergency Air-Freight</h3>
             <p className="text-2xl font-extrabold font-mono text-amber-400">$30,000+</p>
@@ -249,9 +381,15 @@ export default function HomePage() {
             </p>
           </div>
 
+          {/* Card 3: Bond Audit */}
           <div className="glass-panel p-6 rounded-2xl hover:border-indigo-500/60 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold">
-              <Layers className="w-5 h-5" />
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold">
+                <Layers className="w-5 h-5" />
+              </div>
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-950 text-indigo-400 border border-indigo-800/60">
+                BOND AUDIT RISK
+              </span>
             </div>
             <h3 className="font-bold text-white text-base">Bonded Fabric Audits</h3>
             <p className="text-2xl font-extrabold font-mono text-indigo-400">Customs Penalties</p>
@@ -260,12 +398,18 @@ export default function HomePage() {
             </p>
           </div>
 
+          {/* Card 4: Bank Discrepancy */}
           <div className="glass-panel p-6 rounded-2xl hover:border-blue-500/60 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
-              <FileText className="w-5 h-5" />
+            <div className="flex items-center justify-between">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
+                <FileText className="w-5 h-5" />
+              </div>
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-950 text-blue-400 border border-blue-800/60">
+                PAYMENT DELAYS
+              </span>
             </div>
             <h3 className="font-bold text-white text-base">Bank Discrepancies</h3>
-            <p className="text-2xl font-extrabold font-mono text-blue-400">Payment Delays</p>
+            <p className="text-2xl font-extrabold font-mono text-blue-400">Cashflow Freeze</p>
             <p className="text-xs text-slate-400 leading-relaxed">
               A single typo in consignee name or shipment date outside the LC latest window triggers bank discrepancy notices under UCP 600, holding back export remittances for weeks.
             </p>
@@ -280,7 +424,7 @@ export default function HomePage() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Live Interactive Hackathon Prototype</span>
+                <span>Live Interactive Prototype</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 Active Shipments Control Tower
@@ -294,14 +438,14 @@ export default function HomePage() {
             <div className="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-xl flex items-center gap-3">
               <Flame className="w-5 h-5 text-amber-400 shrink-0" />
               <div className="text-xs">
-                <span className="font-bold text-amber-300">Start with EXP-001:</span>
-                <p className="text-slate-300 text-[11px]">Test AI extraction & one-click quantity remediation.</p>
+                <span className="font-bold text-amber-300">Recommended Demo:</span>
+                <p className="text-slate-300 text-[11px]">Start with EXP-001 for 1-click quantity remediation.</p>
               </div>
               <Link
                 href="/shipments/EXP-001"
                 className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition-colors ml-2 shrink-0"
               >
-                Inspect
+                Inspect EXP-001
               </Link>
             </div>
           </div>
@@ -328,12 +472,12 @@ export default function HomePage() {
 
           {/* Filter & Search Bar */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-1.5 bg-[#080d15] p-1 rounded-xl border border-slate-800">
+            <div className="flex items-center gap-1.5 bg-[#080d15] p-1 rounded-xl border border-slate-800 overflow-x-auto">
               {(['All', 'Blocked', 'At risk', 'Customs-ready'] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setFilter(tab)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shrink-0 ${
                     filter === tab
                       ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm'
                       : 'text-slate-400 hover:text-white'
@@ -372,72 +516,83 @@ export default function HomePage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60 font-sans">
-                  {filteredShipments.map((s) => {
-                    const isBlocked = s.status === 'Blocked';
-                    const isAtRisk = s.status === 'At risk';
-                    const isReady = s.status === 'Customs-ready';
+                  {filteredShipments.length > 0 ? (
+                    filteredShipments.map((s) => {
+                      const isBlocked = s.status === 'Blocked';
+                      const isAtRisk = s.status === 'At risk';
+                      const isReady = s.status === 'Customs-ready';
 
-                    return (
-                      <tr key={s.id} className="hover:bg-slate-900/40 transition-colors">
-                        <td className="py-3.5 px-4 sm:px-6 font-mono font-bold text-white">
-                          <Link href={`/shipments/${s.id}`} className="hover:text-emerald-400 transition-colors">
-                            {s.id}
-                          </Link>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <p className="font-semibold text-slate-200">{s.buyer}</p>
-                          <p className="text-[11px] text-slate-400">{s.supplier}</p>
-                        </td>
-                        <td className="py-3.5 px-4 font-mono text-[11px] text-slate-300">
-                          <div>PO: {s.poNumber}</div>
-                          <div className="text-slate-500">LC: {s.lcId}</div>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          {isBlocked && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-950 text-red-300 border border-red-700 font-mono">
-                              <AlertOctagon className="w-3 h-3 text-red-400" />
-                              Blocked
-                            </span>
-                          )}
-                          {isAtRisk && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-700 font-mono">
-                              <AlertTriangle className="w-3 h-3 text-amber-400" />
-                              At Risk
-                            </span>
-                          )}
-                          {isReady && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700 font-mono">
-                              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                              Customs-Ready
-                            </span>
-                          )}
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <span className={`font-mono font-bold text-sm ${
-                            s.bankReadyScore >= 90 ? 'text-emerald-400' : s.bankReadyScore >= 75 ? 'text-amber-400' : 'text-red-400'
-                          }`}>
-                            {s.bankReadyScore}/100
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4 text-slate-400 max-w-xs truncate" title={s.id}>
-                          {s.id === 'EXP-001' && 'Invoice Qty != Packing List (-600 pcs)'}
-                          {s.id === 'EXP-002' && 'Shipment past LC date & missing COO'}
-                          {s.id === 'EXP-003' && 'Fabric consumed > UD quota (+2,500 kg)'}
-                          {s.id === 'EXP-004' && 'Container missing from packing list'}
-                          {s.id === 'EXP-005' && 'All 8 rules passed (Clean)'}
-                        </td>
-                        <td className="py-3.5 px-4 text-right">
-                          <Link
-                            href={`/shipments/${s.id}`}
-                            className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold hover:underline font-mono"
-                          >
-                            <span>Inspect</span>
-                            <ChevronRight className="w-3.5 h-3.5" />
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                      return (
+                        <tr key={s.id} className="hover:bg-slate-900/50 transition-colors">
+                          <td className="py-3.5 px-4 sm:px-6 font-mono font-bold text-white">
+                            <Link href={`/shipments/${s.id}`} className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                              <span>{s.id}</span>
+                              <ExternalLink className="w-3 h-3 text-slate-500 opacity-60 hover:opacity-100" />
+                            </Link>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <p className="font-semibold text-slate-200">{s.buyer}</p>
+                            <p className="text-[11px] text-slate-400">{s.supplier}</p>
+                          </td>
+                          <td className="py-3.5 px-4 font-mono text-[11px] text-slate-300">
+                            <div>PO: {s.poNumber}</div>
+                            <div className="text-slate-500">LC: {s.lcId}</div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            {isBlocked && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-950 text-red-300 border border-red-700 font-mono">
+                                <AlertOctagon className="w-3 h-3 text-red-400" />
+                                Blocked
+                              </span>
+                            )}
+                            {isAtRisk && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-700 font-mono">
+                                <AlertTriangle className="w-3 h-3 text-amber-400" />
+                                At Risk
+                              </span>
+                            )}
+                            {isReady && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700 font-mono">
+                                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                                Customs-Ready
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <div className="flex items-center gap-2">
+                              <span className={`font-mono font-bold text-sm ${
+                                s.bankReadyScore >= 90 ? 'text-emerald-400' : s.bankReadyScore >= 75 ? 'text-amber-400' : 'text-red-400'
+                              }`}>
+                                {s.bankReadyScore}/100
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4 text-slate-400 max-w-xs truncate" title={s.id}>
+                            {s.id === 'EXP-001' && 'Invoice Qty != Packing List (-600 pcs)'}
+                            {s.id === 'EXP-002' && 'Shipment past LC date & missing COO'}
+                            {s.id === 'EXP-003' && 'Fabric consumed > UD quota (+2,500 kg)'}
+                            {s.id === 'EXP-004' && 'Container missing from packing list'}
+                            {s.id === 'EXP-005' && 'All 8 rules passed (Clean baseline)'}
+                          </td>
+                          <td className="py-3.5 px-4 text-right">
+                            <Link
+                              href={`/shipments/${s.id}`}
+                              className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold hover:underline font-mono"
+                            >
+                              <span>Inspect</span>
+                              <ChevronRight className="w-3.5 h-3.5" />
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan={7} className="py-8 text-center text-slate-500 font-mono">
+                        No shipments match the filter "{filter}" or search query "{searchTerm}".
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -455,18 +610,18 @@ export default function HomePage() {
             How Messy Trade Papers Become Customs-Ready in 60s
           </h2>
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            AI reads and explains; pure TypeScript deterministic code makes the legal clearance decision.
+            AI reads and explains; pure TypeScript deterministic code executes the legal clearance decision.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
           <div className="glass-panel p-6 rounded-2xl space-y-3 relative hover:border-emerald-500/40 transition-colors">
             <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm">
               01
             </span>
             <h3 className="font-bold text-white text-base">Trade Docs Ingested</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Accepts Commercial Invoice, Packing List, PO, Export LC, Certificate of Origin, and Bond records via file drop or system sync.
+              Accepts Commercial Invoice, Packing List, PO, Export LC, Certificate of Origin, and Bond records via drag-and-drop or ERP sync.
             </p>
           </div>
 
@@ -496,49 +651,50 @@ export default function HomePage() {
             </span>
             <h3 className="font-bold text-white text-base">Customs Pass Issued</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Shipment flips to Customs-Ready, issuing a Chittagong Port Gate-In Pass with cryptographic verification hash and QR code for clearing agents.
+              Shipment flips to Customs-Ready, generating an official Chittagong Port Gate-In Pass with cryptographic verification hash and QR code.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 6. Interactive Feature Showcase (Tabbed) */}
+      {/* 6. Interactive Feature Showcase (Tabbed with Live Demos) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">Product Deep-Dive</span>
           <h2 className="text-3xl font-extrabold text-white tracking-tight">Enterprise Suite Modules</h2>
           <p className="text-xs sm:text-sm text-slate-400">Built specifically for Bangladeshi garment factories and clearing agents.</p>
         </div>
 
-        {/* Tabs */}
+        {/* Tab Switcher */}
         <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2 text-xs font-semibold">
           <button
             onClick={() => setActiveFeatureTab('studio')}
-            className={`px-4 py-2 rounded-xl transition-all ${
-              activeFeatureTab === 'studio' ? 'bg-emerald-500 text-slate-950 font-bold' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+            className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
+              activeFeatureTab === 'studio' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Inspection Studio
           </button>
           <button
             onClick={() => setActiveFeatureTab('bond')}
-            className={`px-4 py-2 rounded-xl transition-all ${
-              activeFeatureTab === 'bond' ? 'bg-emerald-500 text-slate-950 font-bold' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+            className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
+              activeFeatureTab === 'bond' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             BondIQ Fabric Ledger
           </button>
           <button
             onClick={() => setActiveFeatureTab('alerts')}
-            className={`px-4 py-2 rounded-xl transition-all ${
-              activeFeatureTab === 'alerts' ? 'bg-emerald-500 text-slate-950 font-bold' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+            className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
+              activeFeatureTab === 'alerts' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Floor WhatsApp Alerts
           </button>
           <button
             onClick={() => setActiveFeatureTab('compliance')}
-            className={`px-4 py-2 rounded-xl transition-all ${
-              activeFeatureTab === 'compliance' ? 'bg-emerald-500 text-slate-950 font-bold' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
+            className={`px-4 py-2.5 rounded-xl transition-all shrink-0 ${
+              activeFeatureTab === 'compliance' ? 'bg-emerald-500 text-slate-950 font-bold shadow-md' : 'bg-[#0b101a] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Buyer Compliance (H&M, Zara)
@@ -546,13 +702,17 @@ export default function HomePage() {
         </div>
 
         {/* Feature Tab Card */}
-        <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-8 shadow-2xl">
+        <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl">
+          {/* TAB 1: Inspection Studio */}
           {activeFeatureTab === 'studio' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono">
+                  <span>MODULE 01: DUAL-WINDOW AUDITOR</span>
+                </div>
                 <h3 className="text-2xl font-bold text-white">Side-by-Side Document Inspection Studio</h3>
                 <p className="text-slate-300 text-sm leading-relaxed font-normal">
-                  No more switching between 5 different PDF windows and printed Excel sheets. ExportOps AI aligns the Commercial Invoice, Packing List, and LC side-by-side with line-item highlighting.
+                  No more switching between 5 different PDF windows and printed Excel sheets. ExportOps AI aligns the Commercial Invoice, Packing List, and LC side-by-side with line-item discrepancy highlighting.
                 </p>
                 <div className="space-y-2 text-xs text-slate-400">
                   <div className="flex items-center gap-2">
@@ -568,26 +728,70 @@ export default function HomePage() {
                     <span>Official printable Chittagong Port Gate-In Pass</span>
                   </div>
                 </div>
-                <Link
-                  href="/shipments/EXP-001"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 pt-2 font-mono"
-                >
-                  <span>Open Studio for EXP-001 →</span>
-                </Link>
+                <div className="pt-2 flex items-center gap-3">
+                  <Link
+                    href="/shipments/EXP-001"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg transition-colors font-mono"
+                  >
+                    <span>Open Live Studio (EXP-001)</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
-              <div className="p-5 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono text-emerald-400 shadow-inner">
-                <p className="text-slate-500 text-[10px] pb-2 border-b border-slate-800">// Split Screen Audit Preview</p>
-                <p className="pt-2 text-white">INVOICE: 12,000 PCS @ $6.00 = $72,000</p>
-                <p className="text-red-400 font-bold">PACKING LIST: 11,400 PCS (475 Ctns)</p>
-                <p className="text-amber-400 mt-2">→ RULE R1 FAILED: 600 PCS MISMATCH DETECTED</p>
-                <p className="text-emerald-400 mt-2">✓ User updates to 12,000 PCS: STATUS CLEARED</p>
+
+              {/* Interactive Diff Simulator */}
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono shadow-inner space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <span className="text-slate-400 text-[11px] font-semibold">// Interactive Audit Simulator</span>
+                  <button
+                    onClick={() => setStudioResolved(!studioResolved)}
+                    className="px-2.5 py-1 rounded text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+                  >
+                    {studioResolved ? 'Reset to Mismatch' : 'Simulate 1-Click Fix'}
+                  </button>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  <div className="p-2.5 bg-slate-900/80 rounded-lg flex justify-between">
+                    <span className="text-slate-400">COMMERCIAL INVOICE:</span>
+                    <span className="text-white font-bold">12,000 PCS ($72,000)</span>
+                  </div>
+                  <div className={`p-2.5 rounded-lg flex justify-between transition-colors ${
+                    studioResolved ? 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-300' : 'bg-red-950/60 border border-red-500/40 text-red-300'
+                  }`}>
+                    <span>PACKING LIST:</span>
+                    <span className="font-bold">{studioResolved ? '12,000 PCS (500 Ctns)' : '11,400 PCS (475 Ctns)'}</span>
+                  </div>
+                </div>
+
+                <div className={`p-3 rounded-xl border text-[11px] leading-relaxed transition-all ${
+                  studioResolved
+                    ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300'
+                    : 'bg-red-950/40 border-red-500/50 text-red-300'
+                }`}>
+                  {studioResolved ? (
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>RULE R1 PASSED: Quantities match exactly (12,000 pcs). Gate-In Pass Ready!</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <AlertOctagon className="w-4 h-4 text-red-400 shrink-0" />
+                      <span>RULE R1 FAILED: 600 PCS Deficit detected between Invoice and Packing List.</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
 
+          {/* TAB 2: BondIQ Fabric Ledger */}
           {activeFeatureTab === 'bond' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 text-[11px] font-mono">
+                  <span>MODULE 02: CUSTOMS BOND COMPLIANCE</span>
+                </div>
                 <h3 className="text-2xl font-bold text-white">BondIQ: Fabric Math & UD Quota Ledger</h3>
                 <p className="text-slate-300 text-sm leading-relaxed font-normal">
                   Bonded raw material audits are Bangladesh's biggest export compliance hazard. BondIQ automatically computes fabric consumption per dozen, adds cutting wastage, and balances usage against approved BGMEA Utilization Declaration (UD) quotas.
@@ -602,30 +806,87 @@ export default function HomePage() {
                     <span>Prevents export declaration if unlinked fabric usage is found (Rule R8)</span>
                   </div>
                 </div>
-                <Link
-                  href="/shipments/EXP-003"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 pt-2 font-mono"
-                >
-                  <span>See Bond Violation in EXP-003 →</span>
-                </Link>
+                <div className="pt-2">
+                  <Link
+                    href="/shipments/EXP-003"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-lg transition-colors font-mono"
+                  >
+                    <span>Inspect Violation in EXP-003</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
-              <div className="p-5 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono text-indigo-300 shadow-inner space-y-1">
-                <p className="text-slate-500 text-[10px] pb-2 border-b border-slate-800">// Industrial Fabric Ledger</p>
-                <p className="pt-2">ORDER: 12,000 PCS = 1,000 Dozen</p>
-                <p>CONSUMPTION: 2.40 kg/dzn @ 160 GSM = 2,400 kg</p>
-                <p>WASTAGE (5%): +120 kg</p>
-                <p className="text-emerald-400 font-bold">TOTAL RECONCILED NEED: 2,520 kg</p>
-                <p className="text-slate-400">UD #UD-2026-BGMEA-4410 QUOTA: 4,000 kg (APPROVED)</p>
+
+              {/* Interactive Garment Math Preset Selector */}
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs font-mono text-slate-200 shadow-inner space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <span className="text-slate-400 text-[11px] font-semibold">// Select Garment Preset</span>
+                  <div className="flex items-center gap-1">
+                    {(['tshirt', 'hoodie', 'denim'] as const).map((type) => (
+                      <button
+                        key={type}
+                        onClick={() => setBondGarmentType(type)}
+                        className={`px-2 py-1 rounded text-[10px] font-bold uppercase transition-colors ${
+                          bondGarmentType === type
+                            ? 'bg-indigo-600 text-white'
+                            : 'bg-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 text-xs">
+                  <div className="text-indigo-300 font-bold">{garmentPresets[bondGarmentType].name}</div>
+                  <div className="flex justify-between text-slate-400 text-[11px]">
+                    <span>Fabric Weight (GSM):</span>
+                    <span className="text-white">{garmentPresets[bondGarmentType].gsm} GSM</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400 text-[11px]">
+                    <span>Consumption Formula:</span>
+                    <span className="text-white">{garmentPresets[bondGarmentType].dznCons}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400 text-[11px]">
+                    <span>Order Batch Size:</span>
+                    <span className="text-white">{garmentPresets[bondGarmentType].orderQty}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400 text-[11px]">
+                    <span>Cutting Wastage (5%):</span>
+                    <span className="text-amber-400">{garmentPresets[bondGarmentType].wastage}</span>
+                  </div>
+                  <div className="flex justify-between text-white font-bold pt-1 border-t border-slate-800">
+                    <span>Total Required Fabric:</span>
+                    <span className="text-indigo-400">{garmentPresets[bondGarmentType].totalFabric}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400 text-[11px]">
+                    <span>BGMEA UD Quota:</span>
+                    <span className="text-white">{garmentPresets[bondGarmentType].udQuota}</span>
+                  </div>
+                </div>
+
+                <div className={`p-3 rounded-xl border text-[11px] font-bold ${
+                  garmentPresets[bondGarmentType].isSafe
+                    ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300'
+                    : 'bg-red-950/40 border-red-500/50 text-red-300'
+                }`}>
+                  {garmentPresets[bondGarmentType].status}
+                </div>
               </div>
             </div>
           )}
 
+          {/* TAB 3: Floor WhatsApp Alerts */}
           {activeFeatureTab === 'alerts' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono">
+                  <span>MODULE 03: INSTANT DISPATCH</span>
+                </div>
                 <h3 className="text-2xl font-bold text-white">Bilingual Floor & C&F WhatsApp Dispatcher</h3>
                 <p className="text-slate-300 text-sm leading-relaxed font-normal">
-                  When a mismatch is caught at midnight before vessel cut-off, merchandisers don't have time to write emails. ExportOps AI instantly generates formatted, urgency-ranked WhatsApp messages in Bangla and English.
+                  When a mismatch is caught at midnight before vessel cut-off, merchandisers don't have time to draft emails. ExportOps AI generates formatted, urgency-ranked WhatsApp messages in Bangla and English for instant floor remediation.
                 </p>
                 <div className="space-y-2 text-xs text-slate-400">
                   <div className="flex items-center gap-2">
@@ -637,24 +898,78 @@ export default function HomePage() {
                     <span>Bilingual instructions: clear action steps for floor in-charges</span>
                   </div>
                 </div>
+                <div className="pt-2 flex items-center gap-3">
+                  <button
+                    onClick={handleCopyAlert}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-lg transition-colors font-mono"
+                  >
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>{copiedAlert ? 'Copied to Clipboard!' : 'Copy Dispatch Message'}</span>
+                  </button>
+                </div>
               </div>
-              <div className="p-5 bg-[#070b13] rounded-2xl border border-emerald-500/40 text-xs font-mono text-emerald-200 shadow-inner space-y-1">
-                <p className="text-emerald-400 font-bold">🚨 EXPORTOPS AI: URGENT COMPLIANCE ALERT</p>
-                <p className="text-slate-300">📦 Shipment: EXP-001 (Nordic Retailers)</p>
-                <p className="text-red-400">⚠️ Issue: Quantity Mismatch (-600 PCS)</p>
-                <p className="pt-2 text-slate-300 font-sans text-[11px] leading-relaxed">
-                  ❗ জরুরি অ্যাকশন: ফ্লোরে প্যাকিং লিস্টের কার্টন সংখ্যা রি-চেক করুন। ৫০০ কার্টন রেডি থাকলে প্যাকিং লিস্ট আপডেট করুন।
-                </p>
+
+              {/* Interactive WhatsApp Message Simulator */}
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-emerald-500/30 text-xs font-mono shadow-inner space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    WhatsApp Discrepancy Dispatch
+                  </span>
+                  <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+                    <button
+                      onClick={() => setAlertLanguage('bn')}
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold ${
+                        alertLanguage === 'bn' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'
+                      }`}
+                    >
+                      বাংলা
+                    </button>
+                    <button
+                      onClick={() => setAlertLanguage('en')}
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold ${
+                        alertLanguage === 'en' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'
+                      }`}
+                    >
+                      English
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-[#0a1410] border border-emerald-500/20 rounded-xl space-y-2 text-xs">
+                  <p className="text-emerald-400 font-bold">🚨 EXPORTOPS AI: URGENT COMPLIANCE ALERT</p>
+                  <p className="text-slate-300">📦 Shipment: EXP-001 (Nordic Retailers)</p>
+                  <p className="text-red-400 font-semibold">⚠️ Issue: Quantity Mismatch (-600 PCS vs Invoice)</p>
+                  
+                  {alertLanguage === 'bn' ? (
+                    <div className="pt-2 text-slate-200 font-bengali text-sm leading-relaxed border-t border-emerald-950">
+                      ❗ <strong>জরুরি অ্যাকশন:</strong> ফ্লোরে প্যাকিং লিস্টের কার্টন সংখ্যা রি-চেক করুন। ৫০০ কার্টন রেডি থাকলে প্যাকিং লিস্ট আপডেট করে দ্রুত ক্লিয়ারিং এজেন্টের কাছে পাঠান। জাহাজ কাট-অফ বাকি: ৪৮ ঘণ্টা।
+                    </div>
+                  ) : (
+                    <div className="pt-2 text-slate-200 font-sans text-xs leading-relaxed border-t border-emerald-950">
+                      ❗ <strong>URGENT ACTION:</strong> Verify carton counts on factory packing floor. If 500 cartons are verified, update packing list and transmit to Chittagong C&F agent. Remaining vessel cut-off: 48h.
+                    </div>
+                  )}
+                </div>
+
+                <div className="text-[11px] text-slate-500 flex justify-between">
+                  <span>Priority: HIGH • CUT-OFF RISK</span>
+                  <span>Recipient: Factory Ops + C&F Lead</span>
+                </div>
               </div>
             </div>
           )}
 
+          {/* TAB 4: Buyer Compliance */}
           {activeFeatureTab === 'compliance' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 text-[11px] font-mono">
+                  <span>MODULE 04: RETAIL CHARGEBACK SHIELD</span>
+                </div>
                 <h3 className="text-2xl font-bold text-white">Global Buyer Compliance Rulebook</h3>
                 <p className="text-slate-300 text-sm leading-relaxed font-normal">
-                  Go beyond customs. International buyers enforce strict packaging, barcode, and RFID rules. Prevent expensive $1.50 - $3.00 per-carton retailer chargebacks at European distribution centers.
+                  Go beyond customs. International retail giants enforce strict packaging, barcode, and RFID rules. Prevent expensive $1.50 - $3.00 per-carton retailer chargebacks at European and American distribution hubs.
                 </p>
                 <div className="space-y-2 text-xs text-slate-400">
                   <div className="flex items-center gap-2">
@@ -670,25 +985,49 @@ export default function HomePage() {
                     <span>Target & Walmart GS1-128 barcode and carton weight checks</span>
                   </div>
                 </div>
-                <Link
-                  href="/compliance"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 pt-2 font-mono"
-                >
-                  <span>Explore Buyer Rulebook →</span>
-                </Link>
+                <div className="pt-2">
+                  <Link
+                    href="/compliance"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-colors font-mono"
+                  >
+                    <span>Explore Buyer Directory</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
-              <div className="p-5 bg-[#070b13] rounded-2xl border border-slate-800 text-xs space-y-2">
-                <div className="flex justify-between items-center text-slate-300 font-mono">
-                  <span>H&M Ratio Pack (HM-01)</span>
-                  <span className="text-emerald-400 font-bold">COMPLIANT</span>
+
+              {/* Retailer Rulebook Matrix Preview */}
+              <div className="p-6 bg-[#070b13] rounded-2xl border border-slate-800 text-xs space-y-3 font-mono">
+                <p className="text-slate-400 text-[11px] pb-2 border-b border-slate-800">// Retailer Compliance Matrix</p>
+                
+                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                  <div>
+                    <span className="font-bold text-white">H&M Group (HM-01)</span>
+                    <p className="text-[10px] text-slate-400">Ratio Pack & Suffocation Warning</p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold border border-emerald-800 text-[10px]">
+                    PASSED
+                  </span>
                 </div>
-                <div className="flex justify-between items-center text-slate-300 font-mono">
-                  <span>Inditex RFID Inlay (ZRA-01)</span>
-                  <span className="text-emerald-400 font-bold">COMPLIANT</span>
+
+                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                  <div>
+                    <span className="font-bold text-white">Inditex / Zara (ZRA-01)</span>
+                    <p className="text-[10px] text-slate-400">UHF Gen2 EPC RFID Inlay Audit</p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold border border-emerald-800 text-[10px]">
+                    PASSED
+                  </span>
                 </div>
-                <div className="flex justify-between items-center text-slate-300 font-mono">
-                  <span>Carton Weight &lt; 20kg (TGT-02)</span>
-                  <span className="text-emerald-400 font-bold">COMPLIANT</span>
+
+                <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                  <div>
+                    <span className="font-bold text-white">Target US (TGT-02)</span>
+                    <p className="text-[10px] text-slate-400">Max Carton Gross Weight &lt; 20kg</p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold border border-emerald-800 text-[10px]">
+                    PASSED
+                  </span>
                 </div>
               </div>
             </div>
@@ -696,52 +1035,123 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Quick ROI Widget Section */}
+      {/* 7. Interactive ROI & Demurrage Savings Calculator */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-12 rounded-3xl border border-emerald-500/40 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
-          <div className="space-y-3 max-w-xl">
+        <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-12 rounded-3xl border border-emerald-500/40 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl">
+          <div className="space-y-4 max-w-xl">
             <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">The Business Case</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Calculate Your Factory's Monthly Savings
             </h2>
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-normal">
-              Drag the slider to see how much avoidable demurrage and air-freight penalties your factory prevents every month with ExportOps AI.
+              Drag the volume slider to see how much avoidable demurrage, air-freight penalties, and documentation overtime your factory eliminates every month with ExportOps AI.
             </p>
 
-            <div className="pt-3 space-y-1">
+            <div className="pt-2 space-y-2">
               <div className="flex justify-between text-xs text-slate-300 font-mono">
-                <span>Monthly Export Containers: {quickContainers}</span>
-                <span className="text-emerald-400 font-bold">${estimatedSavings.toLocaleString()} / mo Saved</span>
+                <span>Monthly Export Containers: <strong className="text-white text-sm">{quickContainers} FCL</strong></span>
+                <span className="text-emerald-400 font-bold">${estimatedSavingsMonth.toLocaleString()} / mo Saved</span>
               </div>
               <input
                 type="range"
                 min="5"
-                max="60"
+                max="80"
                 step="5"
                 value={quickContainers}
                 onChange={(e) => setQuickContainers(Number(e.target.value))}
-                className="w-full accent-emerald-400 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                className="w-full accent-emerald-400 h-2.5 bg-slate-800 rounded-lg cursor-pointer"
               />
+              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                <span>5 Containers (Small Unit)</span>
+                <span>40 Containers (Mid Tier)</span>
+                <span>80 Containers (Large Group)</span>
+              </div>
+            </div>
+
+            {/* Micro Breakdown Stats */}
+            <div className="grid grid-cols-3 gap-3 pt-2 text-[11px] font-mono">
+              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800">
+                <span className="text-slate-400 block text-[10px]">Demurrage Avoided</span>
+                <span className="text-emerald-400 font-bold">${(quickContainers * 1275).toLocaleString()}</span>
+              </div>
+              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800">
+                <span className="text-slate-400 block text-[10px]">Air-Freight Risk</span>
+                <span className="text-emerald-400 font-bold">${(quickContainers * 850).toLocaleString()}</span>
+              </div>
+              <div className="bg-[#070b13]/80 p-2.5 rounded-lg border border-slate-800">
+                <span className="text-slate-400 block text-[10px]">Hours Saved</span>
+                <span className="text-emerald-400 font-bold">{(quickContainers * 4)} hrs/mo</span>
+              </div>
             </div>
           </div>
 
-          <div className="text-center md:text-right shrink-0 space-y-3">
-            <p className="text-4xl sm:text-5xl font-black font-mono text-emerald-400">
-              ${(estimatedSavings * 12).toLocaleString()}
+          <div className="text-center lg:text-right shrink-0 space-y-4 bg-[#070b13]/60 p-8 rounded-2xl border border-slate-800">
+            <div>
+              <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">Projected Annual Factory Savings</p>
+              <p className="text-4xl sm:text-5xl font-black font-mono text-emerald-400 mt-1">
+                ${estimatedSavingsAnnual.toLocaleString()}
+              </p>
+            </div>
+            <p className="text-xs text-slate-400 max-w-xs font-sans">
+              Based on Chittagong Port $8,500 average 5-day demurrage hold and 15% discrepancy rates.
             </p>
-            <p className="text-xs text-slate-400 font-mono">Projected Annual Savings</p>
-            <Link
-              href="/roi"
-              className="inline-flex items-center gap-1.5 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-colors"
-            >
-              <span>Explore Pricing Plans (From ৳30k/mo)</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            <div>
+              <Link
+                href="/roi"
+                className="inline-flex items-center gap-1.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-colors"
+              >
+                <span>Explore Pricing Plans (From ৳30k/mo)</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 8. Social Proof & Factory Voices */}
+      {/* 8. Technical Architecture & FAQ Accordion */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold text-emerald-400 uppercase font-mono tracking-wider">
+            Verification & Integrity
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Frequently Asked Technical Questions
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-400">
+            Why industry compliance officers and hackathon judges trust the ExportOps AI architecture.
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-3">
+          {faqs.map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div 
+                key={idx}
+                className="glass-panel rounded-2xl border border-slate-800 overflow-hidden transition-all"
+              >
+                <button
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-800/30 transition-colors"
+                >
+                  <span className="font-bold text-white text-sm sm:text-base flex items-center gap-2.5">
+                    <HelpCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>{faq.q}</span>
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform shrink-0 ${isOpen ? 'rotate-180 text-emerald-400' : ''}`} />
+                </button>
+                {isOpen && (
+                  <div className="px-5 pb-5 pt-1 text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-800/50">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 9. Social Proof & Industry Testimonials */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Trusted by Bangladesh Export Leaders</h2>
@@ -750,38 +1160,50 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
           <div className="glass-panel p-6 rounded-2xl space-y-3">
+            <div className="flex items-center gap-1 text-amber-400">
+              {'★'.repeat(5)}
+            </div>
             <p className="text-slate-300 italic leading-relaxed">
               "We used to spend 4 hours cross-checking packing lists with invoices on every H&M shipment. ExportOps AI caught a 600-piece carton deficit in 3 seconds before container stuffing."
             </p>
-            <div>
+            <div className="pt-2 border-t border-slate-800">
               <p className="font-bold text-white text-sm">Tariqul Islam</p>
-              <p className="text-[11px] text-slate-500">Sr. Export Documentation Manager, DEPZ Savar</p>
+              <p className="text-[11px] text-slate-400">Sr. Export Documentation Manager</p>
+              <span className="text-[10px] text-emerald-400 font-mono">DEPZ Savar Factory</span>
             </div>
           </div>
 
           <div className="glass-panel p-6 rounded-2xl space-y-3">
+            <div className="flex items-center gap-1 text-amber-400">
+              {'★'.repeat(5)}
+            </div>
             <p className="text-slate-300 italic leading-relaxed">
               "BondIQ alone saved our factory from a major customs audit. It prevented us from filing an export shipment that exceeded our approved BGMEA UD quota by 2,500 kg."
             </p>
-            <div>
+            <div className="pt-2 border-t border-slate-800">
               <p className="font-bold text-white text-sm">Shamima Akter</p>
-              <p className="text-[11px] text-slate-500">Commercial & Bond Compliance Lead, Gazipur</p>
+              <p className="text-[11px] text-slate-400">Commercial & Bond Compliance Lead</p>
+              <span className="text-[10px] text-indigo-400 font-mono">Gazipur Woven Composite</span>
             </div>
           </div>
 
           <div className="glass-panel p-6 rounded-2xl space-y-3">
+            <div className="flex items-center gap-1 text-amber-400">
+              {'★'.repeat(5)}
+            </div>
             <p className="text-slate-300 italic leading-relaxed">
               "As a C&F agent at Chittagong Port, getting clean paperwork before vessel cut-off is life or death. The bilingual WhatsApp alert feature gets floor revisions completed in minutes."
             </p>
-            <div>
+            <div className="pt-2 border-t border-slate-800">
               <p className="font-bold text-white text-sm">Rafiqul Karim</p>
-              <p className="text-[11px] text-slate-500">Managing Partner, Crown Logistics & C&F Agency</p>
+              <p className="text-[11px] text-slate-400">Managing Partner</p>
+              <span className="text-[10px] text-cyan-400 font-mono">Crown Logistics & C&F Agency</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 9. Final High-Converting Call to Action */}
+      {/* 10. Final High-Converting Call to Action */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="bg-gradient-to-br from-[#0b101a] via-[#070b13] to-[#0b101a] border border-slate-800 p-10 sm:p-14 rounded-3xl space-y-6 shadow-2xl">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -794,7 +1216,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
               href="/shipments/EXP-001"
-              className="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all"
+              className="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5"
             >
               Start Live Interactive Demo
             </Link>
