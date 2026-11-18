@@ -1,0 +1,443 @@
+[
+  {
+    "id": "EXP-001",
+    "buyer": "Nordic Retailers A/S",
+    "supplier": "Northfield Apparel Ltd.",
+    "poNumber": "PO-88219-NR",
+    "lcId": "LC-2026-DH-90112",
+    "containerNumber": "MSKU-781920-4",
+    "vesselCutoff": "2026-11-22T18:00:00Z",
+    "shipmentDate": "2026-11-20",
+    "status": "Blocked",
+    "bankReadyScore": 75,
+    "bondRecord": {
+      "shipmentId": "EXP-001",
+      "udNumber": "UD-2026-BGMEA-4410",
+      "fabricConsumedKg": 3600,
+      "udLinkedQuantityKg": 4000,
+      "status": "Approved"
+    },
+    "documents": [
+      {
+        "id": "DOC-001-PO",
+        "shipmentId": "EXP-001",
+        "type": "PO",
+        "fileName": "Buyer_PO_88219_Nordic.pdf",
+        "uploadedAt": "2026-11-18T09:15:00Z",
+        "fields": {
+          "buyerName": { "name": "Buyer Name", "value": "Nordic Retailers A/S", "confidence": 0.99, "sourceSnippet": "BUYER / ORDERING ENTITY: Nordic Retailers A/S, Copenhagen" },
+          "poNumber": { "name": "PO Number", "value": "PO-88219-NR", "confidence": 0.98, "sourceSnippet": "PURCHASE ORDER NO: PO-88219-NR" },
+          "orderQuantity": { "name": "Order Quantity", "value": 12000, "confidence": 0.99, "sourceSnippet": "TOTAL PIECES ORDERED: 12,000 PCS (Men's Basic Crewneck T-Shirt)" }
+        }
+      },
+      {
+        "id": "DOC-001-LC",
+        "shipmentId": "EXP-001",
+        "type": "LC",
+        "fileName": "Export_LC_90112_StandardChartered.pdf",
+        "uploadedAt": "2026-11-18T09:20:00Z",
+        "fields": {
+          "lcId": { "name": "LC Number", "value": "LC-2026-DH-90112", "confidence": 0.99, "sourceSnippet": "DOC CREDIT NUMBER: LC-2026-DH-90112" },
+          "lcAmount": { "name": "LC Amount", "value": 75000, "confidence": 0.98, "sourceSnippet": "32B: CURRENCY/AMOUNT: USD 75,000.00" },
+          "tolerancePercentage": { "name": "Tolerance %", "value": 5, "confidence": 0.95, "sourceSnippet": "39A: PERCENTAGE CREDIT AMOUNT TOLERANCE: 5/5" },
+          "latestShipmentDate": { "name": "Latest Shipment Date", "value": "2026-11-25", "confidence": 0.99, "sourceSnippet": "44C: LATEST DATE OF SHIPMENT: 2026-11-25" }
+        }
+      },
+      {
+        "id": "DOC-001-INV",
+        "shipmentId": "EXP-001",
+        "type": "Commercial Invoice",
+        "fileName": "Commercial_Invoice_INV-0412.pdf",
+        "uploadedAt": "2026-11-18T10:05:00Z",
+        "fields": {
+          "invoiceNumber": { "name": "Invoice Number", "value": "INV-0412", "confidence": 0.99, "sourceSnippet": "INVOICE NO: INV-0412 DATE: 18-NOV-2026" },
+          "consigneeName": { "name": "Consignee Name", "value": "Nordic Retailers A/S", "confidence": 0.98, "sourceSnippet": "CONSIGNEE: Nordic Retailers A/S, Toldbodgade 12, DK-1253" },
+          "totalQuantity": { "name": "Total Quantity", "value": 12000, "confidence": 0.98, "sourceSnippet": "TOTAL QUANTITY: 12,000 PCS" },
+          "invoiceAmount": { "name": "Invoice Amount", "value": 72000, "confidence": 0.99, "sourceSnippet": "TOTAL INVOICE VALUE: USD 72,000.00 FOB CTG" },
+          "hsCode": { "name": "HS Code", "value": "6109.10.00", "confidence": 0.97, "sourceSnippet": "H.S. CODE: 6109.10.00 (Knitted Cotton T-Shirts)" },
+          "shipmentDate": { "name": "Shipment Date", "value": "2026-11-20", "confidence": 0.96, "sourceSnippet": "ESTIMATED DEPARTURE: 20-NOV-2026" }
+        }
+      },
+      {
+        "id": "DOC-001-PL",
+        "shipmentId": "EXP-001",
+        "type": "Packing List",
+        "fileName": "Packing_List_PL-0412.pdf",
+        "uploadedAt": "2026-11-18T10:08:00Z",
+        "fields": {
+          "packingListNumber": { "name": "Packing List No", "value": "PL-0412", "confidence": 0.99, "sourceSnippet": "PACKING LIST FOR INV-0412" },
+          "totalQuantity": { "name": "Total Quantity", "value": 11400, "confidence": 0.97, "sourceSnippet": "GRAND TOTAL PIECES: 11,400 PCS (475 Cartons x 24)" },
+          "containerNumber": { "name": "Container Number", "value": "MSKU-781920-4", "confidence": 0.96, "sourceSnippet": "CONTAINER NO: MSKU-781920-4 / SEAL: ML-BD9821" },
+          "hsCode": { "name": "HS Code", "value": "6109.10.00", "confidence": 0.96, "sourceSnippet": "COMMODITY HS CODE: 6109.10.00" }
+        }
+      },
+      {
+        "id": "DOC-001-COO",
+        "shipmentId": "EXP-001",
+        "type": "Certificate of Origin",
+        "fileName": "COO_EPB_EXP001.pdf",
+        "uploadedAt": "2026-11-18T10:12:00Z",
+        "fields": {
+          "cooNumber": { "name": "COO Number", "value": "EPB-COO-2026-8911", "confidence": 0.98, "sourceSnippet": "EXPORT PROMOTION BUREAU COO NO: EPB-COO-2026-8911" },
+          "originCountry": { "name": "Origin Country", "value": "Bangladesh", "confidence": 0.99, "sourceSnippet": "COUNTRY OF ORIGIN: BANGLADESH" },
+          "hsCode": { "name": "HS Code", "value": "6109.10.00", "confidence": 0.97, "sourceSnippet": "HS CODE: 6109.10.00" }
+        }
+      }
+    ],
+    "timeline": [
+      { "id": "TL-1", "shipmentId": "EXP-001", "milestone": "Export LC Received & Accepted", "owner": "Commercial Team", "due": "2026-11-05", "completed": true },
+      { "id": "TL-2", "shipmentId": "EXP-001", "milestone": "Bonded Fabric Import & UD Issue", "owner": "Bond & Compliance", "due": "2026-11-10", "completed": true },
+      { "id": "TL-3", "shipmentId": "EXP-001", "milestone": "Production & Packaging Complete", "owner": "Factory Floor", "due": "2026-11-17", "completed": true },
+      { "id": "TL-4", "shipmentId": "EXP-001", "milestone": "Pre-Shipment Document Reconciliation", "owner": "ExportOps AI / Doc Manager", "due": "2026-11-18", "completed": false },
+      { "id": "TL-5", "shipmentId": "EXP-001", "milestone": "Port Cut-off & Vessel Loading", "owner": "C&F Agent", "due": "2026-11-22", "completed": false }
+    ],
+    "auditLog": [
+      { "id": "AUD-1", "shipmentId": "EXP-001", "actor": "System (Automated Ingestion)", "action": "Uploaded 5 trade documents", "timestamp": "2026-11-18T10:12:00Z", "details": "PO, LC, Invoice, Packing List, and COO parsed via Document Intelligence." },
+      { "id": "AUD-2", "shipmentId": "EXP-001", "actor": "Rules Engine", "action": "Rule R1 Failed: Quantity Discrepancy", "timestamp": "2026-11-18T10:12:05Z", "details": "Invoice (12,000 pcs) != Packing List (11,400 pcs). Shipment status set to Blocked." }
+    ]
+  },
+  {
+    "id": "EXP-002",
+    "buyer": "Zara Inditex S.A.",
+    "supplier": "Bay Island Garments",
+    "poNumber": "PO-ZRA-77190",
+    "lcId": "LC-2026-ES-33100",
+    "containerNumber": "CMAU-992144-1",
+    "vesselCutoff": "2026-11-20T12:00:00Z",
+    "shipmentDate": "2026-11-24",
+    "status": "Blocked",
+    "bankReadyScore": 50,
+    "bondRecord": {
+      "shipmentId": "EXP-002",
+      "udNumber": "UD-2026-BGMEA-3982",
+      "fabricConsumedKg": 5200,
+      "udLinkedQuantityKg": 5500,
+      "status": "Approved"
+    },
+    "documents": [
+      {
+        "id": "DOC-002-PO",
+        "shipmentId": "EXP-002",
+        "type": "PO",
+        "fileName": "Inditex_PO_ZRA_77190.pdf",
+        "uploadedAt": "2026-11-18T11:00:00Z",
+        "fields": {
+          "buyerName": { "name": "Buyer Name", "value": "Zara Inditex S.A.", "confidence": 0.99, "sourceSnippet": "BUYER: Zara Inditex S.A., Arteixo, Spain" },
+          "poNumber": { "name": "PO Number", "value": "PO-ZRA-77190", "confidence": 0.98, "sourceSnippet": "PO NUMBER: PO-ZRA-77190" }
+        }
+      },
+      {
+        "id": "DOC-002-LC",
+        "shipmentId": "EXP-002",
+        "type": "LC",
+        "fileName": "LC_Inditex_BBVA_33100.pdf",
+        "uploadedAt": "2026-11-18T11:02:00Z",
+        "fields": {
+          "lcId": { "name": "LC Number", "value": "LC-2026-ES-33100", "confidence": 0.99, "sourceSnippet": "LC NO: LC-2026-ES-33100" },
+          "lcAmount": { "name": "LC Amount", "value": 110000, "confidence": 0.98, "sourceSnippet": "LC VALUE: USD 110,000.00" },
+          "latestShipmentDate": { "name": "Latest Shipment Date", "value": "2026-11-15", "confidence": 0.99, "sourceSnippet": "44C: LATEST SHIPMENT DATE: 2026-11-15" }
+        }
+      },
+      {
+        "id": "DOC-002-INV",
+        "shipmentId": "EXP-002",
+        "type": "Commercial Invoice",
+        "fileName": "Invoice_BAY_0911.pdf",
+        "uploadedAt": "2026-11-18T11:05:00Z",
+        "fields": {
+          "invoiceNumber": { "name": "Invoice Number", "value": "BAY-0911", "confidence": 0.98, "sourceSnippet": "INVOICE BAY-0911" },
+          "consigneeName": { "name": "Consignee Name", "value": "Zara Inditex S.A.", "confidence": 0.99, "sourceSnippet": "CONSIGNEE: Zara Inditex S.A." },
+          "totalQuantity": { "name": "Total Quantity", "value": 18000, "confidence": 0.99, "sourceSnippet": "TOTAL PCS: 18,000" },
+          "invoiceAmount": { "name": "Invoice Amount", "value": 105000, "confidence": 0.98, "sourceSnippet": "INVOICE VALUE: USD 105,000.00" },
+          "hsCode": { "name": "HS Code", "value": "6204.62.00", "confidence": 0.97, "sourceSnippet": "HS CODE: 6204.62.00" },
+          "shipmentDate": { "name": "Shipment Date", "value": "2026-11-24", "confidence": 0.98, "sourceSnippet": "ETD CHITTAGONG: 2026-11-24" }
+        }
+      },
+      {
+        "id": "DOC-002-PL",
+        "shipmentId": "EXP-002",
+        "type": "Packing List",
+        "fileName": "Packing_List_BAY_0911.pdf",
+        "uploadedAt": "2026-11-18T11:06:00Z",
+        "fields": {
+          "totalQuantity": { "name": "Total Quantity", "value": 18000, "confidence": 0.99, "sourceSnippet": "TOTAL PIECES: 18,000" },
+          "containerNumber": { "name": "Container Number", "value": "CMAU-992144-1", "confidence": 0.97, "sourceSnippet": "CONTAINER: CMAU-992144-1" },
+          "hsCode": { "name": "HS Code", "value": "6204.62.00", "confidence": 0.97, "sourceSnippet": "HS CODE: 6204.62.00" }
+        }
+      }
+    ],
+    "timeline": [
+      { "id": "TL-201", "shipmentId": "EXP-002", "milestone": "LC Verification", "owner": "Commercial", "due": "2026-11-01", "completed": true },
+      { "id": "TL-202", "shipmentId": "EXP-002", "milestone": "Cutting & Sewing", "owner": "Production", "due": "2026-11-12", "completed": true },
+      { "id": "TL-203", "shipmentId": "EXP-002", "milestone": "Port Delivery", "owner": "C&F", "due": "2026-11-20", "completed": false }
+    ],
+    "auditLog": [
+      { "id": "AUD-201", "shipmentId": "EXP-002", "actor": "Rules Engine", "action": "Rule R4 Failed: Late Shipment", "timestamp": "2026-11-18T11:07:00Z", "details": "Invoice shipment date (Nov 24) is 9 days past LC cutoff date (Nov 15)." },
+      { "id": "AUD-202", "shipmentId": "EXP-002", "actor": "Rules Engine", "action": "Rule R5 Failed: Missing COO", "timestamp": "2026-11-18T11:07:01Z", "details": "Certificate of Origin document missing." }
+    ]
+  },
+  {
+    "id": "EXP-003",
+    "buyer": "Target Brands Inc.",
+    "supplier": "Apex Fashion Wears",
+    "poNumber": "PO-TGT-55412",
+    "lcId": "LC-2026-US-88710",
+    "containerNumber": "EGLV-441092-8",
+    "vesselCutoff": "2026-11-23T14:00:00Z",
+    "shipmentDate": "2026-11-21",
+    "status": "Blocked",
+    "bankReadyScore": 75,
+    "bondRecord": {
+      "shipmentId": "EXP-003",
+      "udNumber": "UD-2026-BGMEA-7712",
+      "fabricConsumedKg": 18500,
+      "udLinkedQuantityKg": 16000,
+      "status": "Exceeded"
+    },
+    "documents": [
+      {
+        "id": "DOC-003-PO",
+        "shipmentId": "EXP-003",
+        "type": "PO",
+        "fileName": "Target_PO_55412.pdf",
+        "uploadedAt": "2026-11-18T11:30:00Z",
+        "fields": {
+          "buyerName": { "name": "Buyer Name", "value": "Target Brands Inc.", "confidence": 0.99, "sourceSnippet": "TARGET STORES INC." }
+        }
+      },
+      {
+        "id": "DOC-003-LC",
+        "shipmentId": "EXP-003",
+        "type": "LC",
+        "fileName": "LC_Target_Citi_88710.pdf",
+        "uploadedAt": "2026-11-18T11:31:00Z",
+        "fields": {
+          "lcId": { "name": "LC Number", "value": "LC-2026-US-88710", "confidence": 0.99, "sourceSnippet": "LC NO: 88710" },
+          "lcAmount": { "name": "LC Amount", "value": 180000, "confidence": 0.98, "sourceSnippet": "AMOUNT: USD 180,000" },
+          "latestShipmentDate": { "name": "Latest Shipment Date", "value": "2026-11-28", "confidence": 0.99, "sourceSnippet": "LATEST SHIPMENT: 2026-11-28" }
+        }
+      },
+      {
+        "id": "DOC-003-INV",
+        "shipmentId": "EXP-003",
+        "type": "Commercial Invoice",
+        "fileName": "Invoice_APEX_2201.pdf",
+        "uploadedAt": "2026-11-18T11:32:00Z",
+        "fields": {
+          "consigneeName": { "name": "Consignee Name", "value": "Target Brands Inc.", "confidence": 0.99, "sourceSnippet": "CONSIGNEE: TARGET BRANDS INC." },
+          "totalQuantity": { "name": "Total Quantity", "value": 30000, "confidence": 0.98, "sourceSnippet": "QUANTITY: 30,000 PCS" },
+          "invoiceAmount": { "name": "Invoice Amount", "value": 174000, "confidence": 0.99, "sourceSnippet": "TOTAL: USD 174,000.00" },
+          "hsCode": { "name": "HS Code", "value": "6203.42.10", "confidence": 0.97, "sourceSnippet": "HS CODE: 6203.42.10" },
+          "shipmentDate": { "name": "Shipment Date", "value": "2026-11-21", "confidence": 0.97, "sourceSnippet": "DATE: 2026-11-21" }
+        }
+      },
+      {
+        "id": "DOC-003-PL",
+        "shipmentId": "EXP-003",
+        "type": "Packing List",
+        "fileName": "Packing_List_APEX_2201.pdf",
+        "uploadedAt": "2026-11-18T11:33:00Z",
+        "fields": {
+          "totalQuantity": { "name": "Total Quantity", "value": 30000, "confidence": 0.99, "sourceSnippet": "TOTAL PCS: 30,000" },
+          "containerNumber": { "name": "Container Number", "value": "EGLV-441092-8", "confidence": 0.98, "sourceSnippet": "CONTAINER: EGLV-441092-8" },
+          "hsCode": { "name": "HS Code", "value": "6203.42.10", "confidence": 0.97, "sourceSnippet": "HS: 6203.42.10" }
+        }
+      },
+      {
+        "id": "DOC-003-COO",
+        "shipmentId": "EXP-003",
+        "type": "Certificate of Origin",
+        "fileName": "COO_EPB_EXP003.pdf",
+        "uploadedAt": "2026-11-18T11:34:00Z",
+        "fields": {
+          "hsCode": { "name": "HS Code", "value": "6203.42.10", "confidence": 0.98, "sourceSnippet": "HS: 6203.42.10" }
+        }
+      }
+    ],
+    "timeline": [
+      { "id": "TL-301", "shipmentId": "EXP-003", "milestone": "Bonded Fabric Import", "owner": "Bond Dept", "due": "2026-11-04", "completed": true },
+      { "id": "TL-302", "shipmentId": "EXP-003", "milestone": "Production & Finishing", "owner": "Manufacturing", "due": "2026-11-16", "completed": true },
+      { "id": "TL-303", "shipmentId": "EXP-003", "milestone": "Bond Quota Audit", "owner": "Compliance", "due": "2026-11-18", "completed": false }
+    ],
+    "auditLog": [
+      { "id": "AUD-301", "shipmentId": "EXP-003", "actor": "BondIQ Engine", "action": "Rule R8 Failed: UD Fabric Quota Exceeded", "timestamp": "2026-11-18T11:35:00Z", "details": "Fabric consumed (18,500 kg) exceeds approved UD entitlement (16,000 kg) by 2,500 kg. Customs hold risk." }
+    ]
+  },
+  {
+    "id": "EXP-004",
+    "buyer": "Next Sourcing UK",
+    "supplier": "Crown Textile Mills",
+    "poNumber": "PO-NXT-49910",
+    "lcId": "LC-2026-GB-66129",
+    "containerNumber": "Pending",
+    "vesselCutoff": "2026-11-21T20:00:00Z",
+    "shipmentDate": "2026-11-19",
+    "status": "At risk",
+    "bankReadyScore": 90,
+    "bondRecord": {
+      "shipmentId": "EXP-004",
+      "udNumber": "UD-2026-BGMEA-9018",
+      "fabricConsumedKg": 8200,
+      "udLinkedQuantityKg": 8500,
+      "status": "Approved"
+    },
+    "documents": [
+      {
+        "id": "DOC-004-PO",
+        "shipmentId": "EXP-004",
+        "type": "PO",
+        "fileName": "Next_PO_49910.pdf",
+        "uploadedAt": "2026-11-18T12:00:00Z",
+        "fields": {
+          "buyerName": { "name": "Buyer Name", "value": "Next Sourcing UK", "confidence": 0.99, "sourceSnippet": "BUYER: Next Sourcing UK Ltd." }
+        }
+      },
+      {
+        "id": "DOC-004-LC",
+        "shipmentId": "EXP-004",
+        "type": "LC",
+        "fileName": "LC_Next_HSBC_66129.pdf",
+        "uploadedAt": "2026-11-18T12:01:00Z",
+        "fields": {
+          "lcId": { "name": "LC Number", "value": "LC-2026-GB-66129", "confidence": 0.99, "sourceSnippet": "LC: LC-2026-GB-66129" },
+          "lcAmount": { "name": "LC Amount", "value": 95000, "confidence": 0.98, "sourceSnippet": "AMOUNT: USD 95,000" },
+          "latestShipmentDate": { "name": "Latest Shipment Date", "value": "2026-11-26", "confidence": 0.99, "sourceSnippet": "LATEST SHIPMENT: 2026-11-26" }
+        }
+      },
+      {
+        "id": "DOC-004-INV",
+        "shipmentId": "EXP-004",
+        "type": "Commercial Invoice",
+        "fileName": "Invoice_CRW_501.pdf",
+        "uploadedAt": "2026-11-18T12:02:00Z",
+        "fields": {
+          "consigneeName": { "name": "Consignee Name", "value": "Next Sourcing UK", "confidence": 0.99, "sourceSnippet": "CONSIGNEE: Next Sourcing UK" },
+          "totalQuantity": { "name": "Total Quantity", "value": 15000, "confidence": 0.98, "sourceSnippet": "QTY: 15,000 PCS" },
+          "invoiceAmount": { "name": "Invoice Amount", "value": 90000, "confidence": 0.99, "sourceSnippet": "TOTAL: USD 90,000.00" },
+          "hsCode": { "name": "HS Code", "value": "6110.20.00", "confidence": 0.98, "sourceSnippet": "HS: 6110.20.00" },
+          "shipmentDate": { "name": "Shipment Date", "value": "2026-11-19", "confidence": 0.97, "sourceSnippet": "DATE: 2026-11-19" }
+        }
+      },
+      {
+        "id": "DOC-004-PL",
+        "shipmentId": "EXP-004",
+        "type": "Packing List",
+        "fileName": "Packing_List_CRW_501.pdf",
+        "uploadedAt": "2026-11-18T12:03:00Z",
+        "fields": {
+          "totalQuantity": { "name": "Total Quantity", "value": 15000, "confidence": 0.99, "sourceSnippet": "TOTAL: 15,000 PCS" },
+          "containerNumber": { "name": "Container Number", "value": "", "confidence": 0.40, "sourceSnippet": "CONTAINER: TBD / UNASSIGNED" },
+          "hsCode": { "name": "HS Code", "value": "6110.20.00", "confidence": 0.98, "sourceSnippet": "HS: 6110.20.00" }
+        }
+      },
+      {
+        "id": "DOC-004-COO",
+        "shipmentId": "EXP-004",
+        "type": "Certificate of Origin",
+        "fileName": "COO_CRW_501.pdf",
+        "uploadedAt": "2026-11-18T12:04:00Z",
+        "fields": {
+          "hsCode": { "name": "HS Code", "value": "6110.20.00", "confidence": 0.98, "sourceSnippet": "HS: 6110.20.00" }
+        }
+      }
+    ],
+    "timeline": [
+      { "id": "TL-401", "shipmentId": "EXP-004", "milestone": "Production Complete", "owner": "Crown Factory", "due": "2026-11-15", "completed": true },
+      { "id": "TL-402", "shipmentId": "EXP-004", "milestone": "Container Allocation at Depot", "owner": "Logistics Line", "due": "2026-11-18", "completed": false }
+    ],
+    "auditLog": [
+      { "id": "AUD-401", "shipmentId": "EXP-004", "actor": "Rules Engine", "action": "Rule R6 Warning: Container Missing", "timestamp": "2026-11-18T12:05:00Z", "details": "Container number is missing or marked TBD on packing list. At risk of port gate-in delay." }
+    ]
+  },
+  {
+    "id": "EXP-005",
+    "buyer": "H&M Hennes & Mauritz",
+    "supplier": "Standard Garments Group",
+    "poNumber": "PO-HM-99014",
+    "lcId": "LC-2026-SE-12004",
+    "containerNumber": "MSKU-908234-7",
+    "vesselCutoff": "2026-11-22T08:00:00Z",
+    "shipmentDate": "2026-11-20",
+    "status": "Customs-ready",
+    "bankReadyScore": 100,
+    "bondRecord": {
+      "shipmentId": "EXP-005",
+      "udNumber": "UD-2026-BGMEA-1049",
+      "fabricConsumedKg": 7400,
+      "udLinkedQuantityKg": 7800,
+      "status": "Approved"
+    },
+    "documents": [
+      {
+        "id": "DOC-005-PO",
+        "shipmentId": "EXP-005",
+        "type": "PO",
+        "fileName": "HM_PO_99014.pdf",
+        "uploadedAt": "2026-11-18T13:00:00Z",
+        "fields": {
+          "buyerName": { "name": "Buyer Name", "value": "H&M Hennes & Mauritz", "confidence": 0.99, "sourceSnippet": "BUYER: H&M Hennes & Mauritz GBC AB" },
+          "poNumber": { "name": "PO Number", "value": "PO-HM-99014", "confidence": 0.99, "sourceSnippet": "PO: PO-HM-99014" }
+        }
+      },
+      {
+        "id": "DOC-005-LC",
+        "shipmentId": "EXP-005",
+        "type": "LC",
+        "fileName": "LC_HM_SEB_12004.pdf",
+        "uploadedAt": "2026-11-18T13:01:00Z",
+        "fields": {
+          "lcId": { "name": "LC Number", "value": "LC-2026-SE-12004", "confidence": 0.99, "sourceSnippet": "LC: LC-2026-SE-12004" },
+          "lcAmount": { "name": "LC Amount", "value": 150000, "confidence": 0.99, "sourceSnippet": "AMOUNT: USD 150,000.00" },
+          "latestShipmentDate": { "name": "Latest Shipment Date", "value": "2026-11-25", "confidence": 0.99, "sourceSnippet": "LATEST SHIPMENT: 2026-11-25" }
+        }
+      },
+      {
+        "id": "DOC-005-INV",
+        "shipmentId": "EXP-005",
+        "type": "Commercial Invoice",
+        "fileName": "Invoice_STD_8820.pdf",
+        "uploadedAt": "2026-11-18T13:02:00Z",
+        "fields": {
+          "invoiceNumber": { "name": "Invoice Number", "value": "STD-8820", "confidence": 0.99, "sourceSnippet": "INVOICE: STD-8820" },
+          "consigneeName": { "name": "Consignee Name", "value": "H&M Hennes & Mauritz", "confidence": 0.99, "sourceSnippet": "CONSIGNEE: H&M Hennes & Mauritz" },
+          "totalQuantity": { "name": "Total Quantity", "value": 25000, "confidence": 0.99, "sourceSnippet": "QUANTITY: 25,000 PCS" },
+          "invoiceAmount": { "name": "Invoice Amount", "value": 145000, "confidence": 0.99, "sourceSnippet": "TOTAL: USD 145,000.00" },
+          "hsCode": { "name": "HS Code", "value": "6109.10.00", "confidence": 0.99, "sourceSnippet": "HS CODE: 6109.10.00" },
+          "shipmentDate": { "name": "Shipment Date", "value": "2026-11-20", "confidence": 0.98, "sourceSnippet": "DEPARTURE: 2026-11-20" }
+        }
+      },
+      {
+        "id": "DOC-005-PL",
+        "shipmentId": "EXP-005",
+        "type": "Packing List",
+        "fileName": "Packing_List_STD_8820.pdf",
+        "uploadedAt": "2026-11-18T13:03:00Z",
+        "fields": {
+          "totalQuantity": { "name": "Total Quantity", "value": 25000, "confidence": 0.99, "sourceSnippet": "TOTAL: 25,000 PCS" },
+          "containerNumber": { "name": "Container Number", "value": "MSKU-908234-7", "confidence": 0.98, "sourceSnippet": "CONTAINER: MSKU-908234-7" },
+          "hsCode": { "name": "HS Code", "value": "6109.10.00", "confidence": 0.99, "sourceSnippet": "HS CODE: 6109.10.00" }
+        }
+      },
+      {
+        "id": "DOC-005-COO",
+        "shipmentId": "EXP-005",
+        "type": "Certificate of Origin",
+        "fileName": "COO_STD_8820.pdf",
+        "uploadedAt": "2026-11-18T13:04:00Z",
+        "fields": {
+          "cooNumber": { "name": "COO Number", "value": "EPB-COO-2026-9931", "confidence": 0.99, "sourceSnippet": "COO: EPB-COO-2026-9931" },
+          "hsCode": { "name": "HS Code", "value": "6109.10.00", "confidence": 0.99, "sourceSnippet": "HS CODE: 6109.10.00" }
+        }
+      }
+    ],
+    "timeline": [
+      { "id": "TL-501", "shipmentId": "EXP-005", "milestone": "Export LC & Bond Approved", "owner": "Commercial", "due": "2026-11-02", "completed": true },
+      { "id": "TL-502", "shipmentId": "EXP-005", "milestone": "Production & 100% Quality Pass", "owner": "Quality Control", "due": "2026-11-14", "completed": true },
+      { "id": "TL-503", "shipmentId": "EXP-005", "milestone": "Pre-Shipment Reconciliation Passed", "owner": "ExportOps AI", "due": "2026-11-18", "completed": true },
+      { "id": "TL-504", "shipmentId": "EXP-005", "milestone": "Port Gate-In Cleared", "owner": "C&F Agent", "due": "2026-11-20", "completed": true }
+    ],
+    "auditLog": [
+      { "id": "AUD-501", "shipmentId": "EXP-005", "actor": "Rules Engine", "action": "All Rules Evaluated: PASSED", "timestamp": "2026-11-18T13:05:00Z", "details": "All 8 compliance rules passed. Status marked Customs-ready with Bank-Ready Score 100." }
+    ]
+  }
+]

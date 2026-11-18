@@ -1,0 +1,60 @@
+{
+  "Commercial Invoice": {
+    "EXP-001": {
+      "fields": [
+        { "name": "invoiceNumber", "value": "INV-0412", "confidence": 0.99, "sourceSnippet": "INVOICE NO: INV-0412 DATE: 18-NOV-2026" },
+        { "name": "consigneeName", "value": "Nordic Retailers A/S", "confidence": 0.98, "sourceSnippet": "CONSIGNEE: Nordic Retailers A/S, Toldbodgade 12, DK-1253" },
+        { "name": "totalQuantity", "value": 12000, "confidence": 0.98, "sourceSnippet": "TOTAL QUANTITY: 12,000 PCS" },
+        { "name": "invoiceAmount", "value": 72000, "confidence": 0.99, "sourceSnippet": "TOTAL INVOICE VALUE: USD 72,000.00 FOB CTG" },
+        { "name": "hsCode", "value": "6109.10.00", "confidence": 0.97, "sourceSnippet": "H.S. CODE: 6109.10.00 (Knitted Cotton T-Shirts)" },
+        { "name": "shipmentDate", "value": "2026-11-20", "confidence": 0.96, "sourceSnippet": "ESTIMATED DEPARTURE: 20-NOV-2026" }
+      ]
+    }
+  },
+  "Packing List": {
+    "EXP-001": {
+      "fields": [
+        { "name": "packingListNumber", "value": "PL-0412", "confidence": 0.99, "sourceSnippet": "PACKING LIST FOR INV-0412" },
+        { "name": "totalQuantity", "value": 11400, "confidence": 0.97, "sourceSnippet": "GRAND TOTAL PIECES: 11,400 PCS (475 Cartons x 24)" },
+        { "name": "containerNumber", "value": "MSKU-781920-4", "confidence": 0.96, "sourceSnippet": "CONTAINER NO: MSKU-781920-4 / SEAL: ML-BD9821" },
+        { "name": "hsCode", "value": "6109.10.00", "confidence": 0.96, "sourceSnippet": "COMMODITY HS CODE: 6109.10.00" }
+      ]
+    },
+    "EXP-001-FIXED": {
+      "fields": [
+        { "name": "packingListNumber", "value": "PL-0412-REV1", "confidence": 0.99, "sourceSnippet": "REVISED PACKING LIST FOR INV-0412" },
+        { "name": "totalQuantity", "value": 12000, "confidence": 0.99, "sourceSnippet": "GRAND TOTAL PIECES: 12,000 PCS (500 Cartons x 24)" },
+        { "name": "containerNumber", "value": "MSKU-781920-4", "confidence": 0.98, "sourceSnippet": "CONTAINER NO: MSKU-781920-4 / SEAL: ML-BD9821" },
+        { "name": "hsCode", "value": "6109.10.00", "confidence": 0.98, "sourceSnippet": "COMMODITY HS CODE: 6109.10.00" }
+      ]
+    }
+  },
+  "PO": {
+    "EXP-001": {
+      "fields": [
+        { "name": "buyerName", "value": "Nordic Retailers A/S", "confidence": 0.99, "sourceSnippet": "BUYER / ORDERING ENTITY: Nordic Retailers A/S" },
+        { "name": "poNumber", "value": "PO-88219-NR", "confidence": 0.98, "sourceSnippet": "PURCHASE ORDER NO: PO-88219-NR" },
+        { "name": "orderQuantity", "value": 12000, "confidence": 0.99, "sourceSnippet": "TOTAL PIECES ORDERED: 12,000 PCS" }
+      ]
+    }
+  },
+  "LC": {
+    "EXP-001": {
+      "fields": [
+        { "name": "lcId", "value": "LC-2026-DH-90112", "confidence": 0.99, "sourceSnippet": "DOC CREDIT NUMBER: LC-2026-DH-90112" },
+        { "name": "lcAmount", "value": 75000, "confidence": 0.98, "sourceSnippet": "32B: CURRENCY/AMOUNT: USD 75,000.00" },
+        { "name": "tolerancePercentage", "value": 5, "confidence": 0.95, "sourceSnippet": "39A: PERCENTAGE CREDIT AMOUNT TOLERANCE: 5/5" },
+        { "name": "latestShipmentDate", "value": "2026-11-25", "confidence": 0.99, "sourceSnippet": "44C: LATEST DATE OF SHIPMENT: 2026-11-25" }
+      ]
+    }
+  },
+  "Certificate of Origin": {
+    "EXP-001": {
+      "fields": [
+        { "name": "cooNumber", "value": "EPB-COO-2026-8911", "confidence": 0.98, "sourceSnippet": "EXPORT PROMOTION BUREAU COO NO: EPB-COO-2026-8911" },
+        { "name": "originCountry", "value": "Bangladesh", "confidence": 0.99, "sourceSnippet": "COUNTRY OF ORIGIN: BANGLADESH" },
+        { "name": "hsCode", "value": "6109.10.00", "confidence": 0.97, "sourceSnippet": "HS CODE: 6109.10.00" }
+      ]
+    }
+  }
+}
