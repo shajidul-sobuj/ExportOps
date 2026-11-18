@@ -31,8 +31,22 @@ This document tracks all project milestones, architectural decisions, completed 
 | **Phase 12** | Premium Website Footer (Newsletter Dispatch, Telemetry, 5 Columns, & Legal Modals) | ✅ Completed | Nov 19, 2026 - 01:54 |
 | **Phase 13** | Motion Design Overhaul (Linear Border Beam, Ambient Auras, Viewport Staggered Reveal) | ✅ Completed | Nov 19, 2026 - 02:04 |
 | **Phase 14** | Full Landing Page Animation Suite (Electric Pipeline Stream, Card Lifts, Shimmer, Radar Rings) | ✅ Completed | Nov 19, 2026 - 02:35 |
+| **Phase 15** | Architectural Separation: Public Marketing Landing Page vs. Enterprise WebApp Console | ✅ Completed | Nov 19, 2026 - 03:00 |
 
 ---
+
+## Phase 15 Implementation Highlights
+- **Layout & Routing Architecture Separation (`components/AppShell.tsx` & `app/layout.tsx`):**
+  - Path-aware layout detection: routes separated into **Public Marketing Portal** (`/`) and **Enterprise WebApp Console** (`/dashboard`, `/shipments/[id]`, `/compliance`, `/roi`, `/docs`).
+  - The massive 430-line marketing footer (`components/Footer.tsx`) with newsletter signup, resource links, and marketing badges is now strictly restricted to the Landing Page.
+- **Dedicated Enterprise WebApp Header (`components/AppHeader.tsx`):**
+  - Features factory/tenant switcher (`Apex Textile Holdings Ltd. • Unit 02 - Chittagong EPZ`), live ASYCUDA Gateway ping telemetry (`24ms`, green pulsing beacon), app navigation tabs, quick search shortcut (`⌘K`), user profile (`Engr. K. Rahman - CCO`), and quick return link (`← Marketing Site`).
+- **Compact Industrial App Status Dock (`components/AppStatusDock.tsx`):**
+  - Replaces the giant marketing footer across all webapp workspaces with a sleek 1-row industrial status dock displaying port node connectivity, UCP 600 & BondIQ rules active certification, keyboard shortcuts, and system version (`v1.4.2-prod`).
+- **Dark Theme Harmonization across WebApp Pages:**
+  - Upgraded `/dashboard`, `/compliance`, `/roi`, and `/docs` from light-slate styling to crisp dark enterprise cards (`bg-[#0c121e]`, `border-slate-800`, `text-slate-100`), ensuring unified high-contrast visual ergonomics across all tools.
+- **Dedicated Marketing Navbar (`components/Navbar.tsx`):**
+  - Optimized for the public landing page with anchor links (`#problem`, `#pipeline`, `#control-tower`, `#showcase`, `#calculator`, `/roi`, `/docs`) and prominent "Enter Enterprise Console" CTA.
 
 ## Phase 14 Implementation Highlights
 - **CSS Keyframes & Utility Extensions (`app/globals.css`):**
