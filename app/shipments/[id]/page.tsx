@@ -23,20 +23,30 @@ import {
   FileCheck2,
   FileUp,
   Download,
-  QrCode
+  QrCode,
+  Send,
+  MessageSquare,
+  Mail,
+  Copy,
+  Eye,
+  Calculator,
+  Tag
 } from 'lucide-react';
 import initialShipments from '@/data/shipments.json';
 import { 
   Shipment, 
   RuleResult, 
   AuditEntry, 
-  ShipmentStatus 
+  ShipmentStatus,
+  DiscrepancyDispatchAlert
 } from '@/types';
 import { 
   evaluateShipmentRules, 
   computeShipmentStatus, 
   computeBankReadyScore 
 } from '@/lib/rules';
+import { evaluateBuyerCompliance } from '@/lib/buyer-rules';
+import { calculateFabricConsumption, GARMENT_FABRIC_PRESETS } from '@/lib/bond-ledger';
 
 export default function ShipmentDetailPage() {
   const params = useParams();
@@ -53,15 +63,23 @@ export default function ShipmentDetailPage() {
   const [score, setScore] = useState<number>(() => computeBankReadyScore(ruleResults));
   const [auditLog, setAuditLog] = useState<AuditEntry[]>(baseShipment.auditLog || []);
 
+  // Tabs inside Left Column
+  const [activeStudioTab, setActiveStudioTab] = useState<'docs' | 'rawText' | 'buyerCompliance' | 'bondCalculator'>('docs');
+  const [activeDocTab, setActiveDocTab] = useState<string>('Packing List');
+  
   // Extraction & Remediation state
   const [isExtracting, setIsExtracting] = useState(false);
   const [extractionNotice, setExtractionNotice] = useState<string | null>(null);
   const [editableQuantity, setEditableQuantity] = useState<number>(11400);
-  const [activeDocTab, setActiveDocTab] = useState<string>('Packing List');
   const [showCelebration, setShowCelebration] = useState(false);
   const [showGatePass, setShowGatePass] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Dispatch Alert Modal state
+  const [showAlertModal, setShowAlertModal] = useState(false);
+  const [dispatchAlert, setDispatchAlert] = useState<DiscrepancyDispatchAlert | null>(null);
+  const [copiedType, setCopiedType] = useState<'whatsapp' | 'email' | null>(null);
 
   // Sync initial fields if Packing list exists
   useEffect(() => {
@@ -70,6 +88,18 @@ export default function ShipmentDetailPage() {
       setEditableQuantity(Number(pl.fields.totalQuantity.value));
     }
   }, [shipmentId]);
+
+  // Buyer Compliance evaluation
+  const buyerComplianceRules = evaluateBuyerCompliance(shipment);
+
+  // Fabric calculation evaluation
+  const fabricMath = calculateFabricConsumption({
+    orderQuantityPcs: editableQuantity,
+    gsm: 160,
+    consumptionPerDznKg: 2.4,
+    wastagePercent: 5,
+    approvedUdQuotaKg: shipment.bondRecord.udLinkedQuantityKg,
+  });
 
   // Handle re-running validation
   const handleRevalidate = (updatedQty?: number) => {
@@ -141,7 +171,7 @@ export default function ShipmentDetailPage() {
           handleRevalidate(12000);
         }
       }
-    } catch (err) {
+    } catch {
       setIsExtracting(false);
       if (fixed) {
         setEditableQuantity(12000);
@@ -169,12 +199,42 @@ export default function ShipmentDetailPage() {
   const processRealFile = async (file: File) => {
     try {
       const text = await file.text();
-      // If the file contains 12000 or Revised, treat as fixed
       const isFixed = text.includes('12,000') || text.includes('12000') || file.name.toLowerCase().includes('revised');
       handleSimulateAiUpload(isFixed, text);
     } catch {
       handleSimulateAiUpload(true);
     }
+  };
+
+  // Trigger WhatsApp / Email Alert Generator
+  const handleGenerateAlert = async () => {
+    try {
+      const res = await fetch('/api/dispatch-alert', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          shipmentId: shipment.id,
+          buyer: shipment.buyer,
+          invoiceQty: 12000,
+          packingListQty: editableQuantity,
+          vesselCutoff: shipment.vesselCutoff,
+          containerNumber: shipment.containerNumber,
+        }),
+      });
+      const data = await res.json();
+      if (data.alert) {
+        setDispatchAlert(data.alert);
+        setShowAlertModal(true);
+      }
+    } catch {
+      setShowAlertModal(true);
+    }
+  };
+
+  const copyToClipboard = (text: string, type: 'whatsapp' | 'email') => {
+    navigator.clipboard.writeText(text);
+    setCopiedType(type);
+    setTimeout(() => setCopiedType(null), 2500);
   };
 
   const selectedDocument = shipment.documents.find((d) => d.type === activeDocTab) || shipment.documents[0];
@@ -191,7 +251,18 @@ export default function ShipmentDetailPage() {
           <span>Back to Shipments Control Tower</span>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          {/* Dispatch Floor Alert Button */}
+          {status !== 'Customs-ready' && (
+            <button
+              onClick={handleGenerateAlert}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Dispatch Floor Alert (WhatsApp/Email)</span>
+            </button>
+          )}
+
           {status === 'Customs-ready' && (
             <button
               onClick={() => setShowGatePass(true)}
@@ -308,192 +379,371 @@ export default function ShipmentDetailPage() {
 
       {/* Main Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Documents & Interactive Remediation & BondIQ (7 cols) */}
+        {/* Left Column: Inspection Studio Tabs (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
-          {/* Interactive Remediation & Document Intelligence Hub */}
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            {/* Studio Navigation Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-emerald-600" />
                 <h2 className="font-bold text-slate-900 text-base">
-                  Document Intelligence & Interactive Remediation
+                  Document Inspection Studio
                 </h2>
               </div>
-              <span className="text-[11px] text-slate-400 font-medium">
-                {shipment.documents.length} Trade Docs Ingested
-              </span>
-            </div>
 
-            {/* Document Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-              {shipment.documents.map((doc) => (
+              {/* Sub-Tabs */}
+              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs font-semibold">
                 <button
-                  key={doc.type}
-                  onClick={() => setActiveDocTab(doc.type)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-colors ${
-                    activeDocTab === doc.type
-                      ? 'bg-slate-900 text-white font-semibold'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  onClick={() => setActiveStudioTab('docs')}
+                  className={`px-2.5 py-1 rounded-md transition-colors ${
+                    activeStudioTab === 'docs' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
                   }`}
                 >
-                  {doc.type}
-                  {doc.type === 'Packing List' && status === 'Blocked' && (
-                    <span className="ml-1.5 w-2 h-2 rounded-full bg-red-400 inline-block" />
-                  )}
+                  Extracted Fields
                 </button>
-              ))}
+                <button
+                  onClick={() => setActiveStudioTab('rawText')}
+                  className={`px-2.5 py-1 rounded-md transition-colors ${
+                    activeStudioTab === 'rawText' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
+                  }`}
+                >
+                  Document Viewer
+                </button>
+                <button
+                  onClick={() => setActiveStudioTab('buyerCompliance')}
+                  className={`px-2.5 py-1 rounded-md transition-colors ${
+                    activeStudioTab === 'buyerCompliance' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
+                  }`}
+                >
+                  Buyer Rules
+                </button>
+                <button
+                  onClick={() => setActiveStudioTab('bondCalculator')}
+                  className={`px-2.5 py-1 rounded-md transition-colors ${
+                    activeStudioTab === 'bondCalculator' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
+                  }`}
+                >
+                  Bond Math
+                </button>
+              </div>
             </div>
 
-            {/* Selected Document Details & Extracted Fields */}
-            {selectedDocument && (
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-4">
-                <div className="flex items-center justify-between text-xs">
-                  <div>
-                    <span className="font-semibold text-slate-800">{selectedDocument.fileName}</span>
-                    <p className="text-[11px] text-slate-400">Uploaded {selectedDocument.uploadedAt.split('T')[0]}</p>
+            {/* TAB 1: Extracted Fields & Remediation */}
+            {activeStudioTab === 'docs' && (
+              <div className="space-y-4">
+                {/* Document Type Pills */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  {shipment.documents.map((doc) => (
+                    <button
+                      key={doc.type}
+                      onClick={() => setActiveDocTab(doc.type)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-colors ${
+                        activeDocTab === doc.type
+                          ? 'bg-slate-900 text-white font-semibold'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      {doc.type}
+                      {doc.type === 'Packing List' && status === 'Blocked' && (
+                        <span className="ml-1.5 w-2 h-2 rounded-full bg-red-400 inline-block" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Selected Document Details & Extracted Fields */}
+                {selectedDocument && (
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-4">
+                    <div className="flex items-center justify-between text-xs">
+                      <div>
+                        <span className="font-semibold text-slate-800">{selectedDocument.fileName}</span>
+                        <p className="text-[11px] text-slate-400">Uploaded {selectedDocument.uploadedAt.split('T')[0]}</p>
+                      </div>
+                      <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-100 text-emerald-800">
+                        AI Verified Schema
+                      </span>
+                    </div>
+
+                    {/* Interactive Demo Fix Trigger for EXP-001 Packing List */}
+                    {shipment.id === 'EXP-001' && selectedDocument.type === 'Packing List' && (
+                      <div className="bg-amber-50/90 border border-amber-300 rounded-xl p-4 space-y-3.5">
+                        <div className="flex items-start gap-2.5">
+                          <Flame className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                          <div className="text-xs">
+                            <p className="font-bold text-amber-900 text-sm">
+                              Remediation Workflow: Resolve Quantity Discrepancy
+                            </p>
+                            <p className="text-amber-800 text-xs mt-0.5">
+                              Commercial Invoice specifies <strong>12,000 pcs</strong>, but Packing List specifies only <strong>{editableQuantity.toLocaleString()} pcs</strong>.
+                              Upload a revised document or apply the fix to clear the shipment!
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Drag and Drop Zone */}
+                        <div
+                          onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                          onDragLeave={() => setDragActive(false)}
+                          onDrop={handleFileDrop}
+                          onClick={() => fileInputRef.current?.click()}
+                          className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
+                            dragActive ? 'border-emerald-500 bg-emerald-50/50' : 'border-amber-300 bg-white hover:bg-amber-50/40'
+                          }`}
+                        >
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileInputChange}
+                            className="hidden"
+                            accept=".txt,.pdf,.csv"
+                          />
+                          <FileUp className="w-6 h-6 text-amber-600 mx-auto mb-1.5" />
+                          <p className="text-xs font-semibold text-slate-800">
+                            Drag & drop corrected trade document here, or <span className="text-amber-700 underline">browse file</span>
+                          </p>
+                          <p className="text-[10px] text-slate-400 mt-0.5">
+                            Accepts text, PDF, or sample trade files (.txt, .pdf)
+                          </p>
+                        </div>
+
+                        {/* Quick Demo Buttons */}
+                        <div className="flex flex-wrap items-center gap-2 pt-1">
+                          <button
+                            onClick={() => handleSimulateAiUpload(true)}
+                            disabled={isExtracting}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors"
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>{isExtracting ? 'AI Extracting...' : 'Upload Revised Packing List (12,000 pcs)'}</span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setEditableQuantity(12000);
+                              handleRevalidate(12000);
+                            }}
+                            className="inline-flex items-center gap-1 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium transition-colors"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            <span>Set 12,000 & Re-validate</span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setEditableQuantity(11400);
+                              handleRevalidate(11400);
+                            }}
+                            className="text-xs text-slate-500 hover:text-slate-800 underline px-2"
+                          >
+                            Reset to 11,400 (Blocked)
+                          </button>
+                        </div>
+
+                        {/* Sample Documents Link */}
+                        <div className="pt-2 border-t border-amber-200/60 flex items-center justify-between text-[11px] text-amber-800">
+                          <span>Realistic test files available in project:</span>
+                          <a
+                            href="/sample-docs/EXP-001-Packing-List-Revised.txt"
+                            download
+                            className="inline-flex items-center gap-1 font-semibold text-amber-900 hover:underline"
+                          >
+                            <Download className="w-3 h-3" />
+                            <span>Download Sample Revised File</span>
+                          </a>
+                        </div>
+
+                        {extractionNotice && (
+                          <p className="text-[11px] text-emerald-800 font-medium bg-emerald-100/70 p-2.5 rounded-md">
+                            {extractionNotice}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Fields Grid */}
+                    <div className="space-y-2">
+                      <p className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">
+                        Extracted Document Fields (Strict Schema & Confidence)
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {Object.entries(selectedDocument.fields).map(([key, field]) => {
+                          const isQty = key === 'totalQuantity' && selectedDocument.type === 'Packing List';
+
+                          return (
+                            <div key={key} className="bg-white p-3 rounded-lg border border-slate-200 text-xs space-y-1">
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium text-slate-600">{field.name}</span>
+                                <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">
+                                  {Math.round(field.confidence * 100)}% conf
+                                </span>
+                              </div>
+
+                              {isQty ? (
+                                <div className="flex items-center gap-2 mt-1">
+                                  <input
+                                    type="number"
+                                    value={editableQuantity}
+                                    onChange={(e) => setEditableQuantity(Number(e.target.value))}
+                                    className="w-28 px-2 py-1 text-xs border border-slate-300 rounded font-bold font-mono focus:ring-1 focus:ring-emerald-500"
+                                  />
+                                  <span className="text-[11px] text-slate-500">pcs</span>
+                                </div>
+                              ) : (
+                                <p className="font-bold text-slate-900 font-mono text-sm">
+                                  {typeof field.value === 'number' ? field.value.toLocaleString() : field.value || 'N/A'}
+                                </p>
+                              )}
+
+                              <p className="text-[10px] text-slate-400 italic truncate" title={field.sourceSnippet}>
+                                "{field.sourceSnippet}"
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-100 text-emerald-800">
-                    AI Parsed
+                )}
+              </div>
+            )}
+
+            {/* TAB 2: Document Raw Text Viewer */}
+            {activeStudioTab === 'rawText' && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-700">
+                    Trade Document Source: {selectedDocument.fileName}
+                  </span>
+                  <span className="text-[11px] text-slate-400 font-mono">
+                    OCR / Text Buffer
                   </span>
                 </div>
 
-                {/* Interactive Demo Fix Trigger for EXP-001 Packing List */}
-                {shipment.id === 'EXP-001' && selectedDocument.type === 'Packing List' && (
-                  <div className="bg-amber-50/90 border border-amber-300 rounded-xl p-4 space-y-3.5">
-                    <div className="flex items-start gap-2.5">
-                      <Flame className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                      <div className="text-xs">
-                        <p className="font-bold text-amber-900 text-sm">
-                          Interactive Demo: Remediation Loop
-                        </p>
-                        <p className="text-amber-800 text-xs mt-0.5">
-                          Commercial Invoice specifies <strong>12,000 pcs</strong>, but Packing List specifies only <strong>{editableQuantity.toLocaleString()} pcs</strong>. 
-                          Upload a revised document or apply the fix to clear the shipment!
-                        </p>
-                      </div>
-                    </div>
+                <div className="p-4 bg-slate-900 text-emerald-400 font-mono text-xs rounded-xl overflow-x-auto max-h-96 leading-relaxed shadow-inner">
+                  <pre className="whitespace-pre-wrap">
+{selectedDocument.type === 'Packing List' ? `================================================================================
+PACKING LIST FOR EXPORT SHIPMENT ${shipment.id}
+================================================================================
+PACKING LIST NO: PL-0412
+INVOICE REF: INV-0412
+SHIPPER: ${shipment.supplier}
+CONSIGNEE: ${shipment.buyer}
+CONTAINER: ${shipment.containerNumber}
+PORT OF LOADING: Chittagong Sea Port, Bangladesh
 
-                    {/* Drag and Drop Zone */}
+PACKING SPECIFICATIONS:
+--------------------------------------------------------------------------------
+Carton Range | Description                         | Pcs/Ctn | Total Cartons | Total Pcs
+--------------------------------------------------------------------------------
+001 - 200    | Men's Cotton T-Shirt (Navy)         | 24      | 200           | 4,800
+201 - 350    | Men's Cotton T-Shirt (Black)        | 24      | 150           | 3,600
+351 - ${editableQuantity === 12000 ? '500' : '475'}    | Men's Cotton T-Shirt (White)        | 24      | ${editableQuantity === 12000 ? '150' : '125'}           | ${editableQuantity === 12000 ? '3,600' : '3,000'}
+--------------------------------------------------------------------------------
+GRAND TOTAL PIECES: ${editableQuantity.toLocaleString()} PCS
+TOTAL CARTONS: ${editableQuantity === 12000 ? '500' : '475'} CARTONS
+HS CODE: 6109.10.00
+GROSS WEIGHT: ${editableQuantity === 12000 ? '3,250.00' : '3,087.50'} KGS
+
+[EXTRACTED CONFIDENCE: 99% via Document Intelligence Engine]` : `================================================================================
+COMMERCIAL TRADE DOCUMENT: ${selectedDocument.type.toUpperCase()}
+================================================================================
+SHIPMENT ID: ${shipment.id}
+BUYER: ${shipment.buyer}
+SUPPLIER: ${shipment.supplier}
+EXPORT LC: ${shipment.lcId}
+PO NUMBER: ${shipment.poNumber}
+VESSEL CUT-OFF: ${shipment.vesselCutoff.split('T')[0]}
+
+AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
+                  </pre>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: Buyer Compliance Tab */}
+            {activeStudioTab === 'buyerCompliance' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-xs">
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm">
+                      {shipment.buyer} Technical Compliance Checklist
+                    </h3>
+                    <p className="text-[11px] text-slate-500">
+                      Evaluated against retailer packaging, RFID and barcode standards.
+                    </p>
+                  </div>
+                  <Link
+                    href="/compliance"
+                    className="text-xs text-indigo-600 font-semibold hover:underline"
+                  >
+                    View All Buyers →
+                  </Link>
+                </div>
+
+                <div className="space-y-2.5">
+                  {buyerComplianceRules.map((rule) => (
                     <div
-                      onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-                      onDragLeave={() => setDragActive(false)}
-                      onDrop={handleFileDrop}
-                      onClick={() => fileInputRef.current?.click()}
-                      className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
-                        dragActive ? 'border-emerald-500 bg-emerald-50/50' : 'border-amber-300 bg-white hover:bg-amber-50/40'
+                      key={rule.id}
+                      className={`p-3.5 rounded-xl border text-xs space-y-1.5 ${
+                        rule.passed ? 'bg-white border-slate-200' : 'bg-red-50/60 border-red-200'
                       }`}
                     >
-                      <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileInputChange}
-                        className="hidden"
-                        accept=".txt,.pdf,.csv"
-                      />
-                      <FileUp className="w-6 h-6 text-amber-600 mx-auto mb-1.5" />
-                      <p className="text-xs font-semibold text-slate-800">
-                        Drag & drop corrected trade document here, or <span className="text-amber-700 underline">browse file</span>
-                      </p>
-                      <p className="text-[10px] text-slate-400 mt-0.5">
-                        Accepts text, PDF, or sample trade files (.txt, .pdf)
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-slate-900">{rule.ruleName}</span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          rule.passed ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {rule.passed ? 'Compliant' : 'Non-Compliant'}
+                        </span>
+                      </div>
+                      <p className="text-slate-600 text-[11px]">Requirement: {rule.requirement}</p>
+                      <p className={`text-[11px] font-medium ${rule.passed ? 'text-emerald-700' : 'text-red-800'}`}>
+                        Audit finding: {rule.actual}
                       </p>
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-                    {/* Quick Demo Buttons */}
-                    <div className="flex flex-wrap items-center gap-2 pt-1">
-                      <button
-                        onClick={() => handleSimulateAiUpload(true)}
-                        disabled={isExtracting}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors"
-                      >
-                        <Upload className="w-3.5 h-3.5" />
-                        <span>{isExtracting ? 'AI Extracting...' : 'Upload Revised Packing List (12,000 pcs)'}</span>
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          setEditableQuantity(12000);
-                          handleRevalidate(12000);
-                        }}
-                        className="inline-flex items-center gap-1 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium transition-colors"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                        <span>Set 12,000 & Re-validate</span>
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          setEditableQuantity(11400);
-                          handleRevalidate(11400);
-                        }}
-                        className="text-xs text-slate-500 hover:text-slate-800 underline px-2"
-                      >
-                        Reset to 11,400 (Blocked)
-                      </button>
-                    </div>
-
-                    {/* Sample Documents Link */}
-                    <div className="pt-2 border-t border-amber-200/60 flex items-center justify-between text-[11px] text-amber-800">
-                      <span>Realistic test files available in project:</span>
-                      <a
-                        href="/sample-docs/EXP-001-Packing-List-Revised.txt"
-                        download
-                        className="inline-flex items-center gap-1 font-semibold text-amber-900 hover:underline"
-                      >
-                        <Download className="w-3 h-3" />
-                        <span>Download Sample Revised File</span>
-                      </a>
-                    </div>
-
-                    {extractionNotice && (
-                      <p className="text-[11px] text-emerald-800 font-medium bg-emerald-100/70 p-2.5 rounded-md">
-                        {extractionNotice}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* Fields Grid */}
-                <div className="space-y-2">
-                  <p className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">
-                    Extracted Document Fields (Strict Schema & Confidence)
+            {/* TAB 4: BondIQ Fabric Calculator */}
+            {activeStudioTab === 'bondCalculator' && (
+              <div className="space-y-4 text-xs">
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">
+                    BondIQ Raw Material Consumption Ledger
+                  </h3>
+                  <p className="text-[11px] text-slate-500">
+                    Industrial fabric consumption calculation linked with approved BGMEA UD quota.
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {Object.entries(selectedDocument.fields).map(([key, field]) => {
-                      const isQty = key === 'totalQuantity' && selectedDocument.type === 'Packing List';
+                </div>
 
-                      return (
-                        <div key={key} className="bg-white p-3 rounded-lg border border-slate-200 text-xs space-y-1">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-slate-600">{field.name}</span>
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">
-                              {Math.round(field.confidence * 100)}% conf
-                            </span>
-                          </div>
-
-                          {isQty ? (
-                            <div className="flex items-center gap-2 mt-1">
-                              <input
-                                type="number"
-                                value={editableQuantity}
-                                onChange={(e) => setEditableQuantity(Number(e.target.value))}
-                                className="w-28 px-2 py-1 text-xs border border-slate-300 rounded font-bold font-mono focus:ring-1 focus:ring-emerald-500"
-                              />
-                              <span className="text-[11px] text-slate-500">pcs</span>
-                            </div>
-                          ) : (
-                            <p className="font-bold text-slate-900 font-mono text-sm">
-                              {typeof field.value === 'number' ? field.value.toLocaleString() : field.value || 'N/A'}
-                            </p>
-                          )}
-
-                          <p className="text-[10px] text-slate-400 italic truncate" title={field.sourceSnippet}>
-                            "{field.sourceSnippet}"
-                          </p>
-                        </div>
-                      );
-                    })}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span className="text-[10px] text-slate-400 uppercase">Order Quantity</span>
+                    <p className="font-bold font-mono text-slate-900 mt-1">{editableQuantity.toLocaleString()} pcs</p>
+                    <p className="text-[10px] text-slate-500">({(editableQuantity / 12).toFixed(1)} Dozen)</p>
                   </div>
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span className="text-[10px] text-slate-400 uppercase">Consumption / Dzn</span>
+                    <p className="font-bold font-mono text-slate-900 mt-1">2.40 kg / dzn</p>
+                    <p className="text-[10px] text-slate-500">160 GSM Single Jersey</p>
+                  </div>
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span className="text-[10px] text-slate-400 uppercase">Cutting Wastage</span>
+                    <p className="font-bold font-mono text-slate-900 mt-1">5% Allowance</p>
+                    <p className="text-[10px] text-slate-500">+{fabricMath.wastageKg} kg</p>
+                  </div>
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span className="text-[10px] text-slate-400 uppercase">Total Fabric Required</span>
+                    <p className="font-bold font-mono text-indigo-700 mt-1">{fabricMath.totalFabricRequiredKg.toLocaleString()} kg</p>
+                    <p className="text-[10px] text-indigo-600 font-medium">Reconciled Need</p>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-indigo-50/70 border border-indigo-200 rounded-xl space-y-1">
+                  <p className="font-semibold text-indigo-950">BGMEA UD Quota Status:</p>
+                  <p className="text-indigo-900 text-[11px]">{fabricMath.summary}</p>
                 </div>
               </div>
             )}
@@ -709,6 +959,83 @@ export default function ShipmentDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* WhatsApp / Email Floor Dispatch Modal */}
+      {showAlertModal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-5 relative">
+            <button
+              onClick={() => setShowAlertModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                <Send className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900">
+                  Instant Floor & C&F Dispatcher
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Bilingual resolution notice for factory packaging supervisors and clearing agents.
+                </p>
+              </div>
+            </div>
+
+            {/* WhatsApp Card */}
+            <div className="bg-emerald-50/70 border border-emerald-300 rounded-xl p-4 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+                  <MessageSquare className="w-4 h-4 text-emerald-600" />
+                  WhatsApp Resolution Notice (Bangla & English)
+                </span>
+                <button
+                  onClick={() => copyToClipboard(dispatchAlert?.whatsappFormatted || '', 'whatsapp')}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold shadow-sm transition-colors"
+                >
+                  <Copy className="w-3 h-3" />
+                  <span>{copiedType === 'whatsapp' ? 'Copied!' : 'Copy for WhatsApp'}</span>
+                </button>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-emerald-200 text-[11px] font-mono text-slate-800 whitespace-pre-wrap max-h-40 overflow-y-auto">
+                {dispatchAlert?.whatsappFormatted || 'Generating alert...'}
+              </div>
+            </div>
+
+            {/* Email Card */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                  <Mail className="w-4 h-4 text-slate-600" />
+                  Official Email Resolution Notice
+                </span>
+                <button
+                  onClick={() => copyToClipboard(dispatchAlert?.emailFormatted || '', 'email')}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded text-xs font-semibold shadow-sm transition-colors"
+                >
+                  <Copy className="w-3 h-3" />
+                  <span>{copiedType === 'email' ? 'Copied!' : 'Copy Email'}</span>
+                </button>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-slate-200 text-[11px] font-mono text-slate-700 whitespace-pre-wrap max-h-36 overflow-y-auto">
+                {dispatchAlert?.emailFormatted || 'Generating email...'}
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAlertModal(false)}
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Customs Clearance Gate-Pass Modal */}
       {showGatePass && (

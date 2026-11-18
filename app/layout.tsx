@@ -1,7 +1,15 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Link from 'next/link';
-import { ShieldCheck, Layers, BarChart3, FileText, Anchor } from 'lucide-react';
+import { 
+  ShieldCheck, 
+  Layers, 
+  BarChart3, 
+  FileText, 
+  Anchor, 
+  TrendingUp, 
+  CheckSquare 
+} from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'ExportOps AI - RMG Pre-Shipment Control Tower',
@@ -34,32 +42,46 @@ export default function RootLayout({
                     </span>
                   </div>
                 </Link>
-                <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
                   Supply Chain Nexus
                 </span>
               </div>
 
-              <nav className="flex items-center space-x-1 sm:space-x-4">
+              <nav className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
                 <Link
                   href="/"
-                  className="flex items-center space-x-1.5 px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
                 >
-                  <Layers className="w-4 h-4 text-slate-500" />
+                  <Layers className="w-3.5 h-3.5 text-slate-500" />
                   <span>Shipments</span>
                 </Link>
                 <Link
-                  href="/dashboard"
-                  className="flex items-center space-x-1.5 px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  href="/compliance"
+                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
                 >
-                  <BarChart3 className="w-4 h-4 text-slate-500" />
-                  <span>Management Dashboard</span>
+                  <CheckSquare className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Buyer Compliance</span>
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                >
+                  <BarChart3 className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Cost Dashboard</span>
+                </Link>
+                <Link
+                  href="/roi"
+                  className="flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                >
+                  <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>ROI & Pricing</span>
                 </Link>
                 <Link
                   href="/docs"
-                  className="hidden sm:flex items-center space-x-1.5 px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
+                  className="hidden md:flex items-center space-x-1.5 px-2.5 py-2 rounded-md text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors"
                 >
-                  <FileText className="w-4 h-4 text-slate-500" />
+                  <FileText className="w-3.5 h-3.5 text-slate-500" />
                   <span>Pitch & Docs</span>
                 </Link>
               </nav>
