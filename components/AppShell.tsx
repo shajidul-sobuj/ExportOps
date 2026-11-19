@@ -13,13 +13,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isLandingPage) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#060910] text-slate-100">
+      <div className="min-h-screen flex flex-col bg-[#030712] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-300">
         {/* Public Marketing Navigation */}
         <Navbar />
 
-        {/* Marketing Hero & Content */}
-        <main className="flex-1 bg-grid-subtle relative">
-          <div className="absolute inset-0 radial-glow-emerald pointer-events-none" />
+        {/* Marketing Hero & Content with Vignette Grid & Ambient Mesh */}
+        <main className="flex-1 bg-mesh-dark relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-modern pointer-events-none" />
           <div className="relative z-10">
             {children}
           </div>
