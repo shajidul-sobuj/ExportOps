@@ -59,35 +59,43 @@ export default function Showcase() {
       </div>
 
       {/* Tab Switcher */}
-      <div className="flex items-center justify-center gap-2.5 overflow-x-auto pb-2 text-sm font-bold">
+      <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2 text-xs sm:text-sm font-semibold">
         <button
           onClick={() => setActiveFeatureTab('studio')}
-          className={`px-5 py-3 rounded-2xl transition-all shrink-0 ${
-            activeFeatureTab === 'studio' ? 'bg-emerald-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-300 hover:text-white border border-slate-800'
+          className={`px-4 sm:px-5 py-2.5 rounded-xl transition-all shrink-0 ${
+            activeFeatureTab === 'studio' 
+              ? 'bg-emerald-500 text-slate-950 font-bold shadow-[0_0_20px_rgba(16,185,129,0.25)]' 
+              : 'bg-white/[0.03] text-slate-400 hover:text-white hover:bg-white/[0.06] border border-white/[0.08]'
           }`}
         >
           Inspection Studio
         </button>
         <button
           onClick={() => setActiveFeatureTab('bond')}
-          className={`px-5 py-3 rounded-2xl transition-all shrink-0 ${
-            activeFeatureTab === 'bond' ? 'bg-emerald-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-300 hover:text-white border border-slate-800'
+          className={`px-4 sm:px-5 py-2.5 rounded-xl transition-all shrink-0 ${
+            activeFeatureTab === 'bond' 
+              ? 'bg-emerald-500 text-slate-950 font-bold shadow-[0_0_20px_rgba(16,185,129,0.25)]' 
+              : 'bg-white/[0.03] text-slate-400 hover:text-white hover:bg-white/[0.06] border border-white/[0.08]'
           }`}
         >
           BondIQ Fabric Ledger
         </button>
         <button
           onClick={() => setActiveFeatureTab('alerts')}
-          className={`px-5 py-3 rounded-2xl transition-all shrink-0 ${
-            activeFeatureTab === 'alerts' ? 'bg-emerald-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-300 hover:text-white border border-slate-800'
+          className={`px-4 sm:px-5 py-2.5 rounded-xl transition-all shrink-0 ${
+            activeFeatureTab === 'alerts' 
+              ? 'bg-emerald-500 text-slate-950 font-bold shadow-[0_0_20px_rgba(16,185,129,0.25)]' 
+              : 'bg-white/[0.03] text-slate-400 hover:text-white hover:bg-white/[0.06] border border-white/[0.08]'
           }`}
         >
           Floor WhatsApp Alerts
         </button>
         <button
           onClick={() => setActiveFeatureTab('compliance')}
-          className={`px-5 py-3 rounded-2xl transition-all shrink-0 ${
-            activeFeatureTab === 'compliance' ? 'bg-emerald-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20 scale-105' : 'bg-[#0b101a] text-slate-300 hover:text-white border border-slate-800'
+          className={`px-4 sm:px-5 py-2.5 rounded-xl transition-all shrink-0 ${
+            activeFeatureTab === 'compliance' 
+              ? 'bg-emerald-500 text-slate-950 font-bold shadow-[0_0_20px_rgba(16,185,129,0.25)]' 
+              : 'bg-white/[0.03] text-slate-400 hover:text-white hover:bg-white/[0.06] border border-white/[0.08]'
           }`}
         >
           Buyer Compliance (H&M, Zara)
@@ -95,7 +103,7 @@ export default function Showcase() {
       </div>
 
       {/* Feature Tab Card */}
-      <div className="bg-[#0b101a] rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl relative overflow-hidden animate-fade-in">
+      <div className="bg-[#080d1a]/85 backdrop-blur-xl rounded-2xl border border-white/[0.08] p-6 sm:p-10 shadow-2xl relative overflow-hidden animate-fade-in">
         {/* TAB 1: Inspection Studio */}
         {activeFeatureTab === 'studio' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-fade-in">

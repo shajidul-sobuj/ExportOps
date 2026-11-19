@@ -15,7 +15,6 @@ import FinalCta from '@/components/landing/FinalCta';
 export default function MarketingLandingPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 overflow-hidden">
-      <Ticker />
       <Hero />
       <StatStrip />
       <Problem />

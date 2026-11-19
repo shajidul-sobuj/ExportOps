@@ -12,9 +12,9 @@ export default function RoiCalculator() {
 
   return (
     <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-gradient-to-r from-emerald-950/80 via-[#0b101a] to-[#070b13] p-8 sm:p-14 rounded-3xl border border-emerald-500/40 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
-        {/* Subtle Ambient Pulse */}
-        <div className="absolute -top-32 -left-32 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-ambient-pulse" />
+      <div className="bg-[#080d1a]/90 backdrop-blur-xl p-8 sm:p-12 rounded-2xl border border-white/[0.08] flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
+        {/* Subtle Ambient Glow */}
+        <div className="absolute -top-32 -left-32 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="space-y-5 max-w-xl relative z-10">
           <span className="text-xs sm:text-sm font-extrabold text-emerald-400 uppercase font-mono tracking-wider">The Business Case</span>
