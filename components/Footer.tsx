@@ -154,35 +154,35 @@ export default function Footer() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
             <Link href="/" className="inline-flex items-center space-x-2.5 group">
-              <div className="w-9 h-9 bg-emerald-500 rounded-xl flex items-center justify-center text-slate-950 font-bold shadow-md shadow-emerald-500/25 group-hover:scale-105 group-hover:rotate-3 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all duration-300">
+              <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-slate-950 font-bold shadow-md shadow-emerald-500/25 group-hover:scale-105 group-hover:rotate-3 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all duration-300">
                 <Anchor className="w-5 h-5 transition-transform group-hover:scale-110" />
               </div>
               <div>
-                <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1">
-                  ExportOps <span className="text-emerald-400 font-extrabold">AI</span>
+                <span className="text-xl font-black tracking-tight text-white flex items-center gap-1 font-display">
+                  ExportOps <span className="text-emerald-400 font-black">AI</span>
                 </span>
-                <span className="block text-[10px] uppercase font-semibold text-slate-400 tracking-wider">
+                <span className="block text-xs uppercase font-semibold text-slate-400 tracking-wider">
                   RMG Pre-Shipment Control Tower
                 </span>
               </div>
             </Link>
 
-            <p className="text-slate-300 text-xs leading-relaxed max-w-sm">
+            <p className="text-slate-300 text-sm leading-relaxed max-w-sm">
               Autonomous pre-shipment cross-checking of commercial invoices, packing lists, export LCs, and bonded fabric quotas (UD) before port gate-in. Protecting $47B in Bangladesh garment exports from container demurrage and air-freight penalties.
             </p>
 
             {/* Operational Terminal Status Pill */}
-            <div className="p-3 bg-[#080d16] border border-slate-800/80 rounded-xl space-y-1.5 max-w-sm hover:border-emerald-500/40 transition-colors duration-300 shadow-inner">
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-slate-400 flex items-center gap-1.5">
+            <div className="p-3.5 bg-[#080d16] border border-slate-800/80 rounded-xl space-y-1.5 max-w-sm hover:border-emerald-500/40 transition-colors duration-300 shadow-inner">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-slate-300 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                   <strong className="text-white">CHITTAGONG PORT BERTH 4</strong>
                 </span>
-                <span className="px-1.5 py-0.5 rounded text-[9px] bg-emerald-950 text-emerald-400 font-bold border border-emerald-800/60">
+                <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-950 text-emerald-400 font-bold border border-emerald-800/60">
                   RADAR ACTIVE
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-mono">
+              <p className="text-xs text-slate-400 font-mono">
                 ASYCUDA World Pre-Entry Validated • Zero AI Hallucination
               </p>
             </div>
@@ -193,7 +193,7 @@ export default function Footer() {
                 href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
-                className="group relative w-9 h-9 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center transition-all duration-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:scale-110 hover:-rotate-3 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95"
+                className="group relative w-10 h-10 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center transition-all duration-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:scale-110 hover:-rotate-3 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95"
                 aria-label="ExportOps AI GitHub Repository"
                 title="GitHub Repository"
               >
@@ -203,7 +203,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="group relative w-9 h-9 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center transition-all duration-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:scale-110 hover:rotate-3 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95"
+                className="group relative w-10 h-10 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center transition-all duration-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:scale-110 hover:rotate-3 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95"
                 aria-label="ExportOps AI LinkedIn"
                 title="LinkedIn Network"
               >
@@ -211,110 +211,110 @@ export default function Footer() {
               </a>
               <a
                 href="mailto:compliance@exportops.ai"
-                className="group relative w-9 h-9 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center transition-all duration-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:scale-110 hover:-rotate-3 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95"
+                className="group relative w-10 h-10 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center transition-all duration-300 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:scale-110 hover:-rotate-3 hover:shadow-lg hover:shadow-emerald-500/20 active:scale-95"
                 aria-label="Email Compliance Support"
                 title="Compliance Desk"
               >
                 <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
               </a>
-              <span className="text-[11px] font-mono text-slate-400 pl-1 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-xs font-mono text-slate-300 pl-1 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 Dhaka & Chattogram Hub
               </span>
             </div>
           </div>
 
           {/* Column 1: Platform (2 cols) */}
-          <div className={`lg:col-span-2 space-y-3 transition-all duration-700 delay-200 ease-out ${
+          <div className={`lg:col-span-2 space-y-3.5 transition-all duration-700 delay-200 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <p className="text-xs font-bold text-white uppercase font-mono tracking-wider flex items-center gap-1.5">
+            <p className="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>Platform</span>
             </p>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Control Tower</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Inspection Studio</span>
-                  <span className="text-[9px] px-1 rounded bg-amber-500/20 text-amber-300 font-mono">Demo</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-amber-500/20 text-amber-300 font-mono">Demo</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>BondIQ Fabric Ledger</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Buyer Compliance</span>
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/dashboard" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Cost Dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link href="/roi" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/roi" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>ROI & Pricing</span>
-                  <span className="text-[9px] px-1 rounded bg-emerald-500/20 text-emerald-300 font-mono">Pilot</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-emerald-500/20 text-emerald-300 font-mono">Pilot</span>
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* Column 2: Compliance Rules (2 cols) */}
-          <div className={`lg:col-span-2 space-y-3 transition-all duration-700 delay-250 ease-out ${
+          <div className={`lg:col-span-2 space-y-3.5 transition-all duration-700 delay-250 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <p className="text-xs font-bold text-white uppercase font-mono tracking-wider flex items-center gap-1.5">
+            <p className="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
               <span>Rules Engine</span>
             </p>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>8-Point Matrix (R1-R8)</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>R1: Invoice vs PL Match</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-002" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-002" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>R4: LC Expiry & Date</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>R8: BGMEA UD Quota</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>H&M Ratio Pack (HM-01)</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Zara RFID Inlays (ZRA-01)</span>
                 </Link>
@@ -323,41 +323,41 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Resources & Docs (2 cols) */}
-          <div className={`lg:col-span-2 space-y-3 transition-all duration-700 delay-300 ease-out ${
+          <div className={`lg:col-span-2 space-y-3.5 transition-all duration-700 delay-300 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <p className="text-xs font-bold text-white uppercase font-mono tracking-wider flex items-center gap-1.5">
+            <p className="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               <span>Resources</span>
             </p>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Pitch & Demo Script</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-005" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-005" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Port Gate-In Pass</span>
-                  <span className="text-[9px] px-1 rounded bg-emerald-500/20 text-emerald-300 font-mono">QR</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-emerald-500/20 text-emerald-300 font-mono">QR</span>
                 </Link>
               </li>
               <li>
-                <Link href="/roi" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/roi" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>90-Day Factory Pilot</span>
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>ASYCUDA Format Specs</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Sample Trade Docs</span>
                 </Link>
@@ -366,18 +366,18 @@ export default function Footer() {
           </div>
 
           {/* Column 4: Legal & Standards (2 cols) */}
-          <div className={`lg:col-span-2 space-y-3 transition-all duration-700 delay-350 ease-out ${
+          <div className={`lg:col-span-2 space-y-3.5 transition-all duration-700 delay-350 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <p className="text-xs font-bold text-white uppercase font-mono tracking-wider flex items-center gap-1.5">
+            <p className="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
               <span>Standards</span>
             </p>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <button
                   onClick={() => setActiveModal('security')}
-                  className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
+                  className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
                 >
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Bangladesh Customs Act</span>
@@ -386,7 +386,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => setActiveModal('terms')}
-                  className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
+                  className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
                 >
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>ICC UCP 600 Banking</span>
@@ -395,7 +395,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => setActiveModal('privacy')}
-                  className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
+                  className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
                 >
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Data Isolation Protocol</span>
@@ -404,7 +404,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => setActiveModal('privacy')}
-                  className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
+                  className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
                 >
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Privacy Policy</span>
@@ -413,7 +413,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => setActiveModal('terms')}
-                  className="group flex items-center gap-1.5 text-slate-400 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
+                  className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200 text-left"
                 >
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Terms of Service</span>
@@ -427,29 +427,29 @@ export default function Footer() {
       {/* 3. Operational System Telemetry Bar (Interactive Hover Highlights) */}
       <div id="system-status" className="border-t border-slate-800/80 bg-[#04060b] py-3.5 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-4 text-[11px] font-mono">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-slate-400">
+          <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-slate-300">
               {/* ASYCUDA Pill */}
-              <div className="flex items-center gap-2 p-1 px-2.5 rounded-lg bg-slate-900/40 border border-slate-800/60 hover:border-emerald-500/40 hover:bg-emerald-950/20 transition-all duration-300 cursor-default group">
+              <div className="flex items-center gap-2 p-1 px-3 rounded-lg bg-slate-900/40 border border-slate-800/60 hover:border-emerald-500/40 hover:bg-emerald-950/20 transition-all duration-300 cursor-default group">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse shrink-0" />
                 <span>ASYCUDA Gateway: <strong className="text-white group-hover:text-emerald-300 transition-colors">OPERATIONAL (99.98%)</strong></span>
               </div>
 
               {/* BGMEA UD Pill */}
-              <div className="flex items-center gap-2 p-1 px-2.5 rounded-lg bg-slate-900/40 border border-slate-800/60 hover:border-emerald-500/40 hover:bg-emerald-950/20 transition-all duration-300 cursor-default group">
+              <div className="flex items-center gap-2 p-1 px-3 rounded-lg bg-slate-900/40 border border-slate-800/60 hover:border-emerald-500/40 hover:bg-emerald-950/20 transition-all duration-300 cursor-default group">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block shrink-0" />
                 <span>BGMEA e-UD Ledger: <strong className="text-white group-hover:text-emerald-300 transition-colors">SYNCED</strong></span>
               </div>
 
               {/* Zero Hallucination Pill */}
-              <div className="hidden md:flex items-center gap-2 p-1 px-2.5 rounded-lg bg-slate-900/40 border border-slate-800/60 hover:border-emerald-500/40 hover:bg-emerald-950/20 transition-all duration-300 cursor-default group">
+              <div className="hidden md:flex items-center gap-2 p-1 px-3 rounded-lg bg-slate-900/40 border border-slate-800/60 hover:border-emerald-500/40 hover:bg-emerald-950/20 transition-all duration-300 cursor-default group">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block shrink-0" />
                 <span>Deterministic Rules: <strong className="text-white group-hover:text-emerald-300 transition-colors">ZERO HALLUCINATION</strong></span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-slate-400 text-[10px] bg-slate-900/60 px-2.5 py-1 rounded-lg border border-slate-800/60">
-              <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
+            <div className="flex items-center gap-2 text-slate-300 text-xs bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-800/60">
+              <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>256-BIT TLS INDUSTRIAL ENCRYPTION</span>
             </div>
           </div>
@@ -458,11 +458,11 @@ export default function Footer() {
 
       {/* 4. Bottom Bar */}
       <div className="border-t border-slate-800/80 bg-[#030509] py-6 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="flex items-center space-x-2 text-slate-400">
             <span>© {currentYear} <strong className="text-white font-semibold">ExportOps AI</strong>. All rights reserved.</span>
             <span className="text-slate-600">•</span>
-            <span className="text-slate-400">Chittagong Port Cut-Off Shield</span>
+            <span className="text-slate-300">Chittagong Port Cut-Off Shield</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-slate-400">
