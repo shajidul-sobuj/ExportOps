@@ -1,35 +1,20 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Link from 'next/link';
-import { 
-  ShieldCheck, 
-  Layers, 
-  BarChart3, 
-  FileText, 
-  Anchor, 
-  TrendingUp, 
-  CheckSquare,
-  ArrowRight
-} from 'lucide-react';
-
-import AppShell from '@/components/AppShell';
 
 export const metadata: Metadata = {
-  title: 'ExportOps AI - RMG Pre-Shipment Control Tower',
-  description: 'Validating export documents, reconciling bonded fabric, and delivering live customs-ready clearance for Bangladesh RMG exports.',
+  title: {
+    default: 'ExportOps AI — RMG Pre-Shipment Control Tower',
+    template: '%s · ExportOps AI',
+  },
+  description:
+    'Validate export documents, reconcile bonded fabric, and clear Bangladesh RMG shipments before vessel cut-off.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-[#060910] text-slate-100 antialiased min-h-screen selection:bg-emerald-500/30 selection:text-emerald-300">
-        <AppShell>
-          {children}
-        </AppShell>
+      <body className="bg-canvas text-slate-100 antialiased min-h-screen selection:bg-emerald-500/30 selection:text-emerald-200">
+        {children}
       </body>
     </html>
   );

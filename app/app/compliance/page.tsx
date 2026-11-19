@@ -51,7 +51,7 @@ export default function BuyerCompliancePage() {
         </div>
 
         <Link
-          href={`/shipments/${selectedShipmentId}`}
+          href={`/app/shipments/${selectedShipmentId}`}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 self-start transition-all transform hover:-translate-y-0.5"
         >
           <span>Open {selectedShipmentId} Studio</span>

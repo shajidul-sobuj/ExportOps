@@ -33,7 +33,7 @@ export default function DocsPage() {
         </div>
 
         <Link
-          href="/shipments/EXP-001"
+          href="/app/shipments/EXP-001"
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all self-start transform hover:-translate-y-0.5"
         >
           <span>Launch Live EXP-001 Demo</span>

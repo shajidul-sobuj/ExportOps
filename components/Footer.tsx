@@ -240,32 +240,32 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Inspection Studio</span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-amber-500/20 text-amber-300 font-mono">Demo</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>BondIQ Fabric Ledger</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Buyer Compliance</span>
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/analytics" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Cost Dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link href="/roi" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/roi" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>ROI & Pricing</span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-emerald-500/20 text-emerald-300 font-mono">Pilot</span>
@@ -290,31 +290,31 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>R1: Invoice vs PL Match</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-002" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-002" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>R4: LC Expiry & Date</span>
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-003" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>R8: BGMEA UD Quota</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>H&M Ratio Pack (HM-01)</span>
                 </Link>
               </li>
               <li>
-                <Link href="/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Zara RFID Inlays (ZRA-01)</span>
                 </Link>
@@ -338,14 +338,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-005" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-005" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Port Gate-In Pass</span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-emerald-500/20 text-emerald-300 font-mono">QR</span>
                 </Link>
               </li>
               <li>
-                <Link href="/roi" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/roi" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>90-Day Factory Pilot</span>
                 </Link>
@@ -357,7 +357,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/shipments/EXP-001" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>Sample Trade Docs</span>
                 </Link>

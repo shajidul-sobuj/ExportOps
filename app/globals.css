@@ -5,8 +5,20 @@
 @tailwind utilities;
 
 :root {
-  --background: #060910;
+  --background: #030712;
   --foreground: #f8fafc;
+
+  /* ── Design tokens (see implementation_plan §3) ── */
+  --bg-canvas: #030712;
+  --bg-app: #070b12;
+  --surface-1: #0b111c;
+  --surface-2: #111827;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --text-1: #f8fafc;
+  --text-2: #cbd5e1;
+  --text-3: #94a3b8;
+
   --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;

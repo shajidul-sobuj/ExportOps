@@ -257,7 +257,7 @@ export default function ManagementDashboard() {
                     </td>
                     <td className="py-3 pl-2 text-right">
                       <Link
-                        href={`/shipments/${row.id}`}
+                        href={`/app/shipments/${row.id}`}
                         className="text-emerald-400 hover:text-emerald-300 hover:underline font-semibold text-[11px] inline-flex items-center gap-0.5"
                       >
                         <span>Inspect</span>

@@ -21,6 +21,21 @@ export default {
           800: "#14532d",
           900: "#052e16",
         },
+        canvas: "var(--bg-canvas)",
+        app: "var(--bg-app)",
+        surface: {
+          1: "var(--surface-1)",
+          2: "var(--surface-2)",
+        },
+        line: {
+          DEFAULT: "var(--border)",
+          strong: "var(--border-strong)",
+        },
+        ink: {
+          1: "var(--text-1)",
+          2: "var(--text-2)",
+          3: "var(--text-3)",
+        },
       },
       fontFamily: {
         display: ['var(--font-display)', 'Manrope', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],

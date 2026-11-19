@@ -47,6 +47,18 @@ import {
 } from '@/lib/rules';
 import { evaluateBuyerCompliance } from '@/lib/buyer-rules';
 import { calculateFabricConsumption, GARMENT_FABRIC_PRESETS } from '@/lib/bond-ledger';
+import { 
+  Card, 
+  CardHeader, 
+  Badge, 
+  StatusBadge, 
+  CountdownChip, 
+  ScoreRing, 
+  Button, 
+  ButtonLink,
+  UtilizationBar 
+} from '@/components/ui';
+import { cn } from '@/lib/utils';
 
 export default function ShipmentDetailPage() {
   const params = useParams();
@@ -240,15 +252,15 @@ export default function ShipmentDetailPage() {
   const selectedDocument = shipment.documents.find((d) => d.type === activeDocTab) || shipment.documents[0];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-6 py-6 space-y-6">
       {/* Top Breadcrumb & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+          href="/app/shipments"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-3 hover:text-ink-1 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Shipments Control Tower</span>
+          <span>Back to Shipments</span>
         </Link>
 
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -256,105 +268,76 @@ export default function ShipmentDetailPage() {
           {status !== 'Customs-ready' && (
             <button
               onClick={handleGenerateAlert}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-semibold rounded-lg shadow-sm transition-colors"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Dispatch Floor Alert (WhatsApp/Email)</span>
+              <span>Dispatch Alert (WhatsApp/Email)</span>
             </button>
           )}
 
           {status === 'Customs-ready' && (
             <button
               onClick={() => setShowGatePass(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg shadow-sm transition-colors"
             >
               <FileCheck2 className="w-3.5 h-3.5" />
-              <span>View Customs Clearance Gate-Pass</span>
+              <span>View Gate-Pass</span>
             </button>
           )}
 
           <button
             onClick={() => handleRevalidate()}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-surface-2 hover:bg-white/[0.08] text-ink-1 border border-line-strong text-xs font-medium rounded-lg shadow-sm transition-colors"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Re-evaluate Rules</span>
+            <span>Re-evaluate</span>
           </button>
         </div>
       </div>
 
       {/* Shipment Header Banner */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <Card className="p-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-extrabold text-slate-900 font-mono tracking-tight">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl font-extrabold text-ink-1 font-mono tracking-tight">
                 {shipment.id}
               </h1>
-              {/* Dynamic Status Badge */}
-              {status === 'Blocked' && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200 animate-pulse-subtle">
-                  <AlertOctagon className="w-3.5 h-3.5 text-red-600" />
-                  BLOCKED AT PORT
-                </span>
-              )}
-              {status === 'At risk' && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-                  AT RISK (WARNINGS)
-                </span>
-              )}
-              {status === 'Customs-ready' && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  CUSTOMS-READY & CLEARED
-                </span>
-              )}
+              <StatusBadge status={status} />
+              <CountdownChip cutoff={shipment.vesselCutoff} />
             </div>
-            <p className="text-sm text-slate-600">
-              Buyer: <span className="font-semibold text-slate-900">{shipment.buyer}</span> • Supplier: <span className="text-slate-800">{shipment.supplier}</span>
+            <p className="text-sm text-ink-2">
+              Buyer: <span className="font-semibold text-ink-1">{shipment.buyer}</span> • Supplier: <span className="text-ink-2">{shipment.supplier}</span>
             </p>
-            <p className="text-xs font-mono text-slate-400">
+            <p className="text-xs font-mono text-ink-3">
               PO: {shipment.poNumber} • Export LC: {shipment.lcId} • Container: {shipment.containerNumber}
             </p>
           </div>
 
           {/* Bank-Ready Score Display */}
-          <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 p-4 rounded-xl">
+          <div className="flex items-center gap-4 bg-app border border-line-strong p-4 rounded-xl">
+            <ScoreRing value={score} size={48} stroke={5} />
             <div>
-              <p className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">
+              <p className="text-[11px] uppercase tracking-wider font-semibold text-ink-3">
                 Bank-Ready Score
               </p>
-              <div className="flex items-baseline gap-1 mt-0.5">
-                <span className={`text-3xl font-extrabold font-mono ${
-                  score >= 90 ? 'text-emerald-600' : score >= 75 ? 'text-amber-600' : 'text-red-600'
-                }`}>
-                  {score}
-                </span>
-                <span className="text-xs text-slate-400">/ 100</span>
-              </div>
-            </div>
-            <div className="w-24 bg-slate-200 h-2.5 rounded-full overflow-hidden">
-              <div 
-                className={`h-full rounded-full transition-all duration-700 ${
-                  score >= 90 ? 'bg-emerald-500' : score >= 75 ? 'bg-amber-500' : 'bg-red-500'
-                }`}
-                style={{ width: `${score}%` }}
-              />
+              <p className="text-xs text-ink-2 mt-0.5">
+                {status === 'Customs-ready' ? 'All 8 rules passed' : `${ruleResults.filter(r => !r.passed).length} issues blocking gate-pass`}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Dynamic Celebration Banner */}
         {showCelebration && (
-          <div className="mt-4 p-4 bg-emerald-50 border border-emerald-300 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-emerald-900 text-sm">
+          <div className="mt-4 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-emerald-200 text-sm">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shrink-0">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold shrink-0">
                 ✓
               </div>
               <div>
-                <p className="font-bold">Shipment Successfully Cleared for Port Gate-In!</p>
-                <p className="text-xs text-emerald-700">
+                <p className="font-bold text-ink-1">Shipment Successfully Cleared for Port Gate-In!</p>
+                <p className="text-xs text-emerald-300">
                   All 8 deterministic rules passed. Bank-Ready Score is 100/100. Commercial documents are aligned.
                 </p>
               </div>
@@ -362,66 +345,70 @@ export default function ShipmentDetailPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowGatePass(true)}
-                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+                className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg shadow-sm transition-colors"
               >
                 Open Gate-Pass
               </button>
               <button
                 onClick={() => setShowCelebration(false)}
-                className="text-xs text-emerald-700 hover:text-emerald-950 underline"
+                className="text-xs text-ink-3 hover:text-ink-1 underline"
               >
                 Dismiss
               </button>
             </div>
           </div>
         )}
-      </div>
+      </Card>
 
       {/* Main Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Inspection Studio Tabs (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+          <Card className="p-6 space-y-5">
             {/* Studio Navigation Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line pb-4">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-emerald-600" />
-                <h2 className="font-bold text-slate-900 text-base">
+                <Sparkles className="w-5 h-5 text-emerald-400" />
+                <h2 className="font-bold text-ink-1 text-base">
                   Document Inspection Studio
                 </h2>
               </div>
 
               {/* Sub-Tabs */}
-              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs font-semibold">
+              <div className="flex items-center gap-1 bg-app p-1 rounded-lg text-xs font-medium border border-line">
                 <button
                   onClick={() => setActiveStudioTab('docs')}
-                  className={`px-2.5 py-1 rounded-md transition-colors ${
-                    activeStudioTab === 'docs' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
-                  }`}
+                  className={cn(
+                    'px-2.5 py-1 rounded-md transition-colors',
+                    activeStudioTab === 'docs' ? 'bg-surface-2 text-ink-1 shadow-sm font-semibold' : 'text-ink-3 hover:text-ink-1'
+                  )}
                 >
                   Extracted Fields
                 </button>
                 <button
                   onClick={() => setActiveStudioTab('rawText')}
-                  className={`px-2.5 py-1 rounded-md transition-colors ${
-                    activeStudioTab === 'rawText' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
-                  }`}
+                  className={cn(
+                    'px-2.5 py-1 rounded-md transition-colors',
+                    activeStudioTab === 'rawText' ? 'bg-surface-2 text-ink-1 shadow-sm font-semibold' : 'text-ink-3 hover:text-ink-1'
+                  )}
                 >
                   Document Viewer
                 </button>
                 <button
                   onClick={() => setActiveStudioTab('buyerCompliance')}
-                  className={`px-2.5 py-1 rounded-md transition-colors ${
-                    activeStudioTab === 'buyerCompliance' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
-                  }`}
+                  className={cn(
+                    'px-2.5 py-1 rounded-md transition-colors',
+                    activeStudioTab === 'buyerCompliance' ? 'bg-surface-2 text-ink-1 shadow-sm font-semibold' : 'text-ink-3 hover:text-ink-1'
+                  )}
                 >
                   Buyer Rules
                 </button>
                 <button
                   onClick={() => setActiveStudioTab('bondCalculator')}
-                  className={`px-2.5 py-1 rounded-md transition-colors ${
-                    activeStudioTab === 'bondCalculator' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600'
-                  }`}
+                  className={cn(
+                    'px-2.5 py-1 rounded-md transition-colors',
+                    activeStudioTab === 'bondCalculator' ? 'bg-surface-2 text-ink-1 shadow-sm font-semibold' : 'text-ink-3 hover:text-ink-1'
+                  )}
                 >
                   Bond Math
                 </button>
@@ -437,15 +424,16 @@ export default function ShipmentDetailPage() {
                     <button
                       key={doc.type}
                       onClick={() => setActiveDocTab(doc.type)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-colors ${
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-colors',
                         activeDocTab === doc.type
-                          ? 'bg-slate-900 text-white font-semibold'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                      }`}
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold'
+                          : 'bg-app text-ink-3 hover:text-ink-1 border border-line'
+                      )}
                     >
                       {doc.type}
                       {doc.type === 'Packing List' && status === 'Blocked' && (
-                        <span className="ml-1.5 w-2 h-2 rounded-full bg-red-400 inline-block" />
+                        <span className="ml-1.5 w-2 h-2 rounded-full bg-rose-400 inline-block animate-pulse" />
                       )}
                     </button>
                   ))}
@@ -453,28 +441,28 @@ export default function ShipmentDetailPage() {
 
                 {/* Selected Document Details & Extracted Fields */}
                 {selectedDocument && (
-                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-4">
+                  <div className="bg-app rounded-xl p-4 border border-line space-y-4">
                     <div className="flex items-center justify-between text-xs">
                       <div>
-                        <span className="font-semibold text-slate-800">{selectedDocument.fileName}</span>
-                        <p className="text-[11px] text-slate-400">Uploaded {selectedDocument.uploadedAt.split('T')[0]}</p>
+                        <span className="font-semibold text-ink-1">{selectedDocument.fileName}</span>
+                        <p className="text-[11px] text-ink-3">Uploaded {selectedDocument.uploadedAt.split('T')[0]}</p>
                       </div>
-                      <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-100 text-emerald-800">
+                      <Badge tone="success">
                         AI Verified Schema
-                      </span>
+                      </Badge>
                     </div>
 
                     {/* Interactive Demo Fix Trigger for EXP-001 Packing List */}
                     {shipment.id === 'EXP-001' && selectedDocument.type === 'Packing List' && (
-                      <div className="bg-amber-50/90 border border-amber-300 rounded-xl p-4 space-y-3.5">
+                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 space-y-3.5">
                         <div className="flex items-start gap-2.5">
-                          <Flame className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                          <Flame className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                           <div className="text-xs">
-                            <p className="font-bold text-amber-900 text-sm">
+                            <p className="font-bold text-amber-300 text-sm">
                               Remediation Workflow: Resolve Quantity Discrepancy
                             </p>
-                            <p className="text-amber-800 text-xs mt-0.5">
-                              Commercial Invoice specifies <strong>12,000 pcs</strong>, but Packing List specifies only <strong>{editableQuantity.toLocaleString()} pcs</strong>.
+                            <p className="text-ink-2 text-xs mt-0.5">
+                              Commercial Invoice specifies <strong>12,000 pcs</strong>, but Packing List specifies only <strong className="text-rose-300">{editableQuantity.toLocaleString()} pcs</strong>.
                               Upload a revised document or apply the fix to clear the shipment!
                             </p>
                           </div>
@@ -486,24 +474,23 @@ export default function ShipmentDetailPage() {
                           onDragLeave={() => setDragActive(false)}
                           onDrop={handleFileDrop}
                           onClick={() => fileInputRef.current?.click()}
-                          className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
-                            dragActive ? 'border-emerald-500 bg-emerald-50/50' : 'border-amber-300 bg-white hover:bg-amber-50/40'
-                          }`}
+                          className={cn(
+                            'border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all',
+                            dragActive ? 'border-emerald-400 bg-emerald-500/10' : 'border-line-strong hover:border-emerald-500/40 bg-surface-1'
+                          )}
                         >
                           <input
-                            type="file"
                             ref={fileInputRef}
+                            type="file"
+                            accept=".txt,.pdf,.csv"
                             onChange={handleFileInputChange}
                             className="hidden"
-                            accept=".txt,.pdf,.csv"
                           />
-                          <FileUp className="w-6 h-6 text-amber-600 mx-auto mb-1.5" />
-                          <p className="text-xs font-semibold text-slate-800">
-                            Drag & drop corrected trade document here, or <span className="text-amber-700 underline">browse file</span>
+                          <FileUp className="w-6 h-6 text-emerald-400 mx-auto mb-1.5" />
+                          <p className="text-xs font-semibold text-ink-1">
+                            Drop revised Packing List here or <span className="text-emerald-400 underline">browse</span>
                           </p>
-                          <p className="text-[10px] text-slate-400 mt-0.5">
-                            Accepts text, PDF, or sample trade files (.txt, .pdf)
-                          </p>
+                          <p className="text-[10px] text-ink-3 mt-0.5">Supports .txt, .pdf, or export documents</p>
                         </div>
 
                         {/* Quick Demo Buttons */}
@@ -511,96 +498,69 @@ export default function ShipmentDetailPage() {
                           <button
                             onClick={() => handleSimulateAiUpload(true)}
                             disabled={isExtracting}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-lg text-xs font-bold shadow-sm transition-all disabled:opacity-50"
                           >
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>{isExtracting ? 'AI Extracting...' : 'Upload Revised Packing List (12,000 pcs)'}</span>
+                            <Sparkles className="w-3.5 h-3.5" />
+                            <span>{isExtracting ? 'Extracting...' : 'One-Click: Apply 12,000 pcs Correction'}</span>
                           </button>
 
                           <button
-                            onClick={() => {
-                              setEditableQuantity(12000);
-                              handleRevalidate(12000);
-                            }}
-                            className="inline-flex items-center gap-1 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium transition-colors"
+                            onClick={() => handleSimulateAiUpload(false)}
+                            disabled={isExtracting}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-surface-2 hover:bg-white/[0.08] text-ink-2 rounded-lg text-xs font-medium border border-line transition-all"
                           >
-                            <Edit3 className="w-3.5 h-3.5" />
-                            <span>Set 12,000 & Re-validate</span>
-                          </button>
-
-                          <button
-                            onClick={() => {
-                              setEditableQuantity(11400);
-                              handleRevalidate(11400);
-                            }}
-                            className="text-xs text-slate-500 hover:text-slate-800 underline px-2"
-                          >
-                            Reset to 11,400 (Blocked)
+                            <RefreshCw className="w-3 h-3" />
+                            <span>Reset to 11,400 pcs (Blocked)</span>
                           </button>
                         </div>
 
-                        {/* Sample Documents Link */}
-                        <div className="pt-2 border-t border-amber-200/60 flex items-center justify-between text-[11px] text-amber-800">
-                          <span>Realistic test files available in project:</span>
-                          <a
-                            href="/sample-docs/EXP-001-Packing-List-Revised.txt"
-                            download
-                            className="inline-flex items-center gap-1 font-semibold text-amber-900 hover:underline"
-                          >
-                            <Download className="w-3 h-3" />
-                            <span>Download Sample Revised File</span>
-                          </a>
-                        </div>
-
+                        {/* Extraction Notice */}
                         {extractionNotice && (
-                          <p className="text-[11px] text-emerald-800 font-medium bg-emerald-100/70 p-2.5 rounded-md">
+                          <div className="p-2.5 bg-emerald-500/15 border border-emerald-500/30 rounded-lg text-xs text-emerald-300 font-mono">
                             {extractionNotice}
-                          </p>
+                          </div>
                         )}
                       </div>
                     )}
 
                     {/* Fields Grid */}
-                    <div className="space-y-2">
-                      <p className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">
-                        Extracted Document Fields (Strict Schema & Confidence)
-                      </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {Object.entries(selectedDocument.fields).map(([key, field]) => {
-                          const isQty = key === 'totalQuantity' && selectedDocument.type === 'Packing List';
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      {Object.entries(selectedDocument.fields).map(([key, field]) => {
+                        const isMismatchField = selectedDocument.type === 'Packing List' && key === 'totalQuantity' && editableQuantity !== 12000;
 
-                          return (
-                            <div key={key} className="bg-white p-3 rounded-lg border border-slate-200 text-xs space-y-1">
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium text-slate-600">{field.name}</span>
-                                <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">
-                                  {Math.round(field.confidence * 100)}% conf
-                                </span>
-                              </div>
-
-                              {isQty ? (
-                                <div className="flex items-center gap-2 mt-1">
-                                  <input
-                                    type="number"
-                                    value={editableQuantity}
-                                    onChange={(e) => setEditableQuantity(Number(e.target.value))}
-                                    className="w-28 px-2 py-1 text-xs border border-slate-300 rounded font-bold font-mono focus:ring-1 focus:ring-emerald-500"
-                                  />
-                                  <span className="text-[11px] text-slate-500">pcs</span>
-                                </div>
-                              ) : (
-                                <p className="font-bold text-slate-900 font-mono text-sm">
-                                  {typeof field.value === 'number' ? field.value.toLocaleString() : field.value || 'N/A'}
-                                </p>
-                              )}
-
-                              <p className="text-[10px] text-slate-400 italic truncate" title={field.sourceSnippet}>
-                                "{field.sourceSnippet}"
-                              </p>
+                        return (
+                          <div
+                            key={key}
+                            className={cn(
+                              'p-3 rounded-lg border transition-all',
+                              isMismatchField ? 'bg-rose-500/10 border-rose-500/40' : 'bg-surface-1 border-line'
+                            )}
+                          >
+                            <div className="flex items-center justify-between text-ink-3">
+                              <span className="font-medium capitalize">{field.name || key}</span>
+                              <span className="text-[10px] font-mono text-emerald-400">
+                                {Math.round(field.confidence * 100)}% conf
+                              </span>
                             </div>
-                          );
-                        })}
-                      </div>
+
+                            <div className="flex items-center justify-between mt-1.5">
+                              <span className={cn('text-sm font-bold font-mono', isMismatchField ? 'text-rose-300' : 'text-ink-1')}>
+                                {key === 'totalQuantity' && selectedDocument.type === 'Packing List'
+                                  ? `${editableQuantity.toLocaleString()} pcs`
+                                  : String(field.value)}
+                              </span>
+
+                              {isMismatchField && (
+                                <Badge tone="danger">Mismatch (-600)</Badge>
+                              )}
+                            </div>
+
+                            <p className="mt-1.5 text-[10px] text-ink-3 truncate italic font-mono">
+                              "{field.sourceSnippet}"
+                            </p>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -608,18 +568,18 @@ export default function ShipmentDetailPage() {
             )}
 
             {/* TAB 2: Document Raw Text Viewer */}
-            {activeStudioTab === 'rawText' && (
+            {activeStudioTab === 'rawText' && selectedDocument && (
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-700">
+                  <span className="font-semibold text-ink-2">
                     Trade Document Source: {selectedDocument.fileName}
                   </span>
-                  <span className="text-[11px] text-slate-400 font-mono">
+                  <span className="text-[11px] text-ink-3 font-mono">
                     OCR / Text Buffer
                   </span>
                 </div>
 
-                <div className="p-4 bg-slate-900 text-emerald-400 font-mono text-xs rounded-xl overflow-x-auto max-h-96 leading-relaxed shadow-inner">
+                <div className="p-4 bg-app text-emerald-400 font-mono text-xs rounded-xl overflow-x-auto max-h-96 leading-relaxed border border-line">
                   <pre className="whitespace-pre-wrap">
 {selectedDocument.type === 'Packing List' ? `================================================================================
 PACKING LIST FOR EXPORT SHIPMENT ${shipment.id}
@@ -665,16 +625,16 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-xs">
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm">
+                    <h3 className="font-bold text-ink-1 text-sm">
                       {shipment.buyer} Technical Compliance Checklist
                     </h3>
-                    <p className="text-[11px] text-slate-500">
+                    <p className="text-[11px] text-ink-3">
                       Evaluated against retailer packaging, RFID and barcode standards.
                     </p>
                   </div>
                   <Link
-                    href="/compliance"
-                    className="text-xs text-indigo-600 font-semibold hover:underline"
+                    href="/app/compliance"
+                    className="text-xs text-emerald-400 font-semibold hover:underline"
                   >
                     View All Buyers →
                   </Link>
@@ -684,20 +644,19 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
                   {buyerComplianceRules.map((rule) => (
                     <div
                       key={rule.id}
-                      className={`p-3.5 rounded-xl border text-xs space-y-1.5 ${
-                        rule.passed ? 'bg-white border-slate-200' : 'bg-red-50/60 border-red-200'
-                      }`}
+                      className={cn(
+                        'p-3.5 rounded-xl border text-xs space-y-1.5',
+                        rule.passed ? 'bg-app border-line' : 'bg-rose-500/10 border-rose-500/30'
+                      )}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-slate-900">{rule.ruleName}</span>
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                          rule.passed ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
-                        }`}>
+                        <span className="font-bold text-ink-1">{rule.ruleName}</span>
+                        <Badge tone={rule.passed ? 'success' : 'danger'}>
                           {rule.passed ? 'Compliant' : 'Non-Compliant'}
-                        </span>
+                        </Badge>
                       </div>
-                      <p className="text-slate-600 text-[11px]">Requirement: {rule.requirement}</p>
-                      <p className={`text-[11px] font-medium ${rule.passed ? 'text-emerald-700' : 'text-red-800'}`}>
+                      <p className="text-ink-3 text-[11px]">Requirement: {rule.requirement}</p>
+                      <p className={cn('text-[11px] font-medium', rule.passed ? 'text-emerald-400' : 'text-rose-300')}>
                         Audit finding: {rule.actual}
                       </p>
                     </div>
@@ -710,134 +669,99 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
             {activeStudioTab === 'bondCalculator' && (
               <div className="space-y-4 text-xs">
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm">
+                  <h3 className="font-bold text-ink-1 text-sm">
                     BondIQ Raw Material Consumption Ledger
                   </h3>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-ink-3">
                     Industrial fabric consumption calculation linked with approved BGMEA UD quota.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 uppercase">Order Quantity</span>
-                    <p className="font-bold font-mono text-slate-900 mt-1">{editableQuantity.toLocaleString()} pcs</p>
-                    <p className="text-[10px] text-slate-500">({(editableQuantity / 12).toFixed(1)} Dozen)</p>
+                  <div className="bg-app p-3 rounded-xl border border-line">
+                    <span className="text-[10px] text-ink-3 uppercase">Order Quantity</span>
+                    <p className="font-bold font-mono text-ink-1 mt-1">{editableQuantity.toLocaleString()} pcs</p>
+                    <p className="text-[10px] text-ink-3">({(editableQuantity / 12).toFixed(1)} Dozen)</p>
                   </div>
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 uppercase">Consumption / Dzn</span>
-                    <p className="font-bold font-mono text-slate-900 mt-1">2.40 kg / dzn</p>
-                    <p className="text-[10px] text-slate-500">160 GSM Single Jersey</p>
+                  <div className="bg-app p-3 rounded-xl border border-line">
+                    <span className="text-[10px] text-ink-3 uppercase">Consumption / Dzn</span>
+                    <p className="font-bold font-mono text-ink-1 mt-1">2.40 kg / dzn</p>
+                    <p className="text-[10px] text-ink-3">160 GSM Single Jersey</p>
                   </div>
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 uppercase">Cutting Wastage</span>
-                    <p className="font-bold font-mono text-slate-900 mt-1">5% Allowance</p>
-                    <p className="text-[10px] text-slate-500">+{fabricMath.wastageKg} kg</p>
+                  <div className="bg-app p-3 rounded-xl border border-line">
+                    <span className="text-[10px] text-ink-3 uppercase">Cutting Wastage</span>
+                    <p className="font-bold font-mono text-ink-1 mt-1">5% Allowance</p>
+                    <p className="text-[10px] text-ink-3">+{fabricMath.wastageKg} kg</p>
                   </div>
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 uppercase">Total Fabric Required</span>
-                    <p className="font-bold font-mono text-indigo-700 mt-1">{fabricMath.totalFabricRequiredKg.toLocaleString()} kg</p>
-                    <p className="text-[10px] text-indigo-600 font-medium">Reconciled Need</p>
+                  <div className="bg-app p-3 rounded-xl border border-line">
+                    <span className="text-[10px] text-ink-3 uppercase">Total Fabric Required</span>
+                    <p className="font-bold font-mono text-emerald-400 mt-1">{fabricMath.totalFabricRequiredKg.toLocaleString()} kg</p>
+                    <p className="text-[10px] text-emerald-400/80 font-medium">Reconciled Need</p>
                   </div>
                 </div>
 
-                <div className="p-3.5 bg-indigo-50/70 border border-indigo-200 rounded-xl space-y-1">
-                  <p className="font-semibold text-indigo-950">BGMEA UD Quota Status:</p>
-                  <p className="text-indigo-900 text-[11px]">{fabricMath.summary}</p>
+                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl space-y-1">
+                  <p className="font-semibold text-emerald-300">BGMEA UD Quota Status:</p>
+                  <p className="text-ink-2 text-[11px]">{fabricMath.summary}</p>
                 </div>
               </div>
             )}
-          </div>
+          </Card>
 
           {/* BondIQ: Bonded Raw Material & UD Check Card */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <Card className="p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-3">
               <div className="flex items-center gap-2">
-                <Layers className="w-5 h-5 text-indigo-600" />
-                <h3 className="font-bold text-slate-900 text-sm">
+                <Layers className="w-5 h-5 text-emerald-400" />
+                <h3 className="font-bold text-ink-1 text-sm">
                   BondIQ: Bonded Fabric & UD Quota Reconciliation
                 </h3>
               </div>
-              <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${
-                shipment.bondRecord.status === 'Approved' 
-                  ? 'bg-emerald-100 text-emerald-800' 
-                  : 'bg-red-100 text-red-800'
-              }`}>
-                UD Status: {shipment.bondRecord.status}
-              </span>
+              <Badge tone={shipment.bondRecord.status === 'Approved' ? 'success' : 'danger'}>
+                {shipment.bondRecord.status}
+              </Badge>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <p className="text-[11px] text-slate-500">Utilization Declaration (UD)</p>
-                <p className="font-mono font-bold text-slate-900 mt-1">{shipment.bondRecord.udNumber}</p>
-                <p className="text-[10px] text-slate-400">Issued by BGMEA</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+              <div className="bg-app p-3 rounded-xl border border-line">
+                <span className="text-ink-3">Approved UD Number</span>
+                <p className="font-bold font-mono text-ink-1 mt-0.5">{shipment.bondRecord.udNumber}</p>
               </div>
-
-              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <p className="text-[11px] text-slate-500">UD-Linked Entitlement</p>
-                <p className="font-mono font-bold text-slate-900 mt-1">
-                  {shipment.bondRecord.udLinkedQuantityKg.toLocaleString()} kg
-                </p>
-                <p className="text-[10px] text-slate-400">Approved import quota</p>
+              <div className="bg-app p-3 rounded-xl border border-line">
+                <span className="text-ink-3">Allocated Quota</span>
+                <p className="font-bold font-mono text-ink-1 mt-0.5">{shipment.bondRecord.udLinkedQuantityKg.toLocaleString()} kg</p>
               </div>
-
-              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <p className="text-[11px] text-slate-500">Actual Fabric Consumed</p>
-                <p className={`font-mono font-bold mt-1 ${
-                  shipment.bondRecord.fabricConsumedKg > shipment.bondRecord.udLinkedQuantityKg
-                    ? 'text-red-600'
-                    : 'text-slate-900'
-                }`}>
-                  {shipment.bondRecord.fabricConsumedKg.toLocaleString()} kg
-                </p>
-                <p className="text-[10px] text-slate-400">Factory cutting log</p>
+              <div className="bg-app p-3 rounded-xl border border-line">
+                <span className="text-ink-3">Fabric Consumed</span>
+                <p className="font-bold font-mono text-ink-1 mt-0.5">{shipment.bondRecord.fabricConsumedKg.toLocaleString()} kg</p>
               </div>
             </div>
 
             {/* Visual Quota Bar */}
-            <div className="space-y-1">
-              <div className="flex justify-between text-[11px] text-slate-500">
-                <span>Quota Utilization</span>
-                <span>
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs">
+                <span className="text-ink-3">Quota Utilization Rate</span>
+                <span className="font-mono font-semibold text-ink-1">
                   {Math.round((shipment.bondRecord.fabricConsumedKg / shipment.bondRecord.udLinkedQuantityKg) * 100)}%
                 </span>
               </div>
-              <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    shipment.bondRecord.fabricConsumedKg > shipment.bondRecord.udLinkedQuantityKg
-                      ? 'bg-red-500'
-                      : 'bg-indigo-600'
-                  }`}
-                  style={{
-                    width: `${Math.min(100, Math.round((shipment.bondRecord.fabricConsumedKg / shipment.bondRecord.udLinkedQuantityKg) * 100))}%`
-                  }}
-                />
-              </div>
+              <UtilizationBar percent={(shipment.bondRecord.fabricConsumedKg / shipment.bondRecord.udLinkedQuantityKg) * 100} />
             </div>
-
-            {/* If Exceeded Callout */}
-            {shipment.bondRecord.fabricConsumedKg > shipment.bondRecord.udLinkedQuantityKg && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 font-medium">
-                ⚠️ <strong>The Signature Rule Violation:</strong> "This shipment cannot be declared export-ready because {(shipment.bondRecord.fabricConsumedKg - shipment.bondRecord.udLinkedQuantityKg).toLocaleString()} kg of fabric consumption is unlinked to any approved UD."
-              </div>
-            )}
-          </div>
+          </Card>
         </div>
 
         {/* Right Column: Exceptions Panel (Rules Engine), Timeline & Audit Log (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
           {/* Exceptions Panel: 8 Validation Rules */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <Card className="p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-3">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                <h3 className="font-bold text-slate-900 text-sm">
+                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                <h3 className="font-bold text-ink-1 text-sm">
                   8-Point Compliance Rules Engine
                 </h3>
               </div>
-              <span className="text-[11px] text-slate-500 font-medium">
+              <span className="text-[11px] text-ink-3 font-medium">
                 {ruleResults.filter((r) => r.passed).length} / 8 Passed
               </span>
             </div>
@@ -850,49 +774,45 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
                 return (
                   <div
                     key={rule.ruleId}
-                    className={`p-3 rounded-xl border text-xs transition-all ${
+                    className={cn(
+                      'p-3 rounded-xl border text-xs transition-all',
                       isPassed
-                        ? 'bg-emerald-50/40 border-emerald-200'
+                        ? 'bg-emerald-500/5 border-emerald-500/20'
                         : isCritical
-                        ? 'bg-red-50/70 border-red-300'
-                        : 'bg-amber-50/70 border-amber-300'
-                    }`}
+                        ? 'bg-rose-500/10 border-rose-500/30'
+                        : 'bg-amber-500/10 border-amber-500/30'
+                    )}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 font-semibold text-slate-900">
+                      <div className="flex items-center gap-1.5 font-semibold text-ink-1">
                         {isPassed ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                         ) : isCritical ? (
-                          <AlertOctagon className="w-4 h-4 text-red-600 shrink-0" />
+                          <AlertOctagon className="w-4 h-4 text-rose-400 shrink-0" />
                         ) : (
-                          <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
                         )}
                         <span>{rule.ruleId}: {rule.name}</span>
                       </div>
 
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                        isPassed 
-                          ? 'bg-emerald-100 text-emerald-800' 
-                          : isCritical 
-                          ? 'bg-red-100 text-red-800' 
-                          : 'bg-amber-100 text-amber-800'
-                      }`}>
+                      <Badge tone={isPassed ? 'success' : isCritical ? 'danger' : 'warning'}>
                         {isPassed ? 'Passed' : rule.severity}
-                      </span>
+                      </Badge>
                     </div>
 
-                    <p className={`mt-1.5 text-[11px] leading-relaxed ${
-                      isPassed ? 'text-slate-600' : isCritical ? 'text-red-900 font-medium' : 'text-amber-900 font-medium'
-                    }`}>
+                    <p className={cn(
+                      'mt-1.5 text-[11px] leading-relaxed',
+                      isPassed ? 'text-ink-3' : isCritical ? 'text-rose-200 font-medium' : 'text-amber-200 font-medium'
+                    )}>
                       {rule.explanation}
                     </p>
 
                     {/* Source citations */}
                     {rule.sourceFields && rule.sourceFields.length > 0 && (
-                      <div className="mt-2 pt-1.5 border-t border-slate-200/50 flex flex-wrap gap-2 text-[10px] text-slate-500">
+                      <div className="mt-2 pt-1.5 border-t border-line flex flex-wrap gap-2 text-[10px] text-ink-3">
                         {rule.sourceFields.map((sf, idx) => (
-                          <span key={idx} className="bg-white/80 px-1.5 py-0.5 rounded border border-slate-200">
-                            {sf.docType} • {sf.field}: <strong>{String(sf.value)}</strong>
+                          <span key={idx} className="bg-app px-1.5 py-0.5 rounded border border-line-strong text-ink-2">
+                            {sf.docType} • {sf.field}: <strong className="text-ink-1">{String(sf.value)}</strong>
                           </span>
                         ))}
                       </div>
@@ -901,137 +821,132 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
                 );
               })}
             </div>
-          </div>
+          </Card>
 
           {/* Milestone Timeline */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-            <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <Clock className="w-4 h-4 text-slate-500" />
+          <Card className="p-6 space-y-4">
+            <h3 className="font-bold text-ink-1 text-sm flex items-center gap-2">
+              <Clock className="w-4 h-4 text-ink-3" />
               <span>Shipment Milestones</span>
             </h3>
 
             <div className="space-y-3">
               {shipment.timeline.map((event, index) => (
                 <div key={event.id} className="flex items-start gap-3 text-xs">
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                    event.completed
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-slate-200 text-slate-500'
-                  }`}>
-                    {event.completed ? <Check className="w-3 h-3" /> : index + 1}
+                  <div className={cn(
+                    'w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-[11px]',
+                    event.completed ? 'bg-emerald-500 text-slate-950 font-bold' : 'bg-surface-2 text-ink-3 border border-line'
+                  )}>
+                    {event.completed ? '✓' : index + 1}
                   </div>
-                  <div className="flex-1">
-                    <p className={`font-semibold ${event.completed ? 'text-slate-900' : 'text-slate-500'}`}>
+                  <div className="flex-1 min-w-0">
+                    <p className={cn('font-medium', event.completed ? 'text-ink-1' : 'text-ink-3')}>
                       {event.milestone}
                     </p>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-ink-3">
                       Owner: {event.owner} • Due: {event.due}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </Card>
 
           {/* Immutable Audit Trail Log */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-              <h3 className="font-bold text-slate-900 text-sm">
-                Compliance Audit Trail
+          <Card className="p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <h3 className="font-bold text-ink-1 text-sm flex items-center gap-2">
+                <FileText className="w-4 h-4 text-ink-3" />
+                <span>Immutable Audit Log</span>
               </h3>
-              <span className="text-[10px] text-slate-400 font-mono">Logged</span>
+              <Badge tone="info">UCP 600 Certified</Badge>
             </div>
 
-            <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
+            <div className="space-y-3 text-xs max-h-72 overflow-y-auto pr-1">
               {auditLog.map((log) => (
-                <div key={log.id} className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-800">{log.action}</span>
-                    <span className="text-[10px] text-slate-400 font-mono">
-                      {log.timestamp.includes('T') ? log.timestamp.split('T')[1].slice(0, 5) : 'Just now'}
-                    </span>
+                <div key={log.id} className="p-2.5 rounded-lg bg-app border border-line space-y-1">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="font-semibold text-ink-1">{log.actor}</span>
+                    <span className="text-ink-3 font-mono">{log.timestamp.split('T')[1].slice(0, 5)}</span>
                   </div>
-                  <p className="text-[11px] text-slate-600">{log.details}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">Actor: {log.actor}</p>
+                  <p className="font-medium text-emerald-400">{log.action}</p>
+                  <p className="text-[11px] text-ink-3 leading-relaxed">{log.details}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </Card>
         </div>
       </div>
 
       {/* WhatsApp / Email Floor Dispatch Modal */}
       {showAlertModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-5 relative">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-surface-1 rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-line-strong space-y-5 relative">
             <button
               onClick={() => setShowAlertModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
+              className="absolute top-4 right-4 text-ink-3 hover:text-ink-1 p-1"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+            <div className="flex items-center gap-3 border-b border-line pb-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold">
                 <Send className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-ink-1">
                   Instant Floor & C&F Dispatcher
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-ink-3">
                   Bilingual resolution notice for factory packaging supervisors and clearing agents.
                 </p>
               </div>
             </div>
 
             {/* WhatsApp Card */}
-            <div className="bg-emerald-50/70 border border-emerald-300 rounded-xl p-4 space-y-2.5">
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
-                  <MessageSquare className="w-4 h-4 text-emerald-600" />
+                <span className="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                  <MessageSquare className="w-4 h-4 text-emerald-400" />
                   WhatsApp Resolution Notice (Bangla & English)
                 </span>
                 <button
                   onClick={() => copyToClipboard(dispatchAlert?.whatsappFormatted || '', 'whatsapp')}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold shadow-sm transition-colors"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded text-xs font-bold shadow-sm transition-colors"
                 >
                   <Copy className="w-3 h-3" />
                   <span>{copiedType === 'whatsapp' ? 'Copied!' : 'Copy for WhatsApp'}</span>
                 </button>
               </div>
-              <div className="bg-white p-3 rounded-lg border border-emerald-200 text-[11px] font-mono text-slate-800 whitespace-pre-wrap max-h-40 overflow-y-auto">
+              <div className="bg-app p-3 rounded-lg border border-line text-[11px] font-mono text-ink-2 whitespace-pre-wrap max-h-40 overflow-y-auto">
                 {dispatchAlert?.whatsappFormatted || 'Generating alert...'}
               </div>
             </div>
 
             {/* Email Card */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2.5">
+            <div className="bg-app border border-line rounded-xl p-4 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <Mail className="w-4 h-4 text-slate-600" />
+                <span className="text-xs font-bold text-ink-1 flex items-center gap-1.5">
+                  <Mail className="w-4 h-4 text-ink-3" />
                   Official Email Resolution Notice
                 </span>
                 <button
                   onClick={() => copyToClipboard(dispatchAlert?.emailFormatted || '', 'email')}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded text-xs font-semibold shadow-sm transition-colors"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-surface-2 hover:bg-white/[0.08] text-ink-1 border border-line-strong rounded text-xs font-semibold shadow-sm transition-colors"
                 >
                   <Copy className="w-3 h-3" />
                   <span>{copiedType === 'email' ? 'Copied!' : 'Copy Email'}</span>
                 </button>
               </div>
-              <div className="bg-white p-3 rounded-lg border border-slate-200 text-[11px] font-mono text-slate-700 whitespace-pre-wrap max-h-36 overflow-y-auto">
+              <div className="bg-surface-1 p-3 rounded-lg border border-line text-[11px] font-mono text-ink-3 whitespace-pre-wrap max-h-36 overflow-y-auto">
                 {dispatchAlert?.emailFormatted || 'Generating email...'}
               </div>
             </div>
 
             <div className="flex justify-end">
-              <button
-                onClick={() => setShowAlertModal(false)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
-              >
+              <Button variant="secondary" onClick={() => setShowAlertModal(false)}>
                 Close
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -1039,8 +954,8 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
 
       {/* Customs Clearance Gate-Pass Modal */}
       {showGatePass && (
-        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6 relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white text-slate-900 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-300 space-y-6 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowGatePass(false)}
               className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
@@ -1053,7 +968,7 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
               <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500">
                 Government of the People's Republic of Bangladesh
               </span>
-              <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+              <h2 className="text-xl font-extrabold text-slate-900 tracking-tight font-display">
                 CHITTAGONG CUSTOMS HOUSE • PORT GATE-IN PERMIT
               </h2>
               <p className="text-xs text-slate-600">
@@ -1125,43 +1040,39 @@ AUDITED AND VERIFIED BY EXPORTOPS AI ENGINE.`}
             </div>
 
             {/* QR Code and Official Stamp */}
-            <div className="flex items-center justify-between p-4 bg-emerald-50/50 border border-emerald-200 rounded-xl">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-slate-200">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-white rounded-lg border border-emerald-300">
-                  <QrCode className="w-12 h-12 text-emerald-700" />
+                <div className="w-20 h-20 bg-slate-900 rounded-xl p-1.5 flex items-center justify-center text-white shrink-0">
+                  <QrCode className="w-16 h-16" />
                 </div>
-                <div className="text-xs">
-                  <p className="font-bold text-emerald-950">Cryptographic Seal Verified</p>
-                  <p className="text-[11px] text-emerald-800">
-                    Scan at Chittagong Port Access Gate 4 for immediate automated gate-in.
-                  </p>
-                  <p className="font-mono text-[10px] text-emerald-700 mt-0.5">
-                    HASH: SHA256:7b90f48819a022
-                  </p>
+                <div className="text-[11px] space-y-0.5">
+                  <p className="font-mono font-bold text-slate-900">CRYPTOGRAPHIC ASYCUDA QR</p>
+                  <p className="text-slate-500">Scan at Chittagong Port Gate 4 for automated barrier lift.</p>
+                  <p className="text-emerald-700 font-semibold">Status: SECURE TOKEN GENERATED</p>
                 </div>
               </div>
 
-              <div className="border-2 border-dashed border-emerald-600 rounded-xl p-2 text-center text-emerald-700 rotate-[-4deg]">
-                <span className="text-[10px] font-extrabold uppercase block">ExportOps AI</span>
-                <span className="text-xs font-black block">CUSTOMS READY</span>
-                <span className="text-[9px] block">CLEARED FOR GATE-IN</span>
+              <div className="border-2 border-emerald-600 rounded-xl p-3 text-center text-emerald-700 space-y-0.5 min-w-[150px]">
+                <p className="text-[10px] uppercase font-bold tracking-wider">Customs House Chittagong</p>
+                <p className="text-sm font-extrabold">CLEARED FOR GATE-IN</p>
+                <p className="text-[9px] text-slate-500 font-mono">Date: {new Date().toISOString().split('T')[0]}</p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <button
-                onClick={() => setShowGatePass(false)}
-                className="px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
-              >
-                Close
-              </button>
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
               <button
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors"
               >
-                <Printer className="w-3.5 h-3.5" />
-                <span>Print Gate-In Pass</span>
+                <Printer className="w-4 h-4" />
+                <span>Print Official Gate-Pass</span>
+              </button>
+              <button
+                onClick={() => setShowGatePass(false)}
+                className="px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-xs rounded-xl transition-colors"
+              >
+                Close
               </button>
             </div>
           </div>
