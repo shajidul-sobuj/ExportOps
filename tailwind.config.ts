@@ -23,7 +23,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['var(--font-display)', 'Space Grotesk', 'Outfit', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Outfit', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['var(--font-mono)', 'JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'monospace'],
         bengali: ['var(--font-bengali)', 'Noto Sans Bengali', 'sans-serif'],
       },
