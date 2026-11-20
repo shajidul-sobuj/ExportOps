@@ -11,7 +11,7 @@ const marketingLinks = [
   { href: '/#showcase', label: 'Product' },
   { href: '/#rules', label: '8 Rules' },
   { href: '/#calculator', label: 'ROI' },
-  { href: '/#faq', label: 'FAQ' },
+  { href: '/video', label: '170s Video' },
   { href: '/docs', label: 'Docs' },
 ];
 

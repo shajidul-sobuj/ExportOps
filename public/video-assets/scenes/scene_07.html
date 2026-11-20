@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scene Slide Renderer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .stage {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 100px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage-content">
+    
+        <div style="width: 100%; max-width: 1500px; text-align: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: white; padding: 18px 40px; border-radius: 16px; font-family: monospace; font-size: 18px; font-weight: 800; margin-bottom: 40px;">
+                <span>01. PO & LC</span> ➔ 
+                <span>02. Production & Bond</span> ➔ 
+                <span>03. Invoice & Packing</span> ➔ 
+                <span>04. C&F Bill of Export</span> ➔ 
+                <span style="color: #34d399;">05. Customs Gate-In Pass</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+                <div style="background: white; border: 3px solid #0f172a; border-radius: 20px; padding: 35px;">
+                    <div style="font-size: 32px; font-weight: 900; color: #0d9488; margin-bottom: 10px;">1. AI Reads</div>
+                    <p style="font-size: 18px; color: #475569;">Extracts messy PDFs and cites exact source quotations.</p>
+                </div>
+                <div style="background: white; border: 3px solid #0f172a; border-radius: 20px; padding: 35px;">
+                    <div style="font-size: 32px; font-weight: 900; color: #0f172a; margin-bottom: 10px;">2. Rules Decide</div>
+                    <p style="font-size: 18px; color: #475569;">Deterministic TypeScript engine verifies R1 to R8.</p>
+                </div>
+                <div style="background: white; border: 3px solid #0f172a; border-radius: 20px; padding: 35px;">
+                    <div style="font-size: 32px; font-weight: 900; color: #059669; margin-bottom: 10px;">3. Human Approves</div>
+                    <p style="font-size: 18px; color: #475569;">Human-in-the-loop control; every change logged.</p>
+                </div>
+            </div>
+        </div>
+        
+  </div>
+</body>
+</html>

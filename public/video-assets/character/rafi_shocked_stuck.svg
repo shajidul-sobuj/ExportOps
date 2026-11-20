@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" fill="none">
+  <!-- Transparent Background -->
+  
+  <!-- Subtle floor shadow -->
+  <ellipse cx="400" cy="710" rx="240" ry="25" fill="#fecaca" opacity="0.6" />
+  
+  <!-- Flying Problem Papers in Background -->
+  <g id="flying-paperwork" opacity="0.85">
+    <!-- Paper 1 (Invoice Mismatch) -->
+    <g transform="translate(80, 180) rotate(-15)">
+      <rect width="160" height="110" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="5" />
+      <text x="15" y="32" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#ef4444">INVOICE: 12,000</text>
+      <text x="15" y="55" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#ef4444">PACKING: 11,400</text>
+      <circle cx="135" cy="80" r="16" fill="#fee2e2" stroke="#ef4444" stroke-width="3" />
+      <text x="135" y="86" font-family="'Inter', sans-serif" font-weight="900" font-size="16" fill="#ef4444" text-anchor="middle">!</text>
+    </g>
+
+    <!-- Paper 2 (LC Date Passed) -->
+    <g transform="translate(560, 210) rotate(18)">
+      <rect width="150" height="100" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="5" />
+      <text x="15" y="32" font-family="'Inter', sans-serif" font-weight="900" font-size="13" fill="#0f172a">LC CUT-OFF</text>
+      <line x1="15" y1="52" x2="135" y2="52" stroke="#ef4444" stroke-width="4" />
+      <text x="15" y="75" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#ef4444">EXPIRED DATE</text>
+    </g>
+
+    <!-- Paper 3 (Bond Quota UD) -->
+    <g transform="translate(100, 480) rotate(12)">
+      <rect width="150" height="90" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="5" />
+      <text x="15" y="30" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#0f172a">BGMEA e-UD</text>
+      <text x="15" y="55" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#f59e0b">QUOTA MISMATCH</text>
+    </g>
+  </g>
+
+  <!-- Rafi: Shocked / Stressed Muscular Stickman (Center) -->
+  <g id="rafi-shocked" transform="translate(120, 30)">
+    
+    <!-- Shaking Legs (bent knees) -->
+    <path d="M280 470 L250 580 L240 700" stroke="#0f172a" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M340 470 L370 580 L380 700" stroke="#0f172a" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Heavy Work Boots -->
+    <path d="M220 700 L265 700 L265 680 L230 680 Z" fill="#0f172a" stroke="#0f172a" stroke-width="6" stroke-linejoin="round" />
+    <path d="M360 700 L405 700 L405 680 L370 680 Z" fill="#0f172a" stroke="#0f172a" stroke-width="6" stroke-linejoin="round" />
+
+    <!-- Torso with Safety Vest -->
+    <path d="M225 280 L385 280 L345 480 L265 480 Z" fill="#0d9488" stroke="#0f172a" stroke-width="12" stroke-linejoin="round" />
+    
+    <!-- High-Vis Vest Stripes -->
+    <path d="M260 280 L280 480" stroke="#ffffff" stroke-width="14" stroke-linecap="square" />
+    <path d="M350 280 L330 480" stroke="#ffffff" stroke-width="14" stroke-linecap="square" />
+    <path d="M238 390 L372 390" stroke="#facc15" stroke-width="12" />
+
+    <!-- Chest Line -->
+    <path d="M260 340 Q305 370 350 340" stroke="#0f172a" stroke-width="7" stroke-linecap="round" fill="none" />
+    <line x1="305" y1="310" x2="305" y2="420" stroke="#0f172a" stroke-width="6" stroke-linecap="round" />
+
+    <!-- Arms on Head / Temples in Disbelief -->
+    <!-- Left Arm -->
+    <circle cx="225" cy="285" r="24" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+    <path d="M215 285 Q160 230 220 180 Q250 160 260 170" fill="#f8fafc" stroke="#0f172a" stroke-width="11" stroke-linejoin="round" />
+    <circle cx="255" cy="170" r="20" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+
+    <!-- Right Arm -->
+    <circle cx="385" cy="285" r="24" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+    <path d="M395 285 Q450 230 390 180 Q360 160 350 170" fill="#f8fafc" stroke="#0f172a" stroke-width="11" stroke-linejoin="round" />
+    <circle cx="355" cy="170" r="20" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+
+    <!-- Neck -->
+    <rect x="285" y="220" width="40" height="65" fill="#f8fafc" stroke="#0f172a" stroke-width="10" stroke-linejoin="round" />
+
+    <!-- Round Head -->
+    <circle cx="305" cy="165" r="65" fill="#f8fafc" stroke="#0f172a" stroke-width="12" />
+
+    <!-- Distressed Face -->
+    <!-- Wide Shocked Eyes -->
+    <circle cx="285" cy="155" r="14" fill="#ffffff" stroke="#0f172a" stroke-width="5" />
+    <circle cx="285" cy="155" r="6" fill="#0f172a" />
+    <circle cx="325" cy="155" r="14" fill="#ffffff" stroke="#0f172a" stroke-width="5" />
+    <circle cx="325" cy="155" r="6" fill="#0f172a" />
+    
+    <!-- Anxious Angled Eyebrows -->
+    <line x1="270" y1="135" x2="295" y2="128" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+    <line x1="340" y1="135" x2="315" y2="128" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+    
+    <!-- Open Gasp / Dismayed Mouth -->
+    <ellipse cx="305" cy="190" rx="16" ry="12" fill="#ef4444" stroke="#0f172a" stroke-width="6" />
+
+    <!-- Big Blue Sweat Drop -->
+    <path d="M365 140 C365 125 355 110 355 110 C355 110 345 125 345 140 C345 150 355 158 365 150 Z" fill="#38bdf8" stroke="#0f172a" stroke-width="4" />
+
+    <!-- Crooked Yellow Hard Hat (slightly tilted) -->
+    <g transform="rotate(-6, 305, 140)">
+      <path d="M225 135 Q305 55 385 135 Z" fill="#facc15" stroke="#0f172a" stroke-width="10" stroke-linejoin="round" />
+      <path d="M215 135 L395 135" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
+    </g>
+
+  </g>
+
+  <!-- Giant Stamp: SHIPMENT HELD -->
+  <g transform="translate(180, 360) rotate(-12)">
+    <rect x="-10" y="-10" width="460" height="120" rx="14" fill="none" stroke="#ef4444" stroke-width="14" stroke-dasharray="18 10" />
+    <rect x="0" y="0" width="440" height="100" rx="10" fill="#fee2e2" fill-opacity="0.9" stroke="#ef4444" stroke-width="8" />
+    <text x="220" y="68" font-family="'Inter', sans-serif" font-weight="900" font-size="44" fill="#b91c1c" text-anchor="middle" letter-spacing="4">
+      SHIPMENT HELD
+    </text>
+  </g>
+
+  <!-- Bottom Caption Box -->
+  <g transform="translate(160, 680)">
+    <rect width="480" height="50" rx="12" fill="#0f172a" />
+    <text x="240" y="32" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#ffffff" text-anchor="middle">
+      12,000 garments. Ready on time. Stuck on paperwork.
+    </text>
+  </g>
+</svg>

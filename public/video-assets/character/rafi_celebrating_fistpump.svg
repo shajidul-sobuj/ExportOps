@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" fill="none">
+  <!-- Transparent Background -->
+  
+  <!-- Container Vessel Sailing Away (Right Background) -->
+  <g id="container-ship" transform="translate(480, 340)">
+    <!-- Ship Hull -->
+    <path d="M40 90 L260 90 L230 140 L20 140 Z" fill="#0f172a" stroke="#0f172a" stroke-width="4" />
+    <path d="M20 140 L230 140 L220 155 L10 155 Z" fill="#ef4444" />
+    
+    <!-- Multi-colored Containers on Deck -->
+    <rect x="50" y="55" width="45" height="35" rx="2" fill="#0d9488" stroke="#0f172a" stroke-width="3" />
+    <rect x="98" y="55" width="45" height="35" rx="2" fill="#f59e0b" stroke="#0f172a" stroke-width="3" />
+    <rect x="146" y="55" width="45" height="35" rx="2" fill="#10b981" stroke="#0f172a" stroke-width="3" />
+    
+    <rect x="74" y="22" width="45" height="33" rx="2" fill="#3b82f6" stroke="#0f172a" stroke-width="3" />
+    <rect x="122" y="22" width="45" height="33" rx="2" fill="#10b981" stroke="#0f172a" stroke-width="3" />
+    
+    <!-- Bridge & Radar Tower -->
+    <rect x="195" y="30" width="35" height="60" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+    <line x1="212" y1="10" x2="212" y2="30" stroke="#0f172a" stroke-width="4" />
+    <!-- White Water Waves Behind Ship -->
+    <path d="M0 155 Q40 145 80 155 Q120 145 160 155 Q200 145 260 155" stroke="#10b981" stroke-width="3" fill="none" opacity="0.6" />
+    
+    <text x="140" y="180" font-family="'Inter', sans-serif" font-weight="800" font-size="12" fill="#0f172a">MAERSK HAVEN • SAILING</text>
+  </g>
+
+  <!-- Giant Green Clearance Stamp / Badge (Top Left) -->
+  <g transform="translate(60, 60)">
+    <rect width="360" height="95" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="6" />
+    <circle cx="50" cy="48" r="28" fill="#10b981" />
+    <!-- White Checkmark -->
+    <path d="M38 48 L46 56 L62 38" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <text x="95" y="42" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#065f46">CUSTOMS-READY</text>
+    <text x="95" y="68" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="13" fill="#0d9488">QR GATE PASS #CGP-89201</text>
+  </g>
+
+  <!-- Subtle floor shadow -->
+  <ellipse cx="320" cy="710" rx="220" ry="25" fill="#d1fae5" opacity="0.8" />
+
+  <!-- Rafi: Victorious Celebrating Muscular Stickman (Center-Left) -->
+  <g id="rafi-celebrating" transform="translate(60, 10)">
+    
+    <!-- Confident Stance Legs -->
+    <path d="M260 470 L220 700" stroke="#0f172a" stroke-width="14" stroke-linecap="round" />
+    <path d="M320 470 L360 700" stroke="#0f172a" stroke-width="14" stroke-linecap="round" />
+    
+    <!-- Work Boots -->
+    <path d="M200 700 L245 700 L245 680 L210 680 Z" fill="#0f172a" stroke="#0f172a" stroke-width="6" stroke-linejoin="round" />
+    <path d="M340 700 L385 700 L385 680 L350 680 Z" fill="#0f172a" stroke="#0f172a" stroke-width="6" stroke-linejoin="round" />
+
+    <!-- Muscular Torso with Safety Vest -->
+    <path d="M200 280 L370 280 L330 480 L240 480 Z" fill="#0d9488" stroke="#0f172a" stroke-width="12" stroke-linejoin="round" />
+    
+    <!-- Reflective Stripes -->
+    <path d="M235 280 L255 480" stroke="#ffffff" stroke-width="14" stroke-linecap="square" />
+    <path d="M335 280 L315 480" stroke="#ffffff" stroke-width="14" stroke-linecap="square" />
+    <path d="M215 390 L355 390" stroke="#facc15" stroke-width="12" />
+
+    <!-- Chest Line -->
+    <path d="M240 340 Q285 370 330 340" stroke="#0f172a" stroke-width="7" stroke-linecap="round" fill="none" />
+    <line x1="285" y1="310" x2="285" y2="420" stroke="#0f172a" stroke-width="6" stroke-linecap="round" />
+
+    <!-- Left Arm: Victorious Fist Pump Skyward! -->
+    <!-- Shoulder -->
+    <circle cx="200" cy="285" r="26" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+    <!-- Bicep & Forearm reaching up high -->
+    <path d="M190 280 Q140 180 150 100 Q185 95 195 140 L200 220" fill="#f8fafc" stroke="#0f172a" stroke-width="10" stroke-linejoin="round" />
+    <path d="M155 170 Q140 145 160 120" stroke="#0f172a" stroke-width="8" stroke-linecap="round" fill="none" />
+    <!-- Victorious Skyward Fist -->
+    <circle cx="165" cy="85" r="24" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+    <!-- Speed / Power Lines around Fist -->
+    <line x1="130" y1="65" x2="110" y2="50" stroke="#10b981" stroke-width="6" stroke-linecap="round" />
+    <line x1="165" y1="45" x2="165" y2="25" stroke="#10b981" stroke-width="6" stroke-linecap="round" />
+    <line x1="200" y1="65" x2="220" y2="50" stroke="#10b981" stroke-width="6" stroke-linecap="round" />
+
+    <!-- Right Arm: Flexed on Hip with Thumbs Up -->
+    <!-- Shoulder -->
+    <circle cx="370" cy="285" r="26" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+    <path d="M375 285 Q440 330 420 380 Q390 390 350 370" fill="#f8fafc" stroke="#0f172a" stroke-width="10" stroke-linejoin="round" />
+    <!-- Right Hand Thumbs Up -->
+    <circle cx="350" cy="370" r="20" fill="#f8fafc" stroke="#0f172a" stroke-width="10" />
+    <path d="M350 350 L350 330" stroke="#0f172a" stroke-width="8" stroke-linecap="round" />
+
+    <!-- Neck -->
+    <rect x="265" y="220" width="40" height="65" fill="#f8fafc" stroke="#0f172a" stroke-width="10" stroke-linejoin="round" />
+
+    <!-- Round Head -->
+    <circle cx="285" cy="165" r="65" fill="#f8fafc" stroke="#0f172a" stroke-width="12" />
+
+    <!-- Joyful / Triumphant Face -->
+    <!-- Happy Arched Eyes -->
+    <path d="M255 155 Q268 140 280 155" stroke="#0f172a" stroke-width="7" stroke-linecap="round" fill="none" />
+    <path d="M295 155 Q308 140 320 155" stroke="#0f172a" stroke-width="7" stroke-linecap="round" fill="none" />
+    
+    <!-- Eyebrows raised happily -->
+    <line x1="250" y1="135" x2="275" y2="132" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+    <line x1="300" y1="132" x2="325" y2="135" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+
+    <!-- Big Wide Open Smile with Tongue/Teeth -->
+    <path d="M260 175 Q288 220 315 175 Z" fill="#ef4444" stroke="#0f172a" stroke-width="7" stroke-linejoin="round" />
+    <path d="M265 178 Q288 190 310 178" fill="#ffffff" stroke="#0f172a" stroke-width="4" />
+
+    <!-- Yellow Hard Hat with Shine -->
+    <path d="M205 140 Q285 60 365 140 Z" fill="#facc15" stroke="#0f172a" stroke-width="10" stroke-linejoin="round" />
+    <path d="M195 140 L375 140" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
+    <!-- Hat Crown Ridge -->
+    <path d="M285 75 L285 130" stroke="#eab308" stroke-width="8" stroke-linecap="round" />
+    <!-- Star Sparkle -->
+    <path d="M345 80 L350 90 L360 95 L350 100 L345 110 L340 100 L330 95 L340 90 Z" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+
+  </g>
+
+  <!-- Payoff Tagline Badge (Bottom Right) -->
+  <g transform="translate(420, 680)">
+    <rect width="340" height="55" rx="14" fill="#0d9488" stroke="#0f172a" stroke-width="5" />
+    <text x="170" y="35" font-family="'Inter', sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">
+      BLOCKED TO CUSTOMS-READY ✓
+    </text>
+  </g>
+</svg>
