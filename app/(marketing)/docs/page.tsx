@@ -542,7 +542,7 @@ export default function DocsPage() {
                       </div>
                       <div className="p-2 rounded-lg bg-slate-950 border border-slate-800">
                         <span className="text-[10px] text-slate-400 block">Unit Test Pass Rate</span>
-                        <p className="text-sm font-bold text-white">16 / 16 (100%)</p>
+                        <p className="text-sm font-bold text-white">20 / 20 (100%)</p>
                       </div>
                     </div>
                     <p className="text-[11px] text-slate-400">Pre-seeded with real-world edge-case shipments EXP-001 to EXP-004.</p>
@@ -752,8 +752,12 @@ export default function DocsPage() {
                     <span>✓ tests/data.test.ts (5 tests)</span>
                     <span className="text-slate-400">PASSED</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span>✓ tests/api.test.ts (4 tests)</span>
+                    <span className="text-slate-400">PASSED</span>
+                  </div>
                   <div className="pt-1 border-t border-slate-800 text-white font-bold flex justify-between">
-                    <span>TOTAL: 16 / 16 Tests Passing</span>
+                    <span>TOTAL: 20 / 20 Tests Passing</span>
                     <span className="text-emerald-400">100% GREEN</span>
                   </div>
                 </div>

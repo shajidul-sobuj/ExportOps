@@ -66,7 +66,7 @@ export default function ShipmentDetailPage() {
 
   // Find initial shipment
   const baseShipment = (initialShipments as unknown as Shipment[]).find(
-    (s) => s.id === shipmentId
+    (s) => s.id.toLowerCase() === shipmentId.toLowerCase()
   ) || (initialShipments[0] as unknown as Shipment);
 
   const [shipment, setShipment] = useState<Shipment>(() => JSON.parse(JSON.stringify(baseShipment)));
