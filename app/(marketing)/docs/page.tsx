@@ -109,7 +109,7 @@ export default function DocsPage() {
 
   // Access Control & Scheduling State
   const [adminOpen, setAdminOpen] = useState(false);
-  const [visibilityMode, setVisibilityMode] = useState<'public' | 'private' | 'scheduled'>('public');
+  const [visibilityMode, setVisibilityMode] = useState<'public' | 'private' | 'scheduled'>('private');
   const [scheduleStart, setScheduleStart] = useState('2026-06-10T00:00');
   const [scheduleEnd, setScheduleEnd] = useState('2026-06-14T23:59');
   const [adminUnlocked, setAdminUnlocked] = useState(false);

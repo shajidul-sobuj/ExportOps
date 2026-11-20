@@ -229,7 +229,6 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
             <span className="hidden md:inline">Tenant: Apex Holdings</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/docs" className="hover:text-ink-1 transition-colors">Docs</Link>
             <span className="font-mono">v1.5.0</span>
           </div>
         </footer>

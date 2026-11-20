@@ -11,8 +11,6 @@ const marketingLinks = [
   { href: '/#showcase', label: 'Product' },
   { href: '/#rules', label: '8 Rules' },
   { href: '/#calculator', label: 'ROI' },
-  { href: '/video', label: '170s Video' },
-  { href: '/docs', label: 'Docs' },
 ];
 
 export default function Navbar() {

@@ -148,13 +148,26 @@ const SCENES: Scene[] = [
 ];
 
 export default function ExplainerVideoPage() {
+  const [allowed, setAllowed] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(true); // Autoplay animated video
   const [demoFixed, setDemoFixed] = useState<boolean>(false);
   const playerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('preview') || localStorage.getItem('exportops_video_preview') === 'true') {
+        setAllowed(true);
+      } else {
+        window.location.replace('/');
+      }
+    }
+  }, []);
+
   // Playback timer loop
   useEffect(() => {
+    if (!allowed) return;
     let interval: any = null;
     if (isPlaying) {
       interval = setInterval(() => {
@@ -217,6 +230,10 @@ export default function ExplainerVideoPage() {
 
   // Scene-relative time for animated micro-cues
   const sceneElapsed = currentTime - currentScene.start;
+
+  if (!allowed) {
+    return null;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

@@ -284,7 +284,7 @@ export default function Footer() {
             </p>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/#rules" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
                   <span>8-Point Matrix (R1-R8)</span>
                 </Link>
@@ -332,9 +332,9 @@ export default function Footer() {
             </p>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
-                  <span>Pitch & Demo Script</span>
+                  <span>Interactive Console</span>
                 </Link>
               </li>
               <li>
@@ -351,9 +351,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
+                <Link href="/app/compliance" className="group flex items-center gap-1.5 text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200">
                   <span className="w-0 opacity-0 group-hover:w-2 group-hover:opacity-100 transition-all duration-200 text-emerald-400 font-bold">›</span>
-                  <span>ASYCUDA Format Specs</span>
+                  <span>ASYCUDA Compliance Specs</span>
                 </Link>
               </li>
               <li>

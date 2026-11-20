@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { 
   ShieldCheck, 
   ArrowRight, 
-  Code2, 
   Cpu, 
   CheckCircle2, 
   Scale, 
@@ -138,11 +137,10 @@ export default function RulesGrid() {
 
       <div className="text-center pt-2">
         <Link
-          href="/docs"
+          href="/app/compliance"
           className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
         >
-          <Code2 className="w-4 h-4" />
-          <span>Read the full technical specification & test suite in Docs</span>
+          <span>View live buyer compliance matrix in Console</span>
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

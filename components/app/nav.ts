@@ -7,7 +7,6 @@ import {
   BarChart3,
   TrendingUp,
   Settings,
-  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -44,7 +43,6 @@ export const APP_NAV: NavGroup[] = [
   {
     items: [
       { href: '/app/settings', label: 'Settings', icon: Settings },
-      { href: '/docs', label: 'Docs', icon: BookOpen, external: true },
     ],
   },
 ];
