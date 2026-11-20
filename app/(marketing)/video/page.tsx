@@ -296,7 +296,7 @@ export default function ExplainerVideoPage() {
                   <img 
                     src="/video-assets/character/rafi_proud_flexing.svg" 
                     alt="Rafi Flexing" 
-                    className="w-80 h-80 object-contain drop-shadow-xl"
+                    className="w-80 h-80 object-contain" 
                   />
                   <div className="mt-2 px-4 py-1.5 rounded-full bg-white border-2 border-slate-900 text-slate-900 font-black text-sm shadow-md animate-bounce">
                     12,000 Garments Ready on Time!
@@ -309,7 +309,7 @@ export default function ExplainerVideoPage() {
                     <img 
                       src="/video-assets/character/rafi_shocked_stuck.svg" 
                       alt="Rafi Shocked" 
-                      className="w-80 h-80 object-contain drop-shadow-xl"
+                      className="w-80 h-80 object-contain" 
                     />
                     {/* Animated Sweat Drops */}
                     <div className="absolute top-12 right-24 w-4 h-6 rounded-full bg-cyan-400 border border-slate-900 animate-sweat-drip" />
@@ -468,7 +468,7 @@ export default function ExplainerVideoPage() {
                 <img 
                   src={demoFixed ? "/video-assets/character/rafi_celebrating_fistpump.svg" : "/video-assets/character/rafi_proud_flexing.svg"} 
                   alt="Rafi" 
-                  className={`w-64 h-64 object-contain drop-shadow-2xl transition-all duration-500 ${demoFixed ? 'animate-victory-jump' : ''}`}
+                  className={`w-64 h-64 object-contain transition-all duration-500 ${demoFixed ? 'animate-victory-jump' : ''}`}
                 />
                 <span className={`mt-2 font-mono font-bold text-xs px-3 py-1 rounded-full border ${
                   demoFixed ? 'bg-emerald-950 text-emerald-400 border-emerald-500' : 'bg-slate-800 text-slate-300 border-slate-700'
@@ -693,7 +693,7 @@ export default function ExplainerVideoPage() {
                 <img 
                   src="/video-assets/character/rafi_celebrating_fistpump.svg" 
                   alt="Rafi Celebrating" 
-                  className="w-72 h-72 object-contain drop-shadow-[0_0_35px_rgba(16,185,129,0.3)]"
+                  className="w-72 h-72 object-contain"
                 />
               </div>
 

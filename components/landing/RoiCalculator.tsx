@@ -50,15 +50,15 @@ export default function RoiCalculator() {
           <div className="grid grid-cols-3 gap-3.5 pt-2 text-xs font-mono">
             <div className="bg-[#070b13]/80 p-3.5 rounded-xl border border-slate-800 hover-card-lift">
               <span className="text-slate-400 block text-xs">Demurrage Avoided</span>
-              <span className="text-emerald-400 font-black text-base mt-1 block">${(quickContainers * 1275).toLocaleString()}</span>
+              <span className="text-emerald-400 font-bold text-base mt-1 block">${(quickContainers * 1275).toLocaleString()}</span>
             </div>
             <div className="bg-[#070b13]/80 p-3.5 rounded-xl border border-slate-800 hover-card-lift">
               <span className="text-slate-400 block text-xs">Air-Freight Risk</span>
-              <span className="text-emerald-400 font-black text-base mt-1 block">${(quickContainers * 850).toLocaleString()}</span>
+              <span className="text-emerald-400 font-bold text-base mt-1 block">${(quickContainers * 850).toLocaleString()}</span>
             </div>
             <div className="bg-[#070b13]/80 p-3.5 rounded-xl border border-slate-800 hover-card-lift">
               <span className="text-slate-400 block text-xs">Hours Saved</span>
-              <span className="text-emerald-400 font-black text-base mt-1 block">{(quickContainers * 4)} hrs/mo</span>
+              <span className="text-emerald-400 font-bold text-base mt-1 block">{(quickContainers * 4)} hrs/mo</span>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function RoiCalculator() {
         <div className="text-center lg:text-right shrink-0 space-y-5 bg-[#070b13]/90 p-8 sm:p-10 rounded-3xl border border-slate-800 relative z-10 hover-card-lift shadow-2xl">
           <div>
             <p className="text-xs sm:text-sm text-slate-300 font-mono uppercase tracking-wider font-semibold">Projected Annual Factory Savings</p>
-            <p className="text-5xl sm:text-6xl font-black font-mono text-emerald-400 mt-2 drop-shadow-md">
+            <p className="text-5xl sm:text-6xl font-bold font-mono text-emerald-400 mt-2 tracking-tight">
               ${estimatedSavingsAnnual.toLocaleString()}
             </p>
           </div>

@@ -1,33 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" fill="none">
-  <!-- Transparent Background -->
-  
   <!-- Subtle floor shadow -->
   <ellipse cx="400" cy="710" rx="240" ry="25" fill="#fecaca" opacity="0.6" />
   
-  <!-- Flying Problem Papers in Background -->
+  <!-- Flying Problem Papers in Background (Vector lines, no text) -->
   <g id="flying-paperwork" opacity="0.85">
     <!-- Paper 1 (Invoice Mismatch) -->
     <g transform="translate(80, 180) rotate(-15)">
       <rect width="160" height="110" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="5" />
-      <text x="15" y="32" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#ef4444">INVOICE: 12,000</text>
-      <text x="15" y="55" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#ef4444">PACKING: 11,400</text>
-      <circle cx="135" cy="80" r="16" fill="#fee2e2" stroke="#ef4444" stroke-width="3" />
-      <text x="135" y="86" font-family="'Inter', sans-serif" font-weight="900" font-size="16" fill="#ef4444" text-anchor="middle">!</text>
+      <line x1="20" y1="28" x2="100" y2="28" stroke="#ef4444" stroke-width="6" stroke-linecap="round" />
+      <line x1="20" y1="46" x2="80" y2="46" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
+      <line x1="20" y1="62" x2="110" y2="62" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
+      <line x1="20" y1="78" x2="70" y2="78" stroke="#ef4444" stroke-width="5" stroke-linecap="round" />
+      <circle cx="130" cy="75" r="16" fill="#fee2e2" stroke="#ef4444" stroke-width="3" />
+      <path d="M130 67 L130 77 M130 83 L130 85" stroke="#ef4444" stroke-width="4" stroke-linecap="round" />
     </g>
 
     <!-- Paper 2 (LC Date Passed) -->
     <g transform="translate(560, 210) rotate(18)">
       <rect width="150" height="100" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="5" />
-      <text x="15" y="32" font-family="'Inter', sans-serif" font-weight="900" font-size="13" fill="#0f172a">LC CUT-OFF</text>
-      <line x1="15" y1="52" x2="135" y2="52" stroke="#ef4444" stroke-width="4" />
-      <text x="15" y="75" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#ef4444">EXPIRED DATE</text>
+      <line x1="20" y1="26" x2="110" y2="26" stroke="#0f172a" stroke-width="6" stroke-linecap="round" />
+      <line x1="20" y1="44" x2="95" y2="44" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
+      <line x1="20" y1="60" x2="130" y2="60" stroke="#ef4444" stroke-width="5" stroke-linecap="round" />
+      <!-- Big red X -->
+      <path d="M105 72 L125 92 M125 72 L105 92" stroke="#ef4444" stroke-width="5" stroke-linecap="round" />
     </g>
 
     <!-- Paper 3 (Bond Quota UD) -->
     <g transform="translate(100, 480) rotate(12)">
       <rect width="150" height="90" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="5" />
-      <text x="15" y="30" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#0f172a">BGMEA e-UD</text>
-      <text x="15" y="55" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#f59e0b">QUOTA MISMATCH</text>
+      <line x1="20" y1="26" x2="90" y2="26" stroke="#0f172a" stroke-width="5" stroke-linecap="round" />
+      <line x1="20" y1="44" x2="120" y2="44" stroke="#f59e0b" stroke-width="5" stroke-linecap="round" />
+      <line x1="20" y1="62" x2="80" y2="62" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
+      <!-- Exclamation icon -->
+      <circle cx="120" cy="65" r="14" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" />
+      <path d="M120 58 L120 66 M120 72 L120 74" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
     </g>
   </g>
 
@@ -94,22 +100,5 @@
       <path d="M215 135 L395 135" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
     </g>
 
-  </g>
-
-  <!-- Giant Stamp: SHIPMENT HELD -->
-  <g transform="translate(180, 360) rotate(-12)">
-    <rect x="-10" y="-10" width="460" height="120" rx="14" fill="none" stroke="#ef4444" stroke-width="14" stroke-dasharray="18 10" />
-    <rect x="0" y="0" width="440" height="100" rx="10" fill="#fee2e2" fill-opacity="0.9" stroke="#ef4444" stroke-width="8" />
-    <text x="220" y="68" font-family="'Inter', sans-serif" font-weight="900" font-size="44" fill="#b91c1c" text-anchor="middle" letter-spacing="4">
-      SHIPMENT HELD
-    </text>
-  </g>
-
-  <!-- Bottom Caption Box -->
-  <g transform="translate(160, 680)">
-    <rect width="480" height="50" rx="12" fill="#0f172a" />
-    <text x="240" y="32" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#ffffff" text-anchor="middle">
-      12,000 garments. Ready on time. Stuck on paperwork.
-    </text>
   </g>
 </svg>

@@ -57,7 +57,7 @@ export default function Hero() {
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-[4.2rem] font-extrabold text-white tracking-tight leading-[1.08] font-display">
               Before the vessel leaves, know your cargo is{' '}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.3)]">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
                 customs-ready.
               </span>
             </h1>

@@ -1,45 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" fill="none">
-  <!-- Transparent Background -->
-  
-  <!-- Container Vessel Sailing Away (Right Background) -->
-  <g id="container-ship" transform="translate(480, 340)">
-    <!-- Ship Hull -->
-    <path d="M40 90 L260 90 L230 140 L20 140 Z" fill="#0f172a" stroke="#0f172a" stroke-width="4" />
-    <path d="M20 140 L230 140 L220 155 L10 155 Z" fill="#ef4444" />
-    
-    <!-- Multi-colored Containers on Deck -->
-    <rect x="50" y="55" width="45" height="35" rx="2" fill="#0d9488" stroke="#0f172a" stroke-width="3" />
-    <rect x="98" y="55" width="45" height="35" rx="2" fill="#f59e0b" stroke="#0f172a" stroke-width="3" />
-    <rect x="146" y="55" width="45" height="35" rx="2" fill="#10b981" stroke="#0f172a" stroke-width="3" />
-    
-    <rect x="74" y="22" width="45" height="33" rx="2" fill="#3b82f6" stroke="#0f172a" stroke-width="3" />
-    <rect x="122" y="22" width="45" height="33" rx="2" fill="#10b981" stroke="#0f172a" stroke-width="3" />
-    
-    <!-- Bridge & Radar Tower -->
-    <rect x="195" y="30" width="35" height="60" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
-    <line x1="212" y1="10" x2="212" y2="30" stroke="#0f172a" stroke-width="4" />
-    <!-- White Water Waves Behind Ship -->
-    <path d="M0 155 Q40 145 80 155 Q120 145 160 155 Q200 145 260 155" stroke="#10b981" stroke-width="3" fill="none" opacity="0.6" />
-    
-    <text x="140" y="180" font-family="'Inter', sans-serif" font-weight="800" font-size="12" fill="#0f172a">MAERSK HAVEN • SAILING</text>
-  </g>
-
-  <!-- Giant Green Clearance Stamp / Badge (Top Left) -->
-  <g transform="translate(60, 60)">
-    <rect width="360" height="95" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="6" />
-    <circle cx="50" cy="48" r="28" fill="#10b981" />
-    <!-- White Checkmark -->
-    <path d="M38 48 L46 56 L62 38" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-    
-    <text x="95" y="42" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#065f46">CUSTOMS-READY</text>
-    <text x="95" y="68" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="13" fill="#0d9488">QR GATE PASS #CGP-89201</text>
-  </g>
-
   <!-- Subtle floor shadow -->
-  <ellipse cx="320" cy="710" rx="220" ry="25" fill="#d1fae5" opacity="0.8" />
+  <ellipse cx="400" cy="710" rx="220" ry="25" fill="#d1fae5" opacity="0.8" />
 
-  <!-- Rafi: Victorious Celebrating Muscular Stickman (Center-Left) -->
-  <g id="rafi-celebrating" transform="translate(60, 10)">
+  <!-- Rafi: Victorious Celebrating Muscular Stickman (Centered) -->
+  <g id="rafi-celebrating" transform="translate(140, 10)">
     
     <!-- Confident Stance Legs -->
     <path d="M260 470 L220 700" stroke="#0f172a" stroke-width="14" stroke-linecap="round" />
@@ -109,13 +73,5 @@
     <!-- Star Sparkle -->
     <path d="M345 80 L350 90 L360 95 L350 100 L345 110 L340 100 L330 95 L340 90 Z" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
 
-  </g>
-
-  <!-- Payoff Tagline Badge (Bottom Right) -->
-  <g transform="translate(420, 680)">
-    <rect width="340" height="55" rx="14" fill="#0d9488" stroke="#0f172a" stroke-width="5" />
-    <text x="170" y="35" font-family="'Inter', sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">
-      BLOCKED TO CUSTOMS-READY ✓
-    </text>
   </g>
 </svg>
