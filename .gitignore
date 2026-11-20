@@ -29,7 +29,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 # Internal Docs & Hackathon Guides
-docs/
+/docs/
 
 # Video Files, Render Assets & Screenshots
 public/video-assets/
