@@ -27,3 +27,17 @@ yarn-error.log*
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Internal Docs & Hackathon Guides
+docs/
+
+# Video Files, Render Assets & Screenshots
+public/video-assets/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Video Rendering & Automation Scripts
+scripts/
